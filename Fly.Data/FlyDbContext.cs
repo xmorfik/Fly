@@ -1,6 +1,17 @@
-namespace Fly.Data
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+
+namespace Fly.Data;
+
+public class FlyDbContext : DbContext
 {
-    internal class FlyDbContext
+    public FlyDbContext(DbContextOptions options) : base(options)
     {
     }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
+
 }
