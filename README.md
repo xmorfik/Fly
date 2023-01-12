@@ -2,11 +2,11 @@
 
 Air ticket booking website
 
-![](C:\Users\adukh\AppData\Roaming\marktext\images\2023-01-12-12-42-15-image.png)
+![image](https://user-images.githubusercontent.com/56976694/212049987-a6beb600-d9ff-4e37-a90d-3612749dbf6b.png)
 
 With live flight map using OpenStreetMap and SignalR
 
-![](C:\Users\adukh\AppData\Roaming\marktext\images\2023-01-12-12-44-17-image.png)
+![image](https://user-images.githubusercontent.com/56976694/212049826-9b7e24cd-b94c-48ef-abff-a3503bf609e4.png)
 
 Database: Postgres
 
