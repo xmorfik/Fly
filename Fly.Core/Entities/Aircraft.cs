@@ -10,5 +10,10 @@ public class Aircraft : BaseEntity
     public int? AirportId { get; set; }
     public Airport? Airport { get; set; }
 
+    public int AircraftLocationId { get; set; }
+    public AircraftLocation? AircraftLocation { get; set; }
+
     public ICollection<Seat>? Seats { get; set; }
+
+    public ICollection<Flight>? Flights { get; set; }
 }
