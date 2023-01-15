@@ -1,3 +1,4 @@
+using Fly.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -5,7 +6,24 @@ namespace Fly.Data;
 
 public class FlyDbContext : DbContext
 {
-    public FlyDbContext(DbContextOptions options) : base(options)
+    public DbSet<AircraftLocation> AircraftLocations { get; set; }
+
+    public DbSet<Aircraft> Aircrafts { get; set; }
+
+    public DbSet<Airline> Airlines { get; set; }
+
+    public DbSet<Airport> Airports { get; set; }
+
+    public DbSet<Flight> Flights { get; set; }
+
+    public DbSet<Seat> Seats { get; set; }
+
+    public DbSet<Ticket> Tickets { get; set; }
+
+    public DbSet<Client> Clients { get; set; }
+
+
+    public FlyDbContext(DbContextOptions<FlyDbContext> options) : base(options)
     {
     }
 
@@ -13,5 +31,4 @@ public class FlyDbContext : DbContext
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
-
 }

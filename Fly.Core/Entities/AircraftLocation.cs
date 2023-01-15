@@ -14,6 +14,8 @@ public class AircraftLocation : BaseEntity
 
     public bool? IsFlying { get; set; }
 
+    public DateTime? DateTime { get; set; }
+
     public int? AircraftId { get; set; }
     public Aircraft? Aircraft { get; set; }
 }

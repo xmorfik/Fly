@@ -1,4 +1,4 @@
-﻿namespace Finance.Core.Interfaces;
+﻿namespace Fly.Core.Interfaces;
 
 public interface IAggregateRoot
 {

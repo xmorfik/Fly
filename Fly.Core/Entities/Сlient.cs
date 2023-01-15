@@ -11,5 +11,4 @@ public class Client : BaseEntity
     public string? Phone { get; set; }
 
     public ICollection<Ticket>? Tickets { get; set; }
-
 }

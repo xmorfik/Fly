@@ -2,16 +2,18 @@ namespace Fly.Core.Entities;
 
 public class Flight : BaseEntity
 {
-    public int? DepartureId { get; set; }
-    public Airport? Departure { get; set; }
+    public int? DepartureAirportId { get; set; }
+    public Airport? DepartureAirport { get; set; }
 
-    public int? ArrivalId { get; set; }
-    public Airport? Arrival { get; set; }
+    public int? ArrivalAirportId { get; set; }
+    public Airport? ArrivalAirport { get; set; }
 
     public int? AircraftId { get; set; }
     public Aircraft? Aircraft { get; set; }
 
-    public DateTime DepartureDateTime { get; set; }
+    public DateTime? DepartureDateTime { get; set; }
 
-    public DateTime ArrivalDateTime { get; set; }
+    public DateTime? ArrivalDateTime { get; set; }
+
+    public ICollection<Ticket>? Tickets { get; set; }
 }
