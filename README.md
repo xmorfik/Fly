@@ -15,8 +15,3 @@ Database: Postgres
 Identity: Duende IdentityServer
 
 Going to use Ardalis.Specification for repos
-
-Class diagram: 
-
-![image](https://user-images.githubusercontent.com/56976694/212108068-cd4b4c86-4777-4187-adc9-4e19f20a4869.png)
-
