@@ -6,7 +6,7 @@ public class Airport : BaseEntity
 
     public string? Address { get; set; }
 
-    public ICollection<Aircraft>? Aircrafts { get; set;}
+    public ICollection<Aircraft>? Aircrafts { get; set; }
 
     public ICollection<Flight>? FlightsIn { get; set; }
 

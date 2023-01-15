@@ -1,6 +1,6 @@
 ﻿namespace Fly.Core.Entities;
 
-public class Сlient: BaseEntity
+public class Client : BaseEntity
 {
     public string? FirstName { get; set; }
 

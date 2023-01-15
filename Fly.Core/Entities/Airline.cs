@@ -6,5 +6,5 @@ public class Airline : BaseEntity
 
     public string? Phone { get; set; }
 
-    public ICollection<Aircraft>? Aircrafts { get; set;}
+    public ICollection<Aircraft>? Aircrafts { get; set; }
 }
