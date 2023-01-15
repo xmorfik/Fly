@@ -4,6 +4,8 @@ public class Aircraft : BaseEntity
 {
     public string? Model { get; set; }
 
+    public string? SerialNumber { get; set; }
+
     public int? AirlineId { get; set; }
     public Airline? Airline { get; set; }
 
