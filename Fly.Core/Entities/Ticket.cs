@@ -12,6 +12,6 @@ public class Ticket : BaseEntity
     public int SeatId { get; set; }
     public Seat? Seat { get; set; }
 
-    public int ÑlientId { get; set; }
-    public Ñlient? Ñlient { get; set; }
+    public int ClientId { get; set; }
+    public Ñlient? Client { get; set; }
 }
