@@ -6,6 +6,12 @@ public class AircraftLocation : BaseEntity
 
     public double? Latitude { get; set; }
 
+    public int? Altitude { get; set; }
+
+    public int? DirectionAngle { get; set; }
+
+    public int? Speed { get; set; }
+
     public bool? IsFlying { get; set; }
 
     public int? AircraftId { get; set; }
