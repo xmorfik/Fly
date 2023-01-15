@@ -1,4 +1,4 @@
-using Finance.Core.Interfaces;
+using Fly.Core.Interfaces;
 
 namespace Fly.Core.Entities;
 
