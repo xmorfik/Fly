@@ -2,9 +2,9 @@ using Fly.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Fly.Data.—onfiguration;
+namespace Fly.Data.Configuration;
 
-public class Flight—onfiguration : IEntityTypeConfiguration<Flight>
+public class FlightConfiguration : IEntityTypeConfiguration<Flight>
 {
     public void Configure(EntityTypeBuilder<Flight> builder)
     {
