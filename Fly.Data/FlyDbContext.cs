@@ -20,7 +20,7 @@ public class FlyDbContext : DbContext
 
     public DbSet<Ticket> Tickets { get; set; }
 
-    public DbSet<Client> Clients { get; set; }
+    public DbSet<Passenger> Clients { get; set; }
 
 
     public FlyDbContext(DbContextOptions<FlyDbContext> options) : base(options)
