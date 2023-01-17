@@ -1,5 +1,5 @@
-﻿using Fly.Data;
-using Fly.Data.Interfaces;
+﻿using Fly.Core.Interfaces;
+using Fly.Data;
 
 namespace Fly.WebAPI.Extensions;
 
