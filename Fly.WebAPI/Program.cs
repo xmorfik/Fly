@@ -16,6 +16,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    //builder.Configuration.AddUserSecrets<Program>();
 }
 
 app.UseHttpsRedirection();
