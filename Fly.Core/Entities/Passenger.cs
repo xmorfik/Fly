@@ -18,5 +18,8 @@ public class Passenger : BaseEntity
 
     public string?  PassportNo { get; set; }
 
+    public string? UserId { get; set; }
+    public User? User { get; set; }
+
     public ICollection<Ticket>? Tickets { get; set; }
 }
