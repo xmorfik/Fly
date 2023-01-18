@@ -1,12 +1,19 @@
-# Fly
-
-Air ticket booking website
-
-With live flight map using OpenStreetMap and SignalR
-
-Database: Postgres
-docker run --name fly-postgres -p 5432:5432  -e POSTGRES_PASSWORD=Qwerty123456 -d postgres
-
-Identity: Duende IdentityServer
-
-Going to use Ardalis.Specification for repos
+## WebApp for flight management and ticket sales
+## Features
+- OpenApi
+- Authorization and authentication
+- Map with the ability to track aircraft routes using SignalR
+- Ardalis.Specification for repos 
+- Flight notifications to users
+- Search and filtering of air tickets
+- Airline stats
+- AutoMapper
+- Bootstrap 5 
+- Chat with Admin
+- XUnit testing
+-
+## Roles
+### Airline 
+- Aircraft flight management and ticket sales, statistics
+### Passenger
+- Purchase search and compare tickets
