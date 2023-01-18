@@ -9,6 +9,6 @@ public class ClientConfiguration : IEntityTypeConfiguration<Passenger>
     public void Configure(EntityTypeBuilder<Passenger> builder)
     {
         builder.HasKey(x => x.Id);
-        builder.HasMany(x => x.Tickets).WithOne(x => x.Client);
+        builder.HasMany(x => x.Tickets).WithOne(x => x.Passenger);
     }
 }

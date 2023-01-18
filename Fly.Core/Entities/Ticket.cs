@@ -1,14 +1,12 @@
+using Fly.Core.Enums;
+
 namespace Fly.Core.Entities;
 
 public class Ticket : BaseEntity
 {
     public decimal? Price { get; set; }
 
-    public bool? IsActive { get; set; }
-
-    public bool? IsSold { get; set; }
-
-    public bool? IsUsed { get; set; }
+    public TiketState? TicketState { get; set; }
 
     public DateTime? SoldDate { get; set; }
 
@@ -18,6 +16,6 @@ public class Ticket : BaseEntity
     public int? SeatId { get; set; }
     public Seat? Seat { get; set; }
 
-    public int? ClientId { get; set; }
-    public Passenger? Client { get; set; }
+    public int? PassengerId { get; set; }
+    public Passenger? Passenger { get; set; }
 }
