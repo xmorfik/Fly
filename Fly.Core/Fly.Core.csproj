@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Ardalis.Specification" Version="6.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="7.0.2" />
   </ItemGroup>
 
 </Project>

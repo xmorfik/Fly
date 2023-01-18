@@ -12,8 +12,6 @@ public class AircraftLocation : BaseEntity
 
     public int? Speed { get; set; }
 
-    public bool? IsFlying { get; set; }
-
     public DateTime? DateTime { get; set; }
 
     public int? AircraftId { get; set; }
