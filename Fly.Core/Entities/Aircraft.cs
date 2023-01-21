@@ -8,8 +8,6 @@ public class Aircraft : BaseEntity
 
     public string? SerialNumber { get; set; }
 
-    public string? DateTime { get; set; }
-
     public DateTime? ManufactureDate { get; set; }
 
     public int? FlightHours { get; set; }

@@ -21,7 +21,7 @@ public class FlyDbContext : IdentityDbContext
 
     public DbSet<Ticket> Tickets { get; set; }
 
-    public DbSet<Passenger> Clients { get; set; }
+    public DbSet<Passenger> Passengers { get; set; }
 
     public DbSet<Notification> Notifications { get; set; }
 

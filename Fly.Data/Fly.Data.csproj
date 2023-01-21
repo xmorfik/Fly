@@ -21,8 +21,4 @@
     <ProjectReference Include="..\Fly.Core\Fly.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Specifications\" />
-  </ItemGroup>
-
 </Project>
