@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Fly.Data.Сonfiguration;
 
-public class ClientConfiguration : IEntityTypeConfiguration<Passenger>
+public class PassengerСonfiguration : IEntityTypeConfiguration<Passenger>
 {
     public void Configure(EntityTypeBuilder<Passenger> builder)
     {
