@@ -2,7 +2,7 @@
 
 public class Message : BaseEntity
 {
-    public DateTime DateTime { get; set; }
+    public DateTime? DateTime { get; set; }
 
     public string? Text { get; set; }
 
