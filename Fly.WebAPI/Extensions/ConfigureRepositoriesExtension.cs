@@ -3,9 +3,9 @@ using Fly.Data;
 
 namespace Fly.WebAPI.Extensions;
 
-public static class ConfigureRepositoriesExtention
+public static class ConfigureRepositoriesExtension
 {
-    public static IServiceCollection AddRepositoriesServices(this IServiceCollection services)
+    public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
         services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));

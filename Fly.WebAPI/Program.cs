@@ -4,7 +4,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddPostgres(builder.Configuration);
-builder.Services.AddRepositoriesServices();
+builder.Services.AddRepositories();
+builder.Services.AddServices();
+builder.Services.AddMapper();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
