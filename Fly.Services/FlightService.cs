@@ -2,12 +2,13 @@
 using Fly.Core.DataTransferObjects;
 using Fly.Core.Entities;
 using Fly.Core.Interfaces;
+using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.Core.Specifications;
 
 namespace Fly.Services;
 
-public class FlightService : IService<FlightDTO>
+public class FlightService : IService<FlightDTO>, IFilter<FlightDTO, FlightParameter>
 {
     public readonly IRepository<Flight> _repository;
     public readonly IMapper _mapper;
@@ -26,6 +27,11 @@ public class FlightService : IService<FlightDTO>
     public Task DeleteAsync(int id)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<IEnumerable<FlightDTO>> FilterAsync(FlightParameter parameter)
+    {
+        return await _repository.ListAsync(new FlightListSpec(_mapper,parameter));
     }
 
     public async Task<FlightDTO> GetAsync(int id)

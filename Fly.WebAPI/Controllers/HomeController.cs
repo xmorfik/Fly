@@ -1,4 +1,5 @@
 ﻿using Fly.Core.DataTransferObjects;
+using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +10,13 @@ namespace Fly.WebAPI.Controllers;
 public class HomeController : Controller
 {
     private readonly IService<FlightDTO> _service;
+    private readonly IFilter<FlightDTO, FlightParameter> _filter;
 
-    public HomeController(IService<FlightDTO> service)
+    public HomeController(IService<FlightDTO> service, 
+        IFilter<FlightDTO, FlightParameter> filter)
     {
         _service = service;
+        _filter = filter;
     }
 
     [HttpGet]
