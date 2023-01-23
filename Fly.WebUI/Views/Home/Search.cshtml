@@ -1,4 +1,4 @@
-﻿@model             FlightParameters
+﻿@model Fly.Core.Parameters.FlightParameters
 
 <h4>FlightParameters</h4>
 <hr />
@@ -7,9 +7,9 @@
         <form asp-action="Search">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="DepartureMinTime" class="control-label"></label>
-                <input asp-for="DepartureMinTime" class="form-control" />
-                <span asp-validation-for="DepartureMinTime" class="text-danger"></span>
+                <label asp-for="DepartureDateTime" class="control-label"></label>
+                <input asp-for="DepartureDateTime" class="form-control" />
+                <span asp-validation-for="DepartureDateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DepartureCity" class="control-label"></label>
@@ -22,7 +22,7 @@
                 <span asp-validation-for="ArrivalCity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Search" class="btn btn-primary" />
             </div>
         </form>
     </div>
