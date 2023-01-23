@@ -1,4 +1,5 @@
-﻿using Fly.WebUI.Models;
+﻿using Fly.Core.Parameters;
+using Fly.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -14,6 +15,18 @@ public class HomeController : Controller
     }
 
     public IActionResult Index()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    public IActionResult Search()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult Search(FlightParameters parameters)
     {
         return View();
     }
