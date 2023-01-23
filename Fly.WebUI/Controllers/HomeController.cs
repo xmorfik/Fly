@@ -26,7 +26,7 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult Search(FlightParameters parameters)
+    public IActionResult Search(FlightParameter parameters)
     {
         return View();
     }
