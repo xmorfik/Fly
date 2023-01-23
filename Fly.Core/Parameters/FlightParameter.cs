@@ -1,6 +1,6 @@
 ﻿namespace Fly.Core.Parameters;
 
-public class FlightParameters
+public class FlightParameter
 {
     public DateTime? DepartureDateTime { get; set; }
     public string? DepartureCity { get; set; }
