@@ -10,5 +10,5 @@ public class AirlineDTO : BaseEntityDTO
 
     public string? UserId { get; set; }
 
-    public ICollection<AircraftDTO>? Aircrafts { get; set; }
+    public List<AircraftDTO>? Aircrafts { get; set; }
 }
