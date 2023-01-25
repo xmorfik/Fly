@@ -24,10 +24,12 @@ public class FlightListSpec : Specification<Flight, FlightDTO>
             x.DepartureDateTime >= parameter.DepartureDateTime);
 
         Query.Where(x => parameter.DepartureCity == null ||
+            x.DepartureAirport == null ||
             x.DepartureAirport.City == null ||
             x.DepartureAirport.City.Contains(parameter.DepartureCity));
 
         Query.Where(x => parameter.ArrivalCity == null ||
+            x.ArrivalAirport == null ||
             x.ArrivalAirport.City == null ||
             x.ArrivalAirport.City.Contains(parameter.ArrivalCity));
 
