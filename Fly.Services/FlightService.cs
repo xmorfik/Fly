@@ -2,13 +2,14 @@
 using Fly.Core.DataTransferObjects;
 using Fly.Core.Entities;
 using Fly.Core.Interfaces;
+using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.Core.Specifications;
 
 namespace Fly.Services;
 
-public class FlightService : IService<FlightDTO>, IFilter<FlightDTO, FlightParameter>
+public class FlightService : IService<FlightDTO,PagedResponse<List<FlightDTO>>,FlightParameter>
 {
     public readonly IRepository<Flight> _repository;
     public readonly IMapper _mapper;
@@ -19,38 +20,37 @@ public class FlightService : IService<FlightDTO>, IFilter<FlightDTO, FlightParam
         _mapper = mapper;
     }
 
-    public Task CreateAsync(FlightDTO item)
+    public async Task CreateAsync(FlightDTO item)
     {
-        throw new NotImplementedException();
+        var entity = _mapper.Map<Flight>(item);
+        await _repository.AddAsync(entity);
     }
 
-    public Task DeleteAsync(int id)
+    public async Task DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        await _repository.DeleteAsync(new Flight() { Id = id });
     }
 
-    public async Task<IEnumerable<FlightDTO>> FilterAsync(FlightParameter parameter)
-    {
-        return await _repository.ListAsync(new FlightListSpec(_mapper,parameter));
-    }
-
-    public async Task<FlightDTO> GetAsync(int id)
+    public async Task<Response<FlightDTO>> GetAsync(int id)
     {
         var result = await _repository.FirstOrDefaultAsync(new FlightSpec(id, _mapper));
         if (result == null)
         {
-            return new FlightDTO();
+            return new Response<FlightDTO>(new FlightDTO()) { Succeeded = false};
         }
-        return result;
+        return new Response<FlightDTO>(result);
     }
 
-    public async Task<ICollection<FlightDTO>> GetListAsync()
+    public async Task<PagedResponse<List<FlightDTO>>> GetListAsync(FlightParameter parameter, Page page)
     {
-        return await _repository.ListAsync(new FlightListSpec(_mapper));
+        var items = await _repository.ListAsync(new FlightListSpec(_mapper, parameter, page));
+        var response = new PagedResponse<List<FlightDTO>>(items, page);
+        return response;
     }
 
-    public Task UpdateAsync(FlightDTO item)
+    public async Task UpdateAsync(FlightDTO item)
     {
-        throw new NotImplementedException();
+        var entity = _mapper.Map<Flight>(item);
+        await _repository.UpdateAsync(entity);  
     }
 }

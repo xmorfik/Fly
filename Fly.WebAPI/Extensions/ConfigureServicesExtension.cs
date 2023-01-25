@@ -1,4 +1,5 @@
 ﻿using Fly.Core.DataTransferObjects;
+using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.Services;
@@ -9,8 +10,7 @@ public static class ConfigureServicesExtension
 {
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
-        services.AddScoped<IService<FlightDTO>, FlightService>();
-        services.AddScoped<IFilter<FlightDTO,FlightParameter>, FlightService>();
+        services.AddScoped<IService<FlightDTO, PagedResponse<List<FlightDTO>>, FlightParameter>, FlightService>();
 
         return services;
     }

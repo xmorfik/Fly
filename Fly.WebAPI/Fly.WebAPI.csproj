@@ -32,6 +32,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Fly.Data\Fly.Data.csproj" />
     <ProjectReference Include="..\Fly.Services\Fly.Services.csproj" />
+    <ProjectReference Include="..\Fly.Shared\Fly.Shared.csproj" />
   </ItemGroup>
 
 </Project>

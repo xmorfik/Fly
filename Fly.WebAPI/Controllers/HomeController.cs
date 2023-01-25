@@ -1,4 +1,5 @@
 ﻿using Fly.Core.DataTransferObjects;
+using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -9,19 +10,16 @@ namespace Fly.WebAPI.Controllers;
 [Route("[controller]")]
 public class HomeController : Controller
 {
-    private readonly IService<FlightDTO> _service;
-    private readonly IFilter<FlightDTO, FlightParameter> _filter;
+    private readonly IService<FlightDTO, PagedResponse<List<FlightDTO>>, FlightParameter> _service;
 
-    public HomeController(IService<FlightDTO> service, 
-        IFilter<FlightDTO, FlightParameter> filter)
+    public HomeController(IService<FlightDTO, PagedResponse<List<FlightDTO>>, FlightParameter> service)
     {
         _service = service;
-        _filter = filter;
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index([FromQuery] Page page)
     {
-        return Ok();
+        return Ok(await _service.GetListAsync(new FlightParameter(),page));
     }
 }
