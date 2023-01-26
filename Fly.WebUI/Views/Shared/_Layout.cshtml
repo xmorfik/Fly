@@ -29,6 +29,9 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Search">Search</a>
                         </li>
                     </ul>
+                    <div>
+                        @await Html.PartialAsync("_SelectLanguagePartial")
+                    </div>
                 </div>
             </div>
         </nav>

@@ -1,6 +1,11 @@
-﻿@model Fly.Core.Parameters.FlightParameter
+﻿@using Fly.Core.Parameters;
+@using Microsoft.AspNetCore.Mvc.Localization;
 
-<h4>FlightParameters</h4>
+@model FlightParameter
+
+@inject IViewLocalizer Localizer
+
+<h4>@Localizer["Header"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
