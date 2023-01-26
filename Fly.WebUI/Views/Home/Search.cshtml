@@ -11,30 +11,34 @@
     <div class="col-md-4">
         <form asp-action="Search">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <br />
             <div class="form-group">
-                <label asp-for="DepartureDateTime" class="control-label"></label>
+                <label class="control-label">@Localizer["Time"]</label>
                 <input asp-for="DepartureDateTime" class="form-control" />
                 <span asp-validation-for="DepartureDateTime" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
-                <label asp-for="DepartureCity" class="control-label"></label>
+                <label class="control-label">@Localizer["DepartureCity"]</label>
                 <input asp-for="DepartureCity" class="form-control" />
                 <span asp-validation-for="DepartureCity" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
-                <label asp-for="ArrivalCity" class="control-label"></label>
+                <label class="control-label">@Localizer["ArrivalCity"]</label>
                 <input asp-for="ArrivalCity" class="form-control" />
                 <span asp-validation-for="ArrivalCity" class="text-danger"></span>
             </div>
+            <br/>
             <div class="form-group">
-                <input type="submit" value="Search" class="btn btn-primary" />
+                <input type="submit" value=@Localizer["Search"] class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@Localizer["Back"]</a>
 </div>
 
 @section Scripts {
