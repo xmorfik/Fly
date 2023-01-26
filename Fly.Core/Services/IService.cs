@@ -3,11 +3,11 @@ using Fly.Core.Pagination;
 
 namespace Fly.Core.Services;
 
-public interface IService <T,TResult, TParameter> where T : class, IAggregateDTO
+public interface IService <T, TParameter> where T : class, IAggregateEntities
 {
     public Task CreateAsync(T item);
-    public Task<Response<T>> GetAsync(int id);
     public Task UpdateAsync(T item);
     public Task DeleteAsync(int id);
-    public Task<TResult> GetListAsync(TParameter parameter, Page page);
+    public Task<Response<T>> GetAsync(int id);
+    public Task<PagedResponse<ICollection<T>>> GetListAsync(TParameter parameter, Page page);
 }

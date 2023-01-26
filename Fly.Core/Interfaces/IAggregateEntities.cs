@@ -1,5 +1,5 @@
 ﻿namespace Fly.Core.Interfaces;
 
-public interface IAggregateRoot
+public interface IAggregateEntities
 {
 }

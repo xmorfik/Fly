@@ -1,4 +1,4 @@
-﻿using Fly.Core.DataTransferObjects;
+﻿using Fly.Core.Entities;
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
@@ -10,9 +10,9 @@ namespace Fly.WebAPI.Controllers;
 [Route("[controller]")]
 public class HomeController : Controller
 {
-    private readonly IService<FlightDTO, PagedResponse<List<FlightDTO>>, FlightParameter> _service;
+    private readonly IService<Flight, FlightParameter> _service;
 
-    public HomeController(IService<FlightDTO, PagedResponse<List<FlightDTO>>, FlightParameter> service)
+    public HomeController(IService<Flight, FlightParameter> service)
     {
         _service = service;
     }
