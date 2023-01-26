@@ -20,6 +20,6 @@ public class HomeController : Controller
     [HttpGet]
     public async Task<IActionResult> Index([FromQuery] Page page)
     {
-        return Ok(await _service.GetListAsync(new FlightParameter(),page));
+        return Ok(await _service.GetAsync(1));
     }
 }

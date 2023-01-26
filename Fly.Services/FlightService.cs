@@ -34,7 +34,7 @@ public class FlightService : IService<Flight, FlightParameter>
             return new Response<Flight>(new Flight()) { Succeeded = false };
         }
 
-        return new Response<Flight>(new Flight());
+        return new Response<Flight>(result);
     }
 
     public async Task<PagedResponse<ICollection<Flight>>> GetListAsync(FlightParameter parameter, Page page)
