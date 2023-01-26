@@ -9,7 +9,7 @@ namespace Fly.Services;
 
 public class FlightService : IService<Flight, FlightParameter>
 {
-    public readonly IRepository<Flight> _repository;
+    private readonly IRepository<Flight> _repository;
 
     public FlightService(IRepository<Flight> repository)
     {
@@ -40,6 +40,7 @@ public class FlightService : IService<Flight, FlightParameter>
     public async Task<PagedResponse<ICollection<Flight>>> GetListAsync(FlightParameter parameter, Page page)
     {
         var items = await _repository.ListAsync(new FlightListSpec( parameter, page));
+
         return new PagedResponse<ICollection<Flight>>(items, page);
     }
 
