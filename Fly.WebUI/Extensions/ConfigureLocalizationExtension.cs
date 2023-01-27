@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Localization;
-using Microsoft.Extensions.DependencyInjection;
 using System.Globalization;
-using System.Reflection;
 
 namespace Fly.WebUI.Extensions
 {

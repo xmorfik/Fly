@@ -1,6 +1,4 @@
-﻿using Fly.Core.Entities;
-
-namespace Fly.Core.DataTransferObjects;
+﻿namespace Fly.Core.DataTransferObjects;
 
 public class FlightDTO : BaseDTO
 {

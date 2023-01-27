@@ -3,7 +3,6 @@ using Fly.WebUI.Models;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Text.RegularExpressions;
 
 namespace Fly.WebUI.Controllers;
 
@@ -40,11 +39,6 @@ public class HomeController : Controller
 
     [HttpPost]
     public IActionResult Search(FlightParameter parameters)
-    {
-        return View();
-    }
-
-    public IActionResult Privacy()
     {
         return View();
     }
