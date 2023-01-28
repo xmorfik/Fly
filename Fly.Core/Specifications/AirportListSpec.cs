@@ -16,6 +16,6 @@ public class AirportListSpec : Specification<Airport>
         Query.Where(x => parameter.AirporId == null || x.AirporId.Contains(parameter.CityName));
 
         Query.Skip((page.PageNumber - 1) * page.PageSize)
-            .Take(page.PageSize);
+            .Take(page.PageSize).OrderBy(x => x.Id);
     }
 }

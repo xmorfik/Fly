@@ -20,6 +20,6 @@ public class TicketListSpec : Specification<Ticket>
         Query.Where(x => parameter.ArrivalCity == null || x.Flight.ArrivalAirport.City.Name.Contains(parameter.ArrivalCity));
 
         Query.Skip((page.PageNumber - 1) * page.PageSize)
-            .Take(page.PageSize);
+            .Take(page.PageSize).OrderBy(x => x.Id);
     }
 }

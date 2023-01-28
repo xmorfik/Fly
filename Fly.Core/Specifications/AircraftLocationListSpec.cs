@@ -14,6 +14,6 @@ public class AircraftLocationListSpec : Specification<AircraftLocation>
         Query.Where(x => parameter.SerialNumber == null || x.Aircraft.SerialNumber.Contains(parameter.SerialNumber));
 
         Query.Skip((page.PageNumber - 1) * page.PageSize)
-            .Take(page.PageSize);
+            .Take(page.PageSize).OrderBy(x => x.Id);
     }
 }

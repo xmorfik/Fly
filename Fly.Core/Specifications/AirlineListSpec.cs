@@ -12,6 +12,6 @@ public class AirlineListSpec : Specification<Airline>
         Query.Where(x => parameter.Name == null || x.Name.Contains(parameter.Name));
 
         Query.Skip((page.PageNumber - 1) * page.PageSize)
-            .Take(page.PageSize);
+            .Take(page.PageSize).OrderBy(x => x.Id);
     }
 }

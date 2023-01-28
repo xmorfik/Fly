@@ -10,6 +10,6 @@ public class SeatListSpec : Specification<Seat>
     public SeatListSpec(SeatParameter parameter, Page page)
     {
         Query.Skip((page.PageNumber - 1) * page.PageSize)
-            .Take(page.PageSize);
+            .Take(page.PageSize).OrderBy(x => x.Id);
     }
 }
