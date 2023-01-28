@@ -16,4 +16,6 @@
 ### Airline 
 - Aircraft flight management and ticket sales, statistics
 ### Passenger
-- Purchase search and compare tickets![diagram](https://user-images.githubusercontent.com/56976694/215276428-378cb094-15ce-4a7e-b620-0ceb3841ca83.png)
+- Purchase search and compare tickets!
+## Diagram
+[diagram](https://user-images.githubusercontent.com/56976694/215276428-378cb094-15ce-4a7e-b620-0ceb3841ca83.png)
