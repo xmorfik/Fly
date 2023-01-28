@@ -2,9 +2,26 @@
 
 public class Page
 {
-    public int PageNumber { get; set; }
+    private int _pageNumber;
+    private int _pageSize;
 
-    public int PageSize { get; set; }
+    public int PageNumber
+    {
+        get => _pageNumber;
+        set
+        {
+            _pageNumber = value < 1 ? 1 : value;
+        }
+    }
+
+    public int PageSize
+    {
+        get => _pageSize;
+        set
+        {
+            _pageSize = value < 1 ? 10 : value;
+        }
+    }
 
     public Page()
     {
@@ -14,7 +31,7 @@ public class Page
 
     public Page(int pageNumber, int pageSize)
     {
-        PageNumber = pageNumber < 1 ? 1 : pageNumber;
-        PageSize = pageSize > 10 ? 10 : pageSize;
+        PageNumber = pageNumber;
+        PageSize = pageSize;
     }
 }
