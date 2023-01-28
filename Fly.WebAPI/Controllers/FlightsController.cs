@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Fly.Core.DataTransferObjects;
-using Fly.Core.Entities;
+﻿using Fly.Core.Entities;
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
@@ -13,12 +11,10 @@ namespace Fly.WebAPI.Controllers
     public class FlightsController : ControllerBase
     {
         private readonly IService<Flight, FlightParameter> _service;
-        private readonly IMapper _mapper;
 
-        public FlightsController(IService<Flight, FlightParameter> service, IMapper mapper)
+        public FlightsController(IService<Flight, FlightParameter> service)
         {
             _service = service;
-            _mapper = mapper;
         }
 
         [HttpGet]
@@ -34,17 +30,15 @@ namespace Fly.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task Post([FromBody] FlightDTO value)
+        public async Task Post([FromBody] Flight value)
         {
-            var item = _mapper.Map<Flight>(value);
-            await _service.CreateAsync(item);
+            await _service.CreateAsync(value);
         }
 
         [HttpPut]
-        public async Task Put([FromBody] FlightDTO value)
+        public async Task Put([FromBody] Flight value)
         {
-            var item = _mapper.Map<Flight>(value);
-            await _service.UpdateAsync(item);
+            await _service.UpdateAsync(value);
         }
 
         [HttpDelete("{id}")]

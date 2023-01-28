@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Fly.Shared\Fly.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DataTransferObjects\" />
+  </ItemGroup>
+
 </Project>
