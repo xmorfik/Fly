@@ -18,4 +18,4 @@
 ### Passenger
 - Purchase search and compare tickets!
 ## Diagram
-[diagram](https://user-images.githubusercontent.com/56976694/215276428-378cb094-15ce-4a7e-b620-0ceb3841ca83.png)
+(https://user-images.githubusercontent.com/56976694/215276428-378cb094-15ce-4a7e-b620-0ceb3841ca83.png)
