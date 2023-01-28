@@ -8,35 +8,35 @@ namespace Fly.WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class FlightsController : ControllerBase
+public class AircraftsController : ControllerBase
 {
-    private readonly IService<Flight, FlightParameter> _service;
+    private readonly IService<Aircraft, AircraftParameter> _service;
 
-    public FlightsController(IService<Flight, FlightParameter> service)
+    public AircraftsController(IService<Aircraft, AircraftParameter> service)
     {
         _service = service;
     }
 
     [HttpGet]
-    public async Task<PagedResponse<ICollection<Flight>>> Get([FromQuery] FlightParameter parameter, [FromQuery] Page page)
+    public async Task<PagedResponse<ICollection<Aircraft>>> Get([FromQuery] AircraftParameter parameter, [FromQuery] Page page)
     {
         return await _service.GetListAsync(parameter, page);
     }
 
     [HttpGet("{id}")]
-    public async Task<Response<Flight>> Get(int id)
+    public async Task<Response<Aircraft>> Get(int id)
     {
         return await _service.GetAsync(id);
     }
 
     [HttpPost]
-    public async Task Post([FromBody] Flight value)
+    public async Task Post([FromBody] Aircraft value)
     {
         await _service.CreateAsync(value);
     }
 
     [HttpPut]
-    public async Task Put([FromBody] Flight value)
+    public async Task Put([FromBody] Aircraft value)
     {
         await _service.UpdateAsync(value);
     }

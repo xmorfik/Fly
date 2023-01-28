@@ -7,7 +7,7 @@ using Fly.Core.Specifications;
 
 namespace Fly.Services;
 
-public class FlightService : IService<Flight, FlightParameter>
+public class FlightService  : IService<Flight, FlightParameter>
 {
     private readonly IRepository<Flight> _repository;
 

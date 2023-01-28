@@ -9,20 +9,11 @@ public class FlightListSpec : Specification<Flight>
 {
     public FlightListSpec(FlightParameter parameter, Page page)
     {
-        Query.Where(x => parameter.DepartureDateTime == null ||
-            x.DepartureDateTime >= parameter.DepartureDateTime);
+        Query.Where(x => parameter.DepartureDateTime == null ||x.DepartureDateTime >= parameter.DepartureDateTime);
 
-        Query.Where(x => parameter.DepartureCity == null ||
-            x.DepartureAirport == null ||
-            x.DepartureAirport.City == null ||
-            x.DepartureAirport.City.Name == null ||
-            x.DepartureAirport.City.Name.Contains(parameter.DepartureCity));
+        Query.Where(x => parameter.DepartureCity == null || x.DepartureAirport.City.Name.Contains(parameter.DepartureCity));
 
-        Query.Where(x => parameter.ArrivalCity == null ||
-            x.ArrivalAirport == null ||
-            x.ArrivalAirport.City == null ||
-            x.ArrivalAirport.City.Name == null ||
-            x.ArrivalAirport.City.Name.Contains(parameter.ArrivalCity));
+        Query.Where(x => parameter.ArrivalCity == null || x.ArrivalAirport.City.Name.Contains(parameter.ArrivalCity));
 
         Query.Skip((page.PageNumber - 1) * page.PageSize)
             .Take(page.PageSize);

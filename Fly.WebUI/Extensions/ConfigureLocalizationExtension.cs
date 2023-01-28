@@ -1,31 +1,30 @@
 ﻿using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 
-namespace Fly.WebUI.Extensions
+namespace Fly.WebUI.Extensions;
+
+public static class ConfigureLocalizationExtension
 {
-    public static class ConfigureLocalizationExtension
+    public static IServiceCollection AddCustomLocalization(this IServiceCollection services)
     {
-        public static IServiceCollection AddCustomLocalization(this IServiceCollection services)
+        services.AddLocalization(options => options.ResourcesPath = "Resources");
+        services.AddControllersWithViews()
+            .AddDataAnnotationsLocalization()
+            .AddViewLocalization();
+
+        services.Configure<RequestLocalizationOptions>(options =>
         {
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
-            services.AddControllersWithViews()
-                .AddDataAnnotationsLocalization()
-                .AddViewLocalization();
-
-            services.Configure<RequestLocalizationOptions>(options =>
+            var supportedCultures = new[]
             {
-                var supportedCultures = new[]
-                {
-                    new CultureInfo("en"),
-                    new CultureInfo("uk")
-                };
+                new CultureInfo("en"),
+                new CultureInfo("uk")
+            };
 
-                options.DefaultRequestCulture = new RequestCulture("en");
-                options.SupportedCultures = supportedCultures;
-                options.SupportedUICultures = supportedCultures;
-            });
+            options.DefaultRequestCulture = new RequestCulture("en");
+            options.SupportedCultures = supportedCultures;
+            options.SupportedUICultures = supportedCultures;
+        });
 
-            return services;
-        }
+        return services;
     }
 }
