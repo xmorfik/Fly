@@ -27,6 +27,10 @@ public class FlyDbContext : IdentityDbContext
 
     public DbSet<Message> Messages { get; set; }
 
+    public DbSet<Manager> Managers { get; set; }
+
+    public DbSet<City> Cities { get; set; }
+
 
     public FlyDbContext(DbContextOptions<FlyDbContext> options) : base(options)
     {

@@ -15,12 +15,14 @@ public class FlightListSpec : Specification<Flight>
         Query.Where(x => parameter.DepartureCity == null ||
             x.DepartureAirport == null ||
             x.DepartureAirport.City == null ||
-            x.DepartureAirport.City.Contains(parameter.DepartureCity));
+            x.DepartureAirport.City.Name == null ||
+            x.DepartureAirport.City.Name.Contains(parameter.DepartureCity));
 
         Query.Where(x => parameter.ArrivalCity == null ||
             x.ArrivalAirport == null ||
             x.ArrivalAirport.City == null ||
-            x.ArrivalAirport.City.Contains(parameter.ArrivalCity));
+            x.ArrivalAirport.City.Name == null ||
+            x.ArrivalAirport.City.Name.Contains(parameter.ArrivalCity));
 
         Query.Skip((page.PageNumber - 1) * page.PageSize)
             .Take(page.PageSize);

@@ -8,8 +8,7 @@ public class Airline : BaseEntity
 
     public string? RegistrationAddress { get; set; }
 
-    public string? UserId { get; set; }
-    public User? User { get; set; }
+    public ICollection<Manager>? Managers { get; set; }
 
     public ICollection<Aircraft>? Aircrafts { get; set; }
 }

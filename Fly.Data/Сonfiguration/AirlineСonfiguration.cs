@@ -10,5 +10,6 @@ public class AirlineConfiguration : IEntityTypeConfiguration<Airline>
     {
         builder.HasKey(x => x.Id);
         builder.HasMany(x => x.Aircrafts).WithOne(x => x.Airline);
+        builder.HasMany(x => x.Managers).WithOne(x => x.Airline);
     }
 }
