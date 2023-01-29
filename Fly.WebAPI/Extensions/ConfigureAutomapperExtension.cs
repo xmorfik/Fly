@@ -7,6 +7,7 @@ public static class ConfigureAutomapperExtension
     public static IServiceCollection AddMapper(this IServiceCollection services)
     {
         services.AddAutoMapper(Assembly.Load("Fly.Core"));
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
         return services;
     }

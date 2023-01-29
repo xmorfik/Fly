@@ -2,6 +2,7 @@
 using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.Services;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Fly.WebAPI.Extensions;
 
@@ -16,6 +17,7 @@ public static class ConfigureServicesExtension
         services.AddScoped<IService<Seat, SeatParameter>, SeatService>();
         services.AddScoped<IService<City, CityParameter>, CityService>();
         services.AddScoped<IService<Ticket, TicketParameter>, TicketService>();
+        services.AddScoped<IAuthService, AuthService>();
 
         return services;
     }
