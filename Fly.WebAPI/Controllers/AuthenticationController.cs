@@ -1,5 +1,5 @@
-﻿using Fly.Core.Services;
-using Fly.Shared.DataTransferObjects;
+﻿using Fly.Core.DataTransferObjects;
+using Fly.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fly.WebAPI.Controllers;
@@ -8,7 +8,7 @@ namespace Fly.WebAPI.Controllers;
 [ApiController]
 public class AuthenticationController : ControllerBase
 {
-    private readonly IAuthService _authenticationService; 
+    private readonly IAuthService _authenticationService;
     public AuthenticationController(IAuthService authenticationService)
     {
         _authenticationService = authenticationService;
@@ -28,5 +28,18 @@ public class AuthenticationController : ControllerBase
             return BadRequest(ModelState);
         }
         return StatusCode(201);
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDto user)
+    {
+        if (!await _authenticationService.ValidateUser(user))
+        {
+            return Unauthorized();
+        }
+        return Ok(new
+        {
+            Token = await _authenticationService.CreateToken()
+        });
     }
 }

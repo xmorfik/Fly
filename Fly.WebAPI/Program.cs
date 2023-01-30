@@ -3,6 +3,7 @@ using Fly.WebAPI.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddPostgres(builder.Configuration);
 builder.Services.AddRepositories();
 builder.Services.AddServices();
@@ -10,6 +11,7 @@ builder.Services.AddMapper();
 builder.Services.ConfigureCors();
 builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
+builder.Services.ConfigureJwtBearer(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

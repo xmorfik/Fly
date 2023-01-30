@@ -2,7 +2,6 @@
 using Fly.Core.Entities;
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
-using System.Linq;
 
 namespace Fly.Core.Specifications;
 
@@ -17,6 +16,6 @@ public class AircraftListSpec : Specification<Aircraft>
         Query.Where(x => parameter.ModelType == null || x.ModelType.Contains(parameter.ModelType));
 
         Query.Skip((page.PageNumber - 1) * page.PageSize)
-            .Take(page.PageSize).OrderBy(x=>x.Id);
+            .Take(page.PageSize).OrderBy(x => x.Id);
     }
 }

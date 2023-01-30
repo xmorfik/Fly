@@ -2,7 +2,6 @@
 using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.Services;
-using Microsoft.AspNetCore.Authentication;
 
 namespace Fly.WebAPI.Extensions;
 

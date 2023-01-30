@@ -3,7 +3,7 @@ using Fly.Core.Pagination;
 
 namespace Fly.Core.Services;
 
-public interface IService <T, TParameter> where T : class, IAggregateEntities
+public interface IService<T, TParameter> where T : class, IAggregateEntities
 {
     public Task CreateAsync(T item);
     public Task UpdateAsync(T item);

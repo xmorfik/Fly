@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Fly.Shared.DataTransferObjects;
+namespace Fly.Core.DataTransferObjects;
 
 public record UserForRegistrationDto
 {

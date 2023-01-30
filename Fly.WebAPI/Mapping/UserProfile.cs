@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Fly.Core.DataTransferObjects;
 using Fly.Core.Entities;
-using Fly.Shared.DataTransferObjects;
 
 namespace Fly.WebAPI.Mapping;
 
