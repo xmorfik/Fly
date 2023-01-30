@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Fly.WebAPI.Extensions;
 
-public static class ConfigureJwt
+public static class ConfigureJwtExtension
 {
     public static void ConfigureJwtBearer(this IServiceCollection services, IConfiguration configuration)
     {

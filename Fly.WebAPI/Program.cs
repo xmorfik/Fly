@@ -7,7 +7,7 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddPostgres(builder.Configuration);
 builder.Services.AddRepositories();
 builder.Services.AddServices();
-builder.Services.AddMapper();
+builder.Services.AddAutoMapper();
 builder.Services.ConfigureCors();
 builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
