@@ -10,8 +10,8 @@ builder.Services.AddPostgres(builder.Configuration);
 builder.Services.AddRepositories();
 builder.Services.AddServices();
 builder.Services.AddAutoMapper();
-builder.Services.ConfigureCors();
 builder.Services.AddAuthentication();
+builder.Services.ConfigureCors();
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJwtBearer(builder.Configuration);
 
@@ -41,6 +41,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
