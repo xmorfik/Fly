@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  fly.webapi:
+    image: flywebapi
+    build:
+      context: .
+      dockerfile: Fly.WebAPI/Dockerfile
+
+  fly.webui:
+    image: flywebui
+    build:
+      context: .
+      dockerfile: Fly.WebUI/Dockerfile
+
+  postgresdb:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: Qwerty123456
+    ports:
+      - "5432:5432"

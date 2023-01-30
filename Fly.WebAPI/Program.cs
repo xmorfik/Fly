@@ -1,3 +1,4 @@
+using Fly.Data;
 using Fly.WebAPI.Extensions;
 using Fly.WebAPI.Middlewares;
 
@@ -25,6 +26,12 @@ var logger = LoggerFactory.Create(config =>
     config.AddConsole();
 }).CreateLogger("ExceptionHandler");
 app.ConfigureExceptionHandler(logger);
+
+//using (var scope = app.Services.CreateScope())
+//{
+//    var context = scope.ServiceProvider.GetRequiredService<FlyDbContext>();
+//    context.Database.EnsureCreated();
+//}
 
 if (app.Environment.IsDevelopment())
 {
