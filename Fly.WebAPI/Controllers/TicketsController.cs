@@ -2,7 +2,9 @@
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace Fly.WebAPI.Controllers;
 
@@ -30,18 +32,21 @@ public class TicketsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Manager")]
     public async Task Post([FromBody] Ticket value)
     {
         await _service.CreateAsync(value);
     }
 
     [HttpPut]
+    [Authorize(Roles = "Manager")]
     public async Task Put([FromBody] Ticket value)
     {
         await _service.UpdateAsync(value);
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Manager")]
     public async Task Delete(int id)
     {
         await _service.DeleteAsync(id);
