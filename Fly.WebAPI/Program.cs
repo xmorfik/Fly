@@ -1,4 +1,5 @@
 using Fly.WebAPI.Extensions;
+using Fly.WebAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+var logger = LoggerFactory.Create(config =>
+{
+    config.AddConsole();
+}).CreateLogger("ExceptionHandler");
+app.ConfigureExceptionHandler(logger);
 
 if (app.Environment.IsDevelopment())
 {
