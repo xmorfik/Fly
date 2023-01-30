@@ -7,7 +7,7 @@ using Fly.Core.Specifications;
 
 namespace Fly.Services;
 
-public class FlightService  : IService<Flight, FlightParameter>
+public class FlightService : IService<Flight, FlightParameter>
 {
     private readonly IRepository<Flight> _repository;
 
@@ -39,13 +39,13 @@ public class FlightService  : IService<Flight, FlightParameter>
 
     public async Task<PagedResponse<ICollection<Flight>>> GetListAsync(FlightParameter parameter, Page page)
     {
-        var items = await _repository.ListAsync(new FlightListSpec( parameter, page));
+        var items = await _repository.ListAsync(new FlightListSpec(parameter, page));
 
         return new PagedResponse<ICollection<Flight>>(items, page);
     }
 
     public async Task UpdateAsync(Flight item)
     {
-        await _repository.UpdateAsync(item);  
+        await _repository.UpdateAsync(item);
     }
 }

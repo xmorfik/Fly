@@ -9,7 +9,7 @@ public class FlightListSpec : Specification<Flight>
 {
     public FlightListSpec(FlightParameter parameter, Page page)
     {
-        Query.Where(x => parameter.DepartureDateTime == null ||x.DepartureDateTime >= parameter.DepartureDateTime);
+        Query.Where(x => parameter.DepartureDateTime == null || x.DepartureDateTime >= parameter.DepartureDateTime);
 
         Query.Where(x => parameter.DepartureCity == null || x.DepartureAirport.City.Name.Contains(parameter.DepartureCity));
 
