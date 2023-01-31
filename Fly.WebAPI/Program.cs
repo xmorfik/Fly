@@ -1,4 +1,3 @@
-using Fly.Data;
 using Fly.WebAPI.Extensions;
 using Fly.WebAPI.Middlewares;
 
@@ -17,7 +16,7 @@ builder.Services.ConfigureJwtBearer(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.ConfigureSwagger();
 
 var app = builder.Build();
 
@@ -45,6 +44,12 @@ app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSwagger();
+app.UseSwaggerUI(s =>
+{
+    s.SwaggerEndpoint("/swagger/v1/swagger.json", "Fly API v1");
+});
 
 app.MapControllers();
 
