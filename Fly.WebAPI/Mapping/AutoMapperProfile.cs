@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
 using Fly.Core.DataTransferObjects;
 using Fly.Core.Entities;
+using Fly.Shared.DataTransferObjects;
 
 namespace Fly.WebAPI.Mapping;
 
-public class UserProfile : Profile
+public class AutoMapperProfile : Profile
 {
-    public UserProfile()
+    public AutoMapperProfile()
     {
         CreateMap<User, UserForRegistrationDto>().ReverseMap();
+        CreateMap<AircraftLocation, LocationDto>().ReverseMap();
     }
 }

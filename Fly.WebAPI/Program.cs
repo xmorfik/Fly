@@ -1,4 +1,5 @@
 using Fly.WebAPI.Extensions;
+using Fly.WebAPI.Hubs;
 using Fly.WebAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,8 @@ builder.Services.AddAuthentication();
 builder.Services.ConfigureCors();
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJwtBearer(builder.Configuration);
+builder.Services.ConfigureRedis(builder.Configuration);
+builder.Services.AddSignalR();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -52,5 +55,6 @@ app.UseSwaggerUI(s =>
 });
 
 app.MapControllers();
+app.MapHub<LocationHub>("/locations");
 
 app.Run();

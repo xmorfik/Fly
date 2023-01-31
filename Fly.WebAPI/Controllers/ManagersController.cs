@@ -3,9 +3,7 @@ using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 
 namespace Fly.WebAPI.Controllers
 {
