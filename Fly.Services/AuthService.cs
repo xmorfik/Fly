@@ -21,7 +21,11 @@ public sealed class AuthService : IAuthService
 
     private User? _user;
 
-    public AuthService(IMapper mapper, UserManager<User> userManager, IConfiguration configuration, ILogger<AuthService> logger)
+    public AuthService(
+        IMapper mapper,
+        UserManager<User> userManager,
+        IConfiguration configuration,
+        ILogger<AuthService> logger)
     {
         _mapper = mapper;
         _userManager = userManager;
@@ -32,7 +36,9 @@ public sealed class AuthService : IAuthService
     public async Task<IdentityResult> RegisterUser(UserForRegistrationDto userForRegistration)
     {
         var user = _mapper.Map<User>(userForRegistration);
+
         var result = await _userManager.CreateAsync(user, userForRegistration.Password);
+
         if (result.Succeeded)
         {
             await _userManager.AddToRolesAsync(user, userForRegistration.Roles);
@@ -44,7 +50,9 @@ public sealed class AuthService : IAuthService
     public async Task<bool> ValidateUser(UserForAuthenticationDto userForAuth)
     {
         _user = await _userManager.FindByNameAsync(userForAuth.UserName);
+
         var result = (_user != null && await _userManager.CheckPasswordAsync(_user, userForAuth.Password));
+
         if (!result)
         {
             _logger.LogError($"{nameof(ValidateUser)}: Authentication failed. Wrong username or password.");
@@ -56,7 +64,9 @@ public sealed class AuthService : IAuthService
     public async Task<string> CreateToken()
     {
         var signingCredentials = GetSigningCredentials();
+
         var claims = await GetClaims();
+
         var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
 
         return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
@@ -65,6 +75,7 @@ public sealed class AuthService : IAuthService
     private SigningCredentials GetSigningCredentials()
     {
         var key = Encoding.UTF8.GetBytes(_configuration.GetSection("Secret:Key").Value);
+
         var secret = new SymmetricSecurityKey(key);
 
         return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
@@ -90,6 +101,7 @@ public sealed class AuthService : IAuthService
     private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
     {
         var jwtSettings = _configuration.GetSection("JwtSettings");
+
         var tokenOptions = new JwtSecurityToken
         (
             issuer: jwtSettings["ValidIssuer"],
@@ -98,6 +110,7 @@ public sealed class AuthService : IAuthService
             expires: DateTime.Now.AddMinutes(Convert.ToDouble(jwtSettings["Expires"])),
             signingCredentials: signingCredentials
         );
+
         return tokenOptions;
     }
 }

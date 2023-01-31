@@ -4,48 +4,90 @@ using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.Core.Specifications;
+using Microsoft.Extensions.Logging;
 
 namespace Fly.Services;
 
 public class AirportService : IService<Airport, AirportParameter>
 {
     private readonly IRepository<Airport> _repository;
+    private readonly ILogger<AirportService> _logger;
 
-    public AirportService(IRepository<Airport> repository)
+    public AirportService(IRepository<Airport> repository, ILogger<AirportService> logger)
     {
         _repository = repository;
+        _logger = logger;
     }
 
     public async Task CreateAsync(Airport item)
     {
-        await _repository.AddAsync(item);
+        try
+        {
+            await _repository.AddAsync(item);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            throw;
+        }
     }
 
     public async Task DeleteAsync(int id)
     {
-        await _repository.DeleteAsync(new Airport() { Id = id });
+        try
+        {
+            await _repository.DeleteAsync(new Airport() { Id = id });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            throw;
+        }
     }
 
     public async Task<Response<Airport>> GetAsync(int id)
     {
-        var result = await _repository.FirstOrDefaultAsync(new AirportSpec(id));
-        if (result == null)
+        try
         {
-            return new Response<Airport>(new Airport()) { Succeeded = false };
+            var result = await _repository.FirstOrDefaultAsync(new AirportSpec(id));
+            if (result == null)
+            {
+                return new Response<Airport>(new Airport()) { Succeeded = false };
+            }
+            return new Response<Airport>(result);
         }
-
-        return new Response<Airport>(result);
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            throw;
+        }
     }
 
     public async Task<PagedResponse<ICollection<Airport>>> GetListAsync(AirportParameter parameter, Page page)
     {
-        var items = await _repository.ListAsync(new AirportListSpec(parameter, page));
+        try
+        {
+            var items = await _repository.ListAsync(new AirportListSpec(parameter, page));
 
-        return new PagedResponse<ICollection<Airport>>(items, page);
+            return new PagedResponse<ICollection<Airport>>(items, page);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            throw;
+        }
     }
 
     public async Task UpdateAsync(Airport item)
     {
-        await _repository.UpdateAsync(item);
+        try
+        {
+            await _repository.UpdateAsync(item);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            throw;
+        }
     }
 }

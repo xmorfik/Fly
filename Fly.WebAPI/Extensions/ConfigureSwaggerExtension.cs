@@ -2,7 +2,7 @@
 
 namespace Fly.WebAPI.Extensions;
 
-public static  class ConfigureSwaggerExtension
+public static class ConfigureSwaggerExtension
 {
     public static void ConfigureSwagger(this IServiceCollection services)
     {

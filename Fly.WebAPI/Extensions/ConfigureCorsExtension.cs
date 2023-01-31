@@ -11,5 +11,5 @@ public static class ConfigureCorsExtension
             .AllowAnyMethod()
             .AllowAnyHeader());
         });
-    } 
+    }
 }

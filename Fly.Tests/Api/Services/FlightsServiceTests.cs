@@ -12,7 +12,7 @@ namespace Fly.Tests.Api.Controllers;
 
 public class FlightsServiceTests
 {
-    public readonly Mock<IRepository<Flight>> _repository = new ();
+    public readonly Mock<IRepository<Flight>> _repository = new();
     public readonly List<Flight> _flights;
 
     public FlightsServiceTests()
@@ -25,7 +25,7 @@ public class FlightsServiceTests
     public async Task GetListAsync_NoParameters_ReturnsAll()
     {
         var service = new FlightService(_repository.Object);
-        var result = await service.GetListAsync(new FlightParameter(),new Page());
+        var result = await service.GetListAsync(new FlightParameter(), new Page());
         var data = result.Data;
         data.Count().Should().Be(_flights.Count);
     }

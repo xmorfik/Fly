@@ -4,48 +4,90 @@ using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.Core.Specifications;
+using Microsoft.Extensions.Logging;
 
 namespace Fly.Services;
 
 public class ManagerService : IService<Manager, ManagerParameter>
 {
     private readonly IRepository<Manager> _repository;
+    private readonly ILogger<ManagerService> _logger;
 
-    public ManagerService(IRepository<Manager> repository)
+    public ManagerService(IRepository<Manager> repository, ILogger<ManagerService> logger)
     {
         _repository = repository;
+        _logger = logger;
     }
 
     public async Task CreateAsync(Manager item)
     {
-        await _repository.AddAsync(item);
+        try
+        {
+            await _repository.AddAsync(item);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            throw;
+        }
     }
 
     public async Task DeleteAsync(int id)
     {
-        await _repository.DeleteAsync(new Manager() { Id = id });
+        try
+        {
+            await _repository.DeleteAsync(new Manager() { Id = id });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            throw;
+        }
     }
 
     public async Task<Response<Manager>> GetAsync(int id)
     {
-        var result = await _repository.FirstOrDefaultAsync(new ManagerSpec(id));
-        if (result == null)
+        try
         {
-            return new Response<Manager>(new Manager()) { Succeeded = false };
+            var result = await _repository.FirstOrDefaultAsync(new ManagerSpec(id));
+            if (result == null)
+            {
+                return new Response<Manager>(new Manager()) { Succeeded = false };
+            }
+            return new Response<Manager>(result);
         }
-
-        return new Response<Manager>(result);
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            throw;
+        }
     }
 
     public async Task<PagedResponse<ICollection<Manager>>> GetListAsync(ManagerParameter parameter, Page page)
     {
-        var items = await _repository.ListAsync(new ManagerListSpec(parameter, page));
+        try
+        {
+            var items = await _repository.ListAsync(new ManagerListSpec(parameter, page));
 
-        return new PagedResponse<ICollection<Manager>>(items, page);
+            return new PagedResponse<ICollection<Manager>>(items, page);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            throw;
+        }
     }
 
     public async Task UpdateAsync(Manager item)
     {
-        await _repository.UpdateAsync(item);
+        try
+        {
+            await _repository.UpdateAsync(item);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            throw;
+        }
     }
 }

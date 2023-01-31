@@ -4,48 +4,90 @@ using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.Core.Specifications;
+using Microsoft.Extensions.Logging;
 
 namespace Fly.Services;
 
 public class AircraftService : IService<Aircraft, AircraftParameter>
 {
     private readonly IRepository<Aircraft> _repository;
+    private readonly ILogger<AircraftService> _logger;
 
-    public AircraftService(IRepository<Aircraft> repository)
+    public AircraftService(IRepository<Aircraft> repository, ILogger<AircraftService> logger)
     {
         _repository = repository;
+        _logger = logger;
     }
 
     public async Task CreateAsync(Aircraft item)
     {
-        await _repository.AddAsync(item);
+        try
+        {
+            await _repository.AddAsync(item);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            throw;
+        }
     }
 
     public async Task DeleteAsync(int id)
     {
-        await _repository.DeleteAsync(new Aircraft() { Id = id });
+        try
+        {
+            await _repository.DeleteAsync(new Aircraft() { Id = id });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            throw;
+        }
     }
 
     public async Task<Response<Aircraft>> GetAsync(int id)
     {
-        var result = await _repository.FirstOrDefaultAsync(new AircraftSpec(id));
-        if (result == null)
+        try
         {
-            return new Response<Aircraft>(new Aircraft()) { Succeeded = false };
+            var result = await _repository.FirstOrDefaultAsync(new AircraftSpec(id));
+            if (result == null)
+            {
+                return new Response<Aircraft>(new Aircraft()) { Succeeded = false };
+            }
+            return new Response<Aircraft>(result);
         }
-
-        return new Response<Aircraft>(result);
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            throw;
+        }
     }
 
     public async Task<PagedResponse<ICollection<Aircraft>>> GetListAsync(AircraftParameter parameter, Page page)
     {
-        var items = await _repository.ListAsync(new AircraftListSpec(parameter, page));
+        try
+        {
+            var items = await _repository.ListAsync(new AircraftListSpec(parameter, page));
 
-        return new PagedResponse<ICollection<Aircraft>>(items, page);
+            return new PagedResponse<ICollection<Aircraft>>(items, page);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            throw;
+        }
     }
 
     public async Task UpdateAsync(Aircraft item)
     {
-        await _repository.UpdateAsync(item);
+        try
+        {
+            await _repository.UpdateAsync(item);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            throw;
+        }
     }
 }
