@@ -2,12 +2,12 @@
 
 namespace Fly.Shared.DataTransferObjects;
 
-[Document(StorageType = StorageType.Json)]
+[Document(StorageType = StorageType.Json, Prefixes = new[] { "Location" })]
 public class LocationDto
 {
     [RedisIdField]
     [Indexed]
-    public int? Id { get; set; }
+    public int? AircraftId { get; set; }
     [Indexed]
     public double? Longitude { get; set; }
     [Indexed]
@@ -20,6 +20,4 @@ public class LocationDto
     public int? Speed { get; set; }
     [Indexed]
     public DateTime? DateTime { get; set; }
-    [Indexed]
-    public int? AircraftId { get; set; }
 }
