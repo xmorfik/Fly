@@ -5,12 +5,19 @@
     {
       "library": "bootstrap-icons@1.10.3",
       "destination": "wwwroot/lib/bootstrap-icons/"
+    },
+    {
+      "library": "leaflet@1.9.3",
+      "destination": "wwwroot/lib/leaflet/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "@microsoft/signalr@7.0.2",
+      "destination": "wwwroot/js/signalr/",
+      "files": [
+        "dist/browser/signalr.js",
+        "dist/browser/signalr.min.js"
+      ]
     }
-  ,
-{
-  "provider": "cdnjs",
-  "library": "leaflet@1.9.3",
-  "destination": "wwwroot/lib/leaflet/"
-}
-]
+  ]
 }

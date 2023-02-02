@@ -5,40 +5,34 @@
 
 @inject IViewLocalizer Localizer
 
-<h4>@Localizer["Header"]</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="card">
+    <img class="card-img-top" src="~/pexels-francesco-ungaro-281260.jpg" style="max-height:240px" >
+    <div class="card-body">
         <form asp-action="Search">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <br />
-            <div class="form-group">
-                <label class="control-label">@Localizer["Time"]</label>
-                <input asp-for="DepartureDateTime" class="form-control" />
-                <span asp-validation-for="DepartureDateTime" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <label class="control-label">@Localizer["DepartureCity"]</label>
-                <input asp-for="DepartureCity" class="form-control" />
-                <span asp-validation-for="DepartureCity" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <label class="control-label">@Localizer["ArrivalCity"]</label>
-                <input asp-for="ArrivalCity" class="form-control" />
-                <span asp-validation-for="ArrivalCity" class="text-danger"></span>
-            </div>
-            <br/>
-            <div class="form-group">
-                <input type="submit" value=@Localizer["Search"] class="btn btn-primary" />
+            <div class="row">
+                <div class="col">
+                    <label class="control-label">@Localizer["Time"]</label>
+                    <input asp-for="DepartureDateTime" class="form-control" />
+                    <span asp-validation-for="DepartureDateTime" class="text-danger"></span>
+                </div class="row">
+                <div class="col">
+                    <label class="control-label">@Localizer["DepartureCity"]</label>
+                    <input asp-for="DepartureCity" class="form-control" />
+                    <span asp-validation-for="DepartureCity" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label class="control-label">@Localizer["ArrivalCity"]</label>
+                    <input asp-for="ArrivalCity" class="form-control" />
+                    <span asp-validation-for="ArrivalCity" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <br/>
+                    <input type="submit" value=@Localizer["Search"] class="btn btn-primary" />
+                </div>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">@Localizer["Back"]</a>
 </div>
 
 @section Scripts {
