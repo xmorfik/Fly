@@ -1,10 +1,18 @@
+using Fly.WebUI;
 using Fly.WebUI.Extensions;
+using Fly.WebUI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.Configure<ApiConfiguration>(
+    builder.Configuration.GetSection(ApiConfiguration.Configuration));
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddCustomLocalization();
+builder.Services.AddServices();
+
+builder.Services.AddHttpClient<ApiUriService>();
 
 var app = builder.Build();
 

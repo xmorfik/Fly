@@ -34,7 +34,7 @@ public class AircraftLocationService : IAircraftLocationService<LocationDto>
                 }
             });
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError(ex.Message);
             throw;
@@ -52,7 +52,7 @@ public class AircraftLocationService : IAircraftLocationService<LocationDto>
                 AircraftId = item.AircraftId,
             });
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError(ex.Message);
             throw;
@@ -80,7 +80,7 @@ public class AircraftLocationService : IAircraftLocationService<LocationDto>
     {
         try
         {
-            var result = await _aircraftLocationsHistory.FirstOrDefaultAsync(x=>x.AircraftId == id);
+            var result = await _aircraftLocationsHistory.FirstOrDefaultAsync(x => x.AircraftId == id);
             return result.LocationDtos;
         }
         catch (Exception ex)
