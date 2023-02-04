@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fly.WebUI", "Fly.WebUI\Fly.
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{FB4B0D9A-00BA-4030-940B-1A2161AF79E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fly.IdentityServer", "..\Fly.IdentityServer\Fly.IdentityServer.csproj", "{4ACC6F85-D942-4D33-9B4A-D5BFD9FAEA94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{FB4B0D9A-00BA-4030-940B-1A2161AF79E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB4B0D9A-00BA-4030-940B-1A2161AF79E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB4B0D9A-00BA-4030-940B-1A2161AF79E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4ACC6F85-D942-4D33-9B4A-D5BFD9FAEA94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ACC6F85-D942-4D33-9B4A-D5BFD9FAEA94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ACC6F85-D942-4D33-9B4A-D5BFD9FAEA94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ACC6F85-D942-4D33-9B4A-D5BFD9FAEA94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +86,7 @@ Global
 		{A704F7D1-EA5F-479B-84DD-AD56E1896372} = {CFAC16DF-4217-48FE-AA7E-DA813E973EC0}
 		{302E8194-A1C3-4F9A-8A6D-592ECB2E9E08} = {6EB5C5AD-58D1-4B43-8AD4-18AA4F8E6052}
 		{3962C283-5F7A-44D8-9094-8B0D0D776A5F} = {6EB5C5AD-58D1-4B43-8AD4-18AA4F8E6052}
+		{4ACC6F85-D942-4D33-9B4A-D5BFD9FAEA94} = {6EB5C5AD-58D1-4B43-8AD4-18AA4F8E6052}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0889EDE5-496D-458A-B4BD-E4D8F70B9226}
