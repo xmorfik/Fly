@@ -1,3 +1,6 @@
+using Fly.Core.Entities;
+using Fly.Data;
+using Microsoft.AspNetCore.Identity;
 using Serilog;
 
 namespace Fly.IdentityServer
@@ -6,17 +9,26 @@ namespace Fly.IdentityServer
     {
         public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
         {
-            // uncomment if you want to add a UI
-            //builder.Services.AddRazorPages();
+            builder.Services.AddRazorPages(); 
+
+            builder.Services.AddPostgres(builder.Configuration);
+
+            builder.Services.AddIdentity<User, IdentityRole>()
+            .AddEntityFrameworkStores<FlyDbContext>()
+            .AddDefaultTokenProviders();
 
             builder.Services.AddIdentityServer(options =>
                 {
-                    // https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/api_scopes#authorization-based-on-scopes
-                    options.EmitStaticAudienceClaim = true;
+                    options.Events.RaiseErrorEvents = true;
+                    options.Events.RaiseInformationEvents = true;
+                    options.Events.RaiseFailureEvents = true;
+                    options.Events.RaiseSuccessEvents = true;
                 })
+                .AddAspNetIdentity<User>()
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddInMemoryClients(Config.Clients);
+                .AddInMemoryClients(Config.Clients)
+                .AddDeveloperSigningCredential();
 
             return builder.Build();
         }
@@ -30,15 +42,13 @@ namespace Fly.IdentityServer
                 app.UseDeveloperExceptionPage();
             }
 
-            // uncomment if you want to add a UI
-            //app.UseStaticFiles();
-            //app.UseRouting();
+            app.UseStaticFiles();
+            app.UseRouting();
 
             app.UseIdentityServer();
 
-            // uncomment if you want to add a UI
-            //app.UseAuthorization();
-            //app.MapRazorPages().RequireAuthorization();
+            app.UseAuthorization();
+            app.MapRazorPages().RequireAuthorization();
 
             return app;
         }

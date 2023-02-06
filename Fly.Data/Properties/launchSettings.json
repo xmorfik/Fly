@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Fly.Data": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:53897;http://localhost:53898"
+    }
+  }
+}
