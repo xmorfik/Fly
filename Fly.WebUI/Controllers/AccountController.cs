@@ -19,9 +19,9 @@ public class AccountController : Controller
         return View();
     }
 
-    public IActionResult Login()
+    public async Task<IActionResult> Login()
     {
-        _service.GetListAsync(new AircraftParameter(), new Page());
+        var result = await _service.GetListAsync(new AircraftParameter(), new Page());
         return View();
     }
 

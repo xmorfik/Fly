@@ -1,3 +1,4 @@
+using Duende.IdentityServer;
 using Fly.Core.Entities;
 using Fly.Data;
 using Fly.WebAPI.Extensions;
@@ -30,6 +31,14 @@ namespace Fly.IdentityServer
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.Clients)
                 .AddDeveloperSigningCredential();
+
+            var configuration = builder.Configuration;
+            builder.Services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
+            {
+                microsoftOptions.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                microsoftOptions.ClientId = configuration["Authentication:Microsoft:ClientId"];
+                microsoftOptions.ClientSecret = configuration["Authentication:Microsoft:ClientSecret"];
+            });
 
             return builder.Build();
         }

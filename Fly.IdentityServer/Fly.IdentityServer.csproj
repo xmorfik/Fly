@@ -3,12 +3,17 @@
   <PropertyGroup>
 	  <TargetFramework>net7.0</TargetFramework>
 	  <ImplicitUsings>enable</ImplicitUsings>
+	  <UserSecretsId>6fc3749a-d419-4c0c-83b9-9f90725ac733</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.2.3" />
 
 	<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.2" />
+
+	<PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="7.0.2" />
+
+	<PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="7.0.2" />
 	<PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
 
 	<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.2" />

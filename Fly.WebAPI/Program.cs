@@ -51,7 +51,7 @@ app.UseSwaggerUI(s =>
     s.SwaggerEndpoint("/swagger/v1/swagger.json", "Fly API v1");
 });
 
-app.MapControllers().RequireAuthorization();
+app.MapControllers();
 app.MapHub<LocationHub>("/locations");
 
 app.Run();
