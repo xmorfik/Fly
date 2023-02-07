@@ -7,10 +7,11 @@ public class PagedResponse<T> : Response<T>
 
     public PagedResponse(T data, Page page) : base(data)
     {
-        if (page != null)
+        if (page == null)
         {
-            PageNumber = page.PageNumber;
-            PageSize = page.PageSize;
+            page = new Page();
         }
+        PageNumber = page.PageNumber;
+        PageSize = page.PageSize;
     }
 }
