@@ -1,5 +1,6 @@
 using Fly.Core.Entities;
 using Fly.Data;
+using Fly.WebAPI.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Serilog;
 
@@ -9,7 +10,7 @@ namespace Fly.IdentityServer
     {
         public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
         {
-            builder.Services.AddRazorPages(); 
+            builder.Services.AddRazorPages();
 
             builder.Services.AddPostgres(builder.Configuration);
 

@@ -8,13 +8,13 @@ namespace Fly.IdentityServer
         public static IEnumerable<IdentityResource> IdentityResources =>
             new IdentityResource[]
             {
-                new IdentityResources.OpenId()
+                new IdentityResources.OpenId(),
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
                 {
-                    new ApiScope("api1")
+                    new ApiScope("api1", "Web Api ")
                 };
 
         public static IEnumerable<Client> Clients =>
@@ -34,7 +34,6 @@ namespace Fly.IdentityServer
                         PostLogoutRedirectUris = { "https://localhost:5002/home/index" },
 
                         AllowOfflineAccess = true,
-                        RequireConsent = false,
 
                         AllowedScopes = new List<string>
                         {

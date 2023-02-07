@@ -19,5 +19,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Fly.Core\Fly.Core.csproj" />
     <ProjectReference Include="..\Fly.Data\Fly.Data.csproj" />
+    <ProjectReference Include="..\Fly.WebAPI\Fly.WebAPI.csproj" />
   </ItemGroup>
 </Project>

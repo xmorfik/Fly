@@ -3,7 +3,9 @@ using Fly.Core.Entities;
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
-using Fly.WebUI.Services;
+using IdentityModel.Client;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -11,13 +13,21 @@ namespace Fly.WebUI.RequestServices
 {
     public class AircraftRequestService : IService<Aircraft, AircraftParameter>
     {
-        private readonly ApiUriService _apiUriService;
         private readonly ILogger<AircraftRequestService> _logger;
+        private readonly IHttpClientFactory _factory;
+        private readonly ApiConfiguration _apiConfiguration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AircraftRequestService(ApiUriService apiUri, ILogger<AircraftRequestService> logger)
+        public AircraftRequestService(
+            ILogger<AircraftRequestService> logger,
+            IHttpClientFactory factory,
+            IOptions<ApiConfiguration> apiConfiguration,
+            IHttpContextAccessor httpContextAccessor)
         {
-            _apiUriService = apiUri;
             _logger = logger;
+            _apiConfiguration = apiConfiguration.Value;
+            _factory = factory;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task CreateAsync(Aircraft item)
@@ -26,7 +36,11 @@ namespace Fly.WebUI.RequestServices
             {
                 var itemJson = JsonConvert.SerializeObject(item);
                 var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
-                await _apiUriService.HttpClient.PostAsync("aircrafts", content);
+                var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
+                var client = _factory.CreateClient();
+                client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
+                client.SetBearerToken(accessToken);
+                await client.PostAsync("aircrafts", content);
             }
             catch (Exception ex)
             {
@@ -39,7 +53,11 @@ namespace Fly.WebUI.RequestServices
         {
             try
             {
-                await _apiUriService.HttpClient.DeleteAsync($"aircrafts/{id}");
+                var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
+                var client = _factory.CreateClient();
+                client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
+                client.SetBearerToken(accessToken);
+                await client.DeleteAsync($"aircrafts/{id}");
             }
             catch (Exception ex)
             {
@@ -52,7 +70,11 @@ namespace Fly.WebUI.RequestServices
         {
             try
             {
-                var response = await _apiUriService.HttpClient.GetAsync($"aircrafts/{id}");
+                var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
+                var client = _factory.CreateClient();
+                client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
+                client.SetBearerToken(accessToken);
+                var response = await client.GetAsync($"aircrafts/{id}");
                 var responseString = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<Response<Aircraft>>(responseString);
 
@@ -74,9 +96,13 @@ namespace Fly.WebUI.RequestServices
         {
             try
             {
+                var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
+                var client = _factory.CreateClient();
+                client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
+                client.SetBearerToken(accessToken);
                 var queryParameters = WebSerializer.ToQueryString(parameter);
                 var queryPage = WebSerializer.ToQueryString(page);
-                var response = await _apiUriService.HttpClient.GetAsync("aircrafts?" + queryParameters + queryPage);
+                var response = await client.GetAsync("aircrafts?" + queryParameters + queryPage);
                 var responseString = await response.Content.ReadAsStringAsync();
                 var items = JsonConvert.DeserializeObject<PagedResponse<ICollection<Aircraft>>>(responseString);
                 return items;
@@ -92,9 +118,13 @@ namespace Fly.WebUI.RequestServices
         {
             try
             {
+                var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
+                var client = _factory.CreateClient();
+                client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
+                client.SetBearerToken(accessToken);
                 var itemJson = JsonConvert.SerializeObject(item);
                 var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
-                await _apiUriService.HttpClient.PutAsync("aircrafts", content);
+                await client.PutAsync("aircrafts", content);
             }
             catch (Exception ex)
             {

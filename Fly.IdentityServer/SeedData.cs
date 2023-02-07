@@ -1,10 +1,10 @@
-﻿using System.Security.Claims;
-using Fly.Core.Entities;
+﻿using Fly.Core.Entities;
 using Fly.Data;
 using IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using System.Security.Claims;
 
 namespace Fly.IdentityServer;
 

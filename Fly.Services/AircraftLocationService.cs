@@ -94,7 +94,8 @@ public class AircraftLocationService : IAircraftLocationService<LocationDto>
     {
         try
         {
-            return await _aircraftLocations.ToListAsync();
+            var locationDtos = await _aircraftLocations.ToListAsync();
+            return locationDtos;
         }
         catch (Exception ex)
         {

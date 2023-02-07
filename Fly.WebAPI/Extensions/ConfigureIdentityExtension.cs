@@ -5,9 +5,10 @@
         public static void ConfigureIdentity(this IServiceCollection services)
         {
             services.AddAuthentication("Bearer")
-             .AddJwtBearer("Bearer", config => {
+             .AddJwtBearer("Bearer", config =>
+             {
                  config.Authority = "https://localhost:5004";
-                 config.Audience = "api1";
+                 config.TokenValidationParameters.ValidateAudience = false;
              });
         }
     }
