@@ -4,7 +4,6 @@ using Fly.WebAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddPostgres(builder.Configuration);
 builder.Services.AddRepositories();
@@ -13,10 +12,8 @@ builder.Services.AddAutoMapper();
 builder.Services.AddAuthentication();
 builder.Services.ConfigureCors();
 builder.Services.ConfigureIdentity();
-builder.Services.ConfigureJwtBearer(builder.Configuration);
 builder.Services.ConfigureRedis(builder.Configuration);
 builder.Services.AddSignalR();
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwagger();
@@ -54,7 +51,7 @@ app.UseSwaggerUI(s =>
     s.SwaggerEndpoint("/swagger/v1/swagger.json", "Fly API v1");
 });
 
-app.MapControllers();
+app.MapControllers().RequireAuthorization();
 app.MapHub<LocationHub>("/locations");
 
 app.Run();

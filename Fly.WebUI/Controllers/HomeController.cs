@@ -1,4 +1,6 @@
-﻿using Fly.Core.Parameters;
+﻿using Fly.Core.Entities;
+using Fly.Core.Parameters;
+using Fly.Core.Services;
 using Fly.WebUI.Models;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,14 +11,17 @@ namespace Fly.WebUI.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly IService<Aircraft, AircraftParameter> _service;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, IService<Aircraft, AircraftParameter> service)
     {
         _logger = logger;
+        _service = service;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
+        var result = await _service.GetListAsync(new AircraftParameter(), new Core.Pagination.Page());
         return View();
     }
 

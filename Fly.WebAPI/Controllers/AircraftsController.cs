@@ -19,6 +19,7 @@ public class AircraftsController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<PagedResponse<ICollection<Aircraft>>> Get([FromQuery] AircraftParameter parameter, [FromQuery] Page page)
     {
         return await _service.GetListAsync(parameter, page);
@@ -31,7 +32,7 @@ public class AircraftsController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "Manager")]
+    [Authorize]
     public async Task Post([FromBody] Aircraft value)
     {
         await _service.CreateAsync(value);
