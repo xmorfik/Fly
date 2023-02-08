@@ -19,13 +19,14 @@ public class AircraftsController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize]
+    [AllowAnonymous]
     public async Task<PagedResponse<ICollection<Aircraft>>> Get([FromQuery] AircraftParameter parameter, [FromQuery] Page page)
     {
         return await _service.GetListAsync(parameter, page);
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<Response<Aircraft>> Get(int id)
     {
         return await _service.GetAsync(id);

@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fly.WebUI", "Fly.WebUI\Fly.
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{FB4B0D9A-00BA-4030-940B-1A2161AF79E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fly.IdentityServer", "Fly.IdentityServer\Fly.IdentityServer.csproj", "{94109209-F814-42D6-BC18-512F738A674D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fly.IdentityServer", "Fly.IdentityServer\Fly.IdentityServer.csproj", "{94109209-F814-42D6-BC18-512F738A674D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

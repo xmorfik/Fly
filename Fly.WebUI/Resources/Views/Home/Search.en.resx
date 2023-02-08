@@ -129,6 +129,9 @@
   <data name="Header" xml:space="preserve">
     <value>Tikets search</value>
   </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>

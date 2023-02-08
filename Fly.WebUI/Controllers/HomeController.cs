@@ -21,7 +21,6 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var result = await _service.GetListAsync(new AircraftParameter(), new Core.Pagination.Page());
         return View();
     }
 

@@ -58,7 +58,7 @@ namespace Fly.IdentityServer
             app.UseIdentityServer();
 
             app.UseAuthorization();
-            app.MapRazorPages().RequireAuthorization();
+            app.MapRazorPages();
 
             return app;
         }

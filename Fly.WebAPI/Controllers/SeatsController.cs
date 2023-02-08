@@ -19,12 +19,14 @@ public class SeatsController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<PagedResponse<ICollection<Seat>>> Get([FromQuery] SeatParameter parameter, [FromQuery] Page page)
     {
         return await _service.GetListAsync(parameter, page);
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<Response<Seat>> Get(int id)
     {
         return await _service.GetAsync(id);

@@ -1,7 +1,8 @@
-﻿using Fly.Core.Entities;
-using Fly.Core.Pagination;
+﻿using Fly.Core.DataTransferObjects;
+using Fly.Core.Entities;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fly.WebUI.Controllers;
@@ -21,11 +22,18 @@ public class AccountController : Controller
 
     public async Task<IActionResult> Login()
     {
-        var result = await _service.GetListAsync(new AircraftParameter(), new Page());
-        return View();
+        return Challenge(new AuthenticationProperties
+        {
+            RedirectUri = "/"
+        });
     }
 
     public IActionResult Register()
+    {
+        return Redirect("");
+    }
+
+    public IActionResult Register(UserForRegistrationDto user)
     {
         return View();
     }

@@ -19,12 +19,14 @@ public class CitiesController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<PagedResponse<ICollection<City>>> Get([FromQuery] CityParameter parameter, [FromQuery] Page page)
     {
         return await _service.GetListAsync(parameter, page);
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public async Task<Response<City>> Get(int id)
     {
         return await _service.GetAsync(id);
