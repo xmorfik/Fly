@@ -19,7 +19,7 @@ namespace Fly.IdentityServer.Pages.Account.Register
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> OnPost(UserForRegistrationDto userForRegistrationDto)
+        public async Task<IActionResult> OnPost()
         {
             var user = new User();
             user.UserName = UserForRegistrationDto.UserName;
