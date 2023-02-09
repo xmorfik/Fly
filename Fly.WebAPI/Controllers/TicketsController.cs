@@ -4,6 +4,7 @@ using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Fly.WebAPI.Controllers;
 
@@ -20,9 +21,11 @@ public class TicketsController : ControllerBase
 
     [HttpGet]
     [AllowAnonymous]
-    public async Task<PagedResponse<ICollection<Ticket>>> Get([FromQuery] TicketParameter parameter, [FromQuery] Page page)
+    public async Task<ICollection<Ticket>> Get([FromQuery] TicketParameter parameter, [FromQuery] Page page)
     {
-        return await _service.GetListAsync(parameter, page);
+        var result = await _service.GetListAsync(parameter, page);
+        Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(result.MetaData));
+        return result.Data;
     }
 
     [HttpGet("{id}")]

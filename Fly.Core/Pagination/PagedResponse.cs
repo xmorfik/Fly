@@ -2,16 +2,20 @@
 
 public class PagedResponse<T> : Response<T>
 {
-    public int PageNumber { get; set; }
-    public int PageSize { get; set; }
-
-    public PagedResponse(T data, Page page) : base(data)
+    public MetaData MetaData { get; set; }
+    public PagedResponse(T items, int count, Page page) : base(items)
     {
-        if (page == null)
+        MetaData = new MetaData
         {
-            page = new Page();
-        }
-        PageNumber = page.PageNumber;
-        PageSize = page.PageSize;
+            TotalCount = count,
+            PageSize = page.PageSize,
+            CurrentPage = page.PageNumber,
+            TotalPages = (int)Math.Ceiling(count / (double)page.PageSize)
+        };
+    }
+
+    public PagedResponse(T items, MetaData metaData) : base(items)
+    {
+        MetaData = metaData;
     }
 }

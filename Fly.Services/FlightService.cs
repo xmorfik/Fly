@@ -68,8 +68,8 @@ public class FlightService : IService<Flight, FlightParameter>
         try
         {
             var items = await _repository.ListAsync(new FlightListSpec(parameter, page));
-
-            return new PagedResponse<ICollection<Flight>>(items, page);
+            var count = await _repository.CountAsync();
+            return new PagedResponse<ICollection<Flight>>(items, count, page);
         }
         catch (Exception ex)
         {

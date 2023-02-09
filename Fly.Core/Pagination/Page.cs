@@ -4,7 +4,6 @@ public class Page
 {
     private int _pageNumber;
     private int _pageSize;
-
     public int PageNumber
     {
         get => _pageNumber;

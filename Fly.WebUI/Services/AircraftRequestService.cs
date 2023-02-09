@@ -94,18 +94,22 @@ namespace Fly.WebUI.RequestServices
 
         public async Task<PagedResponse<ICollection<Aircraft>>> GetListAsync(AircraftParameter parameter, Page page)
         {
+            var queryParameters = WebSerializer.ToQueryString(parameter);
+            var queryPage = WebSerializer.ToQueryString(page);
+            var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
+            var client = _factory.CreateClient();
+            client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
+            client.SetBearerToken(accessToken);
             try
             {
-                var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-                var client = _factory.CreateClient();
-                client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
-                client.SetBearerToken(accessToken);
-                var queryParameters = WebSerializer.ToQueryString(parameter);
-                var queryPage = WebSerializer.ToQueryString(page);
                 var response = await client.GetAsync("aircrafts?" + queryParameters + queryPage);
                 var responseString = await response.Content.ReadAsStringAsync();
-                var items = JsonConvert.DeserializeObject<PagedResponse<ICollection<Aircraft>>>(responseString);
-                return items;
+                IEnumerable<string> headerValues = response.Headers.GetValues("X-Pagination");
+                var jsonMetaData = headerValues.FirstOrDefault();
+                var items = JsonConvert.DeserializeObject<ICollection<Aircraft>>(responseString);
+                var metaData = JsonConvert.DeserializeObject<MetaData>(jsonMetaData);
+                var pagedResponse = new PagedResponse<ICollection<Aircraft>>(items, metaData);
+                return pagedResponse;
             }
             catch (Exception ex)
             {

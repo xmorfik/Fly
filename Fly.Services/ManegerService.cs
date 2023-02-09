@@ -68,8 +68,8 @@ public class ManagerService : IService<Manager, ManagerParameter>
         try
         {
             var items = await _repository.ListAsync(new ManagerListSpec(parameter, page));
-
-            return new PagedResponse<ICollection<Manager>>(items, page);
+            var count = await _repository.CountAsync();
+            return new PagedResponse<ICollection<Manager>>(items, count, page);
         }
         catch (Exception ex)
         {

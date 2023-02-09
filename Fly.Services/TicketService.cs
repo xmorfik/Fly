@@ -68,8 +68,8 @@ public class TicketService : IService<Ticket, TicketParameter>
         try
         {
             var items = await _repository.ListAsync(new TicketListSpec(parameter, page));
-
-            return new PagedResponse<ICollection<Ticket>>(items, page);
+            var count = await _repository.CountAsync();
+            return new PagedResponse<ICollection<Ticket>>(items, count, page);
         }
         catch (Exception ex)
         {

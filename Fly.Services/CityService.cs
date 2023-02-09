@@ -68,8 +68,8 @@ public class CityService : IService<City, CityParameter>
         try
         {
             var items = await _repository.ListAsync(new CityListSpec(parameter, page));
-
-            return new PagedResponse<ICollection<City>>(items, page);
+            var count = await _repository.CountAsync();
+            return new PagedResponse<ICollection<City>>(items, count, page);
         }
         catch (Exception ex)
         {
