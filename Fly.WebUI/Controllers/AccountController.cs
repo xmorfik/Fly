@@ -1,7 +1,7 @@
-﻿using Fly.Core.DataTransferObjects;
-using Fly.Core.Entities;
+﻿using Fly.Core.Entities;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
+using Fly.Shared.DataTransferObjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,4 +1,4 @@
-﻿using Fly.Core.DataTransferObjects;
+﻿using Fly.Shared.DataTransferObjects;
 using Microsoft.AspNetCore.Identity;
 
 namespace Fly.Core.Services;

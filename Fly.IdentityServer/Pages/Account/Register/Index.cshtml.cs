@@ -1,5 +1,5 @@
-using Fly.Core.DataTransferObjects;
 using Fly.Core.Entities;
+using Fly.Shared.DataTransferObjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
