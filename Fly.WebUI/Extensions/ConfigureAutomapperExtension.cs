@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Fly.WebAPI.Extensions;
+namespace Fly.WebUI.Extensions;
 
 public static class ConfigureAutomapperExtension
 {

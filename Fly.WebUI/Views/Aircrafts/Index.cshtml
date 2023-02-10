@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Fly.Core.Entities.Aircraft>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SerialNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ManufactureDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlightHours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AircraftState)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AirlineId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AirportId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModelType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SerialNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManufactureDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlightHours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AircraftState)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Airline.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Airport.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -21,6 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="IdentityModel" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.2" />
@@ -40,6 +42,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fly.Core\Fly.Core.csproj" />
+    <ProjectReference Include="..\Fly.Data\Fly.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

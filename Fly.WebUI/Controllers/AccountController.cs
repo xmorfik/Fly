@@ -1,7 +1,6 @@
 ﻿using Fly.Core.Entities;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
-using Fly.Shared.DataTransferObjects;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,10 +30,5 @@ public class AccountController : Controller
     public IActionResult Register()
     {
         return Redirect("");
-    }
-
-    public IActionResult Register(UserForRegistrationDto user)
-    {
-        return View();
     }
 }

@@ -2,6 +2,7 @@
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
+using Fly.WebAPI.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -36,6 +37,7 @@ namespace Fly.WebAPI.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]
+        [ValidateModel]
         public async Task Post([FromBody] Manager value)
         {
             await _service.CreateAsync(value);
@@ -43,6 +45,7 @@ namespace Fly.WebAPI.Controllers
 
         [HttpPut]
         [Authorize(Roles = "Administrator")]
+        [ValidateModel]
         public async Task Put([FromBody] Manager value)
         {
             await _service.UpdateAsync(value);

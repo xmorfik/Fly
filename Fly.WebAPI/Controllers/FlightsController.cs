@@ -2,6 +2,7 @@
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
+using Fly.WebAPI.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -36,21 +37,20 @@ public class FlightsController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "Manager")]
+    [ValidateModel]
     public async Task Post([FromBody] Flight value)
     {
         await _service.CreateAsync(value);
     }
 
     [HttpPut]
-    [Authorize(Roles = "Manager")]
+    [ValidateModel]
     public async Task Put([FromBody] Flight value)
     {
         await _service.UpdateAsync(value);
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Manager")]
     public async Task Delete(int id)
     {
         await _service.DeleteAsync(id);

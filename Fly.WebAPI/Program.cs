@@ -1,6 +1,9 @@
 using Fly.WebAPI.Extensions;
 using Fly.WebAPI.Hubs;
 using Fly.WebAPI.Middlewares;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,13 +11,17 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddPostgres(builder.Configuration);
 builder.Services.AddRepositories();
 builder.Services.AddServices();
-builder.Services.AddAutoMapper();
+builder.Services.AddMapper();
 builder.Services.AddAuthentication();
 builder.Services.ConfigureCors();
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureRedis(builder.Configuration);
 builder.Services.AddSignalR();
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options => {
+    options.JsonSerializerOptions.MaxDepth = 2;
+}).AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwagger();
 

@@ -11,15 +11,15 @@ using System.Text;
 
 namespace Fly.WebUI.RequestServices
 {
-    public class AircraftRequestService : IService<Aircraft, AircraftParameter>
+    public class AirportRequestService : IService<Airport, AirportParameter>
     {
-        private readonly ILogger<AircraftRequestService> _logger;
+        private readonly ILogger<AirportRequestService> _logger;
         private readonly IHttpClientFactory _factory;
         private readonly ApiConfiguration _apiConfiguration;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AircraftRequestService(
-            ILogger<AircraftRequestService> logger,
+        public AirportRequestService(
+            ILogger<AirportRequestService> logger,
             IHttpClientFactory factory,
             IOptions<ApiConfiguration> apiConfiguration,
             IHttpContextAccessor httpContextAccessor)
@@ -30,7 +30,7 @@ namespace Fly.WebUI.RequestServices
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task CreateAsync(Aircraft item)
+        public async Task CreateAsync(Airport item)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace Fly.WebUI.RequestServices
                 var client = _factory.CreateClient();
                 client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
                 client.SetBearerToken(accessToken);
-                await client.PostAsync("aircrafts", content);
+                await client.PostAsync("Airports", content);
             }
             catch (Exception ex)
             {
@@ -57,7 +57,7 @@ namespace Fly.WebUI.RequestServices
                 var client = _factory.CreateClient();
                 client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
                 client.SetBearerToken(accessToken);
-                await client.DeleteAsync($"aircrafts/{id}");
+                await client.DeleteAsync($"Airports/{id}");
             }
             catch (Exception ex)
             {
@@ -66,7 +66,7 @@ namespace Fly.WebUI.RequestServices
             }
         }
 
-        public async Task<Response<Aircraft>> GetAsync(int id)
+        public async Task<Response<Airport>> GetAsync(int id)
         {
             try
             {
@@ -74,13 +74,13 @@ namespace Fly.WebUI.RequestServices
                 var client = _factory.CreateClient();
                 client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
                 client.SetBearerToken(accessToken);
-                var response = await client.GetAsync($"aircrafts/{id}");
+                var response = await client.GetAsync($"Airports/{id}");
                 var responseString = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<Response<Aircraft>>(responseString);
+                var result = JsonConvert.DeserializeObject<Response<Airport>>(responseString);
 
                 if (result == null)
                 {
-                    return new Response<Aircraft>(new Aircraft()) { Succeeded = false };
+                    return new Response<Airport>(new Airport()) { Succeeded = false };
                 }
 
                 return result;
@@ -92,7 +92,7 @@ namespace Fly.WebUI.RequestServices
             }
         }
 
-        public async Task<PagedResponse<ICollection<Aircraft>>> GetListAsync(AircraftParameter parameter, Page page)
+        public async Task<PagedResponse<ICollection<Airport>>> GetListAsync(AirportParameter parameter, Page page)
         {
             var queryParameters = WebSerializer.ToQueryString(parameter);
             var queryPage = WebSerializer.ToQueryString(page);
@@ -102,13 +102,13 @@ namespace Fly.WebUI.RequestServices
             client.SetBearerToken(accessToken);
             try
             {
-                var response = await client.GetAsync("aircrafts?" + queryParameters.TrimStart('&') + '&' + queryPage);
+                var response = await client.GetAsync("airports?" + queryParameters.TrimStart('&') + '&' + queryPage);
                 var responseString = await response.Content.ReadAsStringAsync();
                 IEnumerable<string> headerValues = response.Headers.GetValues("X-Pagination");
                 var jsonMetaData = headerValues.FirstOrDefault();
-                var items = JsonConvert.DeserializeObject<ICollection<Aircraft>>(responseString);
+                var items = JsonConvert.DeserializeObject<ICollection<Airport>>(responseString);
                 var metaData = JsonConvert.DeserializeObject<MetaData>(jsonMetaData);
-                var pagedResponse = new PagedResponse<ICollection<Aircraft>>(items, metaData);
+                var pagedResponse = new PagedResponse<ICollection<Airport>>(items, metaData);
                 return pagedResponse;
             }
             catch (Exception ex)
@@ -118,7 +118,7 @@ namespace Fly.WebUI.RequestServices
             }
         }
 
-        public async Task UpdateAsync(Aircraft item)
+        public async Task UpdateAsync(Airport item)
         {
             try
             {
@@ -128,7 +128,7 @@ namespace Fly.WebUI.RequestServices
                 client.SetBearerToken(accessToken);
                 var itemJson = JsonConvert.SerializeObject(item);
                 var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
-                await client.PutAsync("aircrafts", content);
+                await client.PutAsync("Airports", content);
             }
             catch (Exception ex)
             {

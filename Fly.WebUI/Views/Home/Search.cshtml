@@ -1,7 +1,8 @@
-﻿@using Fly.Core.Parameters;
+﻿@using Fly.Core.Entities;
+@using Fly.Core.Pagination;
 @using Microsoft.AspNetCore.Mvc.Localization;
 
-@model FlightParameter
+@model FlightParameterViewModel
 
 @inject IViewLocalizer Localizer
 
@@ -14,17 +15,22 @@
                 <div class="col">
                     <label class="control-label">@Localizer["Time"]</label>
                     <input asp-for="DepartureDateTime" class="form-control" />
-                    <span asp-validation-for="DepartureDateTime" class="text-danger"></span>
-                </div class="row">
+                </div>
                 <div class="col">
                     <label class="control-label">@Localizer["DepartureCity"]</label>
                     <input asp-for="DepartureCity" class="form-control" />
-                    <span asp-validation-for="DepartureCity" class="text-danger"></span>
                 </div>
                 <div class="col">
                     <label class="control-label">@Localizer["ArrivalCity"]</label>
                     <input asp-for="ArrivalCity" class="form-control" />
-                    <span asp-validation-for="ArrivalCity" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label class="control-label">Page Number</label>
+                    <input asp-for="PageNumber" class="form-control" />
+                </div>
+                <div class="col">
+                    <label class="control-label">Page Size</label>
+                    <input asp-for="PageSize" class="form-control" />
                 </div>
                 <div class="col">
                     <br/>
@@ -35,6 +41,39 @@
     </div>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+<table class="table">
+    <tbody>
+        @foreach (var item in (List<Flight>)ViewData["result"]) 
+        {
+            <tr>
+                <td>
+                @Html.DisplayFor(modelItem => item.DepartureAirport.AirporId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartureAirport.City.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrivalAirport.AirporId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrivalAirport.City.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aircraft.ModelType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartureDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrivalDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tickets.Count)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new {  id=item.AircraftId})
+            </td>
+            </tr>
+        }
+    </tbody>
+</table>

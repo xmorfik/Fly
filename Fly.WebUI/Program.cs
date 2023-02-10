@@ -6,12 +6,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<ApiConfiguration>(
     builder.Configuration.GetSection(ApiConfiguration.Configuration));
 
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.ConfigureIdentity();
 builder.Services.AddControllersWithViews();
 builder.Services.AddCustomLocalization();
 builder.Services.AddServices();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
+builder.Services.AddMapper();
 
 var app = builder.Build();
 

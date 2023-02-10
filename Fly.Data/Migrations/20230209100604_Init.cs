@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -441,9 +442,9 @@ namespace Fly.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "70a834fb-017e-45d5-9914-a736f3b396d0", null, "Passenger", "PASSENGER" },
-                    { "7f67c6df-4bee-4a41-accd-ab1d6e422226", null, "Manager", "MANAGER" },
-                    { "b2e920e8-0fcd-4b53-af76-596da3ef4de7", null, "Administrator", "ADMINISTRATOR" }
+                    { "1b472fdf-fa38-48ce-b7fc-85e72733965e", null, "Manager", "MANAGER" },
+                    { "893d684b-a096-44d6-9523-c733a2843a6c", null, "Passenger", "PASSENGER" },
+                    { "c6fdedca-a191-439c-8d28-4d77abcc8a85", null, "Administrator", "ADMINISTRATOR" }
                 });
 
             migrationBuilder.CreateIndex(
