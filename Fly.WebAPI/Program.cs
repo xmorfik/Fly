@@ -18,7 +18,7 @@ builder.Services.ConfigureIdentity();
 builder.Services.ConfigureRedis(builder.Configuration);
 builder.Services.AddSignalR();
 builder.Services.AddControllers().AddJsonOptions(options => {
-    options.JsonSerializerOptions.MaxDepth = 2;
+    options.JsonSerializerOptions.MaxDepth = 1;
 }).AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 );

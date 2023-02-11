@@ -13,10 +13,6 @@ public class AirportListSpec : Specification<Airport>
 
         Query.Include(x => x.City);
 
-        Query.Include(x => x.FlightsIn);
-
-        Query.Include(x => x.FlightsOut);
-
         Query.Where(x => parameter.Address == null || x.Address.Contains(parameter.Address));
 
         Query.Where(x => parameter.CityName == null || x.City.Name.Contains(parameter.CityName));

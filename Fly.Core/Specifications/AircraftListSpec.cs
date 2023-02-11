@@ -13,8 +13,6 @@ public class AircraftListSpec : Specification<Aircraft>
 
         Query.Include(x => x.Airport);
 
-        Query.Include(x => x.Flights);
-
         Query.Where(x => parameter.AircraftState == null || x.AircraftState == parameter.AircraftState);
 
         Query.Where(x => parameter.Airline == null || x.Airline.Name.Contains(parameter.Airline));

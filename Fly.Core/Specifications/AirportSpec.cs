@@ -11,10 +11,6 @@ public class AirportSpec : Specification<Airport>
 
         Query.Include(x => x.City);
 
-        Query.Include(x => x.FlightsIn);
-
-        Query.Include(x => x.FlightsOut);
-
         Query.Where(x => x.Id == id).AsNoTracking();
     }
 }

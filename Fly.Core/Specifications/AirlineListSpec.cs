@@ -9,6 +9,8 @@ public class AirlineListSpec : Specification<Airline>
 {
     public AirlineListSpec(AirlineParameter parameter, Page page)
     {
+        Query.Include(x => x.Aircrafts);
+
         Query.Where(x => parameter.Name == null || x.Name.Contains(parameter.Name));
 
         Query.Skip((page.PageNumber - 1) * page.PageSize)
