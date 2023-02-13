@@ -11,6 +11,6 @@ public class AircraftSpec : Specification<Aircraft>
 
         Query.Include(x => x.Airport);
 
-        Query.Where(x => x.Id == id).AsNoTracking();
+        Query.Where(x => x.Id == id);
     }
 }

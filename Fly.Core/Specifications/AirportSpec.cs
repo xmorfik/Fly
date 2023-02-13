@@ -11,6 +11,6 @@ public class AirportSpec : Specification<Airport>
 
         Query.Include(x => x.City);
 
-        Query.Where(x => x.Id == id).AsNoTracking();
+        Query.Where(x => x.Id == id);
     }
 }

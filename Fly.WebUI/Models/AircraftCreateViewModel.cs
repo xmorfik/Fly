@@ -1,5 +1,4 @@
-﻿using Fly.Core.Entities;
-using Fly.Core.Enums;
+﻿using Fly.Core.Enums;
 
 namespace Fly.WebUI.Models;
 

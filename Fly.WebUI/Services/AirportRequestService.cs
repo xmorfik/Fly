@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Text;
 
-namespace Fly.WebUI.RequestServices
+namespace Fly.WebUI.Services
 {
     public class AirportRequestService : IService<Airport, AirportParameter>
     {
@@ -92,7 +92,7 @@ namespace Fly.WebUI.RequestServices
             }
         }
 
-        public async Task<PagedResponse<ICollection<Airport>>> GetListAsync(AirportParameter parameter, Page page)
+        public async Task<PagedResponse<Airport>> GetListAsync(AirportParameter parameter, Page page)
         {
             var queryParameters = WebSerializer.ToQueryString(parameter);
             var queryPage = WebSerializer.ToQueryString(page);
@@ -104,11 +104,11 @@ namespace Fly.WebUI.RequestServices
             {
                 var response = await client.GetAsync("airports?" + queryParameters.TrimStart('&') + '&' + queryPage);
                 var responseString = await response.Content.ReadAsStringAsync();
-                IEnumerable<string> headerValues = response.Headers.GetValues("X-Pagination");
+                var headerValues = response.Headers.GetValues("X-Pagination");
                 var jsonMetaData = headerValues.FirstOrDefault();
-                var items = JsonConvert.DeserializeObject<ICollection<Airport>>(responseString);
+                var items = JsonConvert.DeserializeObject<List<Airport>>(responseString);
                 var metaData = JsonConvert.DeserializeObject<MetaData>(jsonMetaData);
-                var pagedResponse = new PagedResponse<ICollection<Airport>>(items, metaData);
+                var pagedResponse = new PagedResponse<Airport>(items, metaData);
                 return pagedResponse;
             }
             catch (Exception ex)

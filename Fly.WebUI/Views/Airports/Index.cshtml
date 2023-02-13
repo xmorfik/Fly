@@ -7,7 +7,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.AirporId)
+                @Html.DisplayNameFor(model => model.IATALocationIdentifier)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Address)
@@ -25,7 +25,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.AirporId)
+                    @Html.DisplayFor(modelItem => item.IATALocationIdentifier)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Address)

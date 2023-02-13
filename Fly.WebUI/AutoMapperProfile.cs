@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using Fly.Core.Entities;
 using Fly.Core.Parameters;
-using Fly.Shared.DataTransferObjects;
 using Fly.WebUI.Models;
 
-namespace Fly.WebAPI.Mapping;
+namespace Fly.WebUI;
 
 public class AutoMapperProfile : Profile
 {

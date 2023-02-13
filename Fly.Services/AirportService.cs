@@ -63,13 +63,12 @@ public class AirportService : IService<Airport, AirportParameter>
         }
     }
 
-    public async Task<PagedResponse<ICollection<Airport>>> GetListAsync(AirportParameter parameter, Page page)
+    public async Task<PagedResponse<Airport>> GetListAsync(AirportParameter parameter, Page page)
     {
         try
         {
-            var items = await _repository.ListAsync(new AirportListSpec(parameter, page));
-            var count = await _repository.CountAsync();
-            return new PagedResponse<ICollection<Airport>>(items, count, page);
+            var items = await _repository.ListAsync(new AirportListSpec(parameter));
+            return PagedResponse<Airport>.ToPagedList(items, page);
         }
         catch (Exception ex)
         {

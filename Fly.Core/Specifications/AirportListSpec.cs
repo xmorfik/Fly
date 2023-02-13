@@ -1,13 +1,12 @@
 ﻿using Ardalis.Specification;
 using Fly.Core.Entities;
-using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 
 namespace Fly.Core.Specifications;
 
 public class AirportListSpec : Specification<Airport>
 {
-    public AirportListSpec(AirportParameter parameter, Page page)
+    public AirportListSpec(AirportParameter parameter)
     {
         Query.Include(x => x.Aircrafts);
 
@@ -17,9 +16,6 @@ public class AirportListSpec : Specification<Airport>
 
         Query.Where(x => parameter.CityName == null || x.City.Name.Contains(parameter.CityName));
 
-        Query.Where(x => parameter.AirporId == null || x.AirporId.Contains(parameter.CityName));
-
-        Query.Skip((page.PageNumber - 1) * page.PageSize)
-            .Take(page.PageSize).OrderBy(x => x.Id);
+        Query.Where(x => parameter.IATALocationIdentifier == null || x.IATALocationIdentifier.Contains(parameter.IATALocationIdentifier));
     }
 }

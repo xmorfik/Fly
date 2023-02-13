@@ -7,6 +7,6 @@ public class TicketSpec : Specification<Ticket>
 {
     public TicketSpec(int id)
     {
-        Query.Where(x => x.Id == id).AsNoTracking();
+        Query.Where(x => x.Id == id);
     }
 }

@@ -7,8 +7,7 @@ public class AirlineSpec : Specification<Airline>
 {
     public AirlineSpec(int id)
     {
-        Query.Include(x => x.Aircrafts); 
 
-        Query.Where(x => x.Id == id).AsNoTracking();
+        Query.Where(x => x.Id == id);
     }
 }

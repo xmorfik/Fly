@@ -25,7 +25,7 @@ namespace Fly.WebAPI.Controllers
         {
             var result = await _service.GetListAsync(parameter, page);
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(result.MetaData));
-            return result.Data;
+            return result;
         }
 
         [HttpGet("{id}")]
@@ -36,7 +36,7 @@ namespace Fly.WebAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Policy = "AdministratorOnly")]
         [ValidateModel]
         public async Task Post([FromBody] Manager value)
         {
@@ -44,7 +44,7 @@ namespace Fly.WebAPI.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Policy = "AdministratorOnly")]
         [ValidateModel]
         public async Task Put([FromBody] Manager value)
         {
@@ -52,7 +52,7 @@ namespace Fly.WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Policy = "AdministratorOnly")]
         public async Task Delete(int id)
         {
             await _service.DeleteAsync(id);

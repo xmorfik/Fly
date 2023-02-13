@@ -9,12 +9,10 @@ public class FlightSpec : Specification<Flight>, ISingleResultSpecification
     {
         Query.Include(x => x.Aircraft);
 
-        Query.Include(x => x.DepartureAirport.City);
+        Query.Include(x => x.DepartureAirport).ThenInclude(x => x.City);
 
-        Query.Include(x => x.ArrivalAirport.City);
+        Query.Include(x => x.ArrivalAirport).ThenInclude(x => x.City);
 
-        Query.Include(x => x.Tickets);
-
-        Query.Where(x => x.Id == id).AsNoTracking();
+        Query.Where(x => x.Id == id);
     }
 }

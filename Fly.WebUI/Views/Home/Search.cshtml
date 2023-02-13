@@ -47,13 +47,13 @@
         {
             <tr>
                 <td>
-                @Html.DisplayFor(modelItem => item.DepartureAirport.AirporId)
+                @Html.DisplayFor(modelItem => item.DepartureAirport.IATALocationIdentifier)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DepartureAirport.City.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ArrivalAirport.AirporId)
+                    @Html.DisplayFor(modelItem => item.ArrivalAirport.IATALocationIdentifier)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ArrivalAirport.City.Name)

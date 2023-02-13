@@ -3,6 +3,7 @@ using Fly.Shared.DataTransferObjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
 
 namespace Fly.IdentityServer.Pages.Account.Register
 {
@@ -19,8 +20,19 @@ namespace Fly.IdentityServer.Pages.Account.Register
             _userManager = userManager;
         }
 
+        public async Task<IActionResult> OnGet()
+        {
+            await _signInManager.SignOutAsync();
+            return Page();
+        }
+
         public async Task<IActionResult> OnPost()
         {
+            if (ModelState.IsValid == false)
+            {
+                return Page();
+            }
+
             var user = new User();
             user.UserName = UserForRegistrationDto.UserName;
             var result = await _userManager.CreateAsync(user, UserForRegistrationDto.Password);
@@ -28,8 +40,9 @@ namespace Fly.IdentityServer.Pages.Account.Register
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, false);
+                await _userManager.AddClaimAsync(user, new Claim("Role", "Passenger"));
 
-                return Redirect("/");
+                return Redirect("https://localhost:5002");
             }
             return Page();
         }

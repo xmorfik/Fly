@@ -7,6 +7,6 @@ public class SeatSpec : Specification<Seat>
 {
     public SeatSpec(int id)
     {
-        Query.Where(x => x.Id == id).AsNoTracking();
+        Query.Where(x => x.Id == id);
     }
 }

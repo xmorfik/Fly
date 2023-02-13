@@ -9,12 +9,14 @@ namespace Fly.IdentityServer
             new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
+                new IdentityResources.Profile(),
+                new IdentityResource("Role", new [] { "Administrator" })
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
                 {
-                    new ApiScope("api1", "Web Api ")
+                    new ApiScope("api1", "Web Api ", new List<string>() { "Role" })
                 };
 
         public static IEnumerable<Client> Clients =>
@@ -28,15 +30,17 @@ namespace Fly.IdentityServer
                         AllowedGrantTypes = GrantTypes.Code,
 
                         RedirectUris = { "https://localhost:5002/signin-oidc" },
-
-                        PostLogoutRedirectUris = { "https://localhost:5002/home/index" },
+                        FrontChannelLogoutUri = "https://localhost:5002/signout-oidc",
+                        PostLogoutRedirectUris = { "https://localhost:5002/signout-callback-oidc" },
 
                         AllowOfflineAccess = true,
 
                         AllowedScopes = new List<string>
                         {
                             IdentityServerConstants.StandardScopes.OpenId,
-                            "api1"
+                            IdentityServerConstants.StandardScopes.Profile,
+                            "api1",
+                            "Role"
                         }
                     }
                 };

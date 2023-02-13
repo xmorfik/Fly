@@ -32,13 +32,13 @@ namespace Fly.WebUI.Controllers
         public async Task<IActionResult> Index()
         {
             var result = await _airportService.GetListAsync(new AirportParameter(), new Page());
-            return View(result.Data);
+            return View(result);
         }
 
         public async Task<IActionResult> Detalis(int id)
         {
             var result = await _airportService.GetAsync(id);
-            return View(result.Data);
+            return View(result);
         }
     }
 }

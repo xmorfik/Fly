@@ -14,30 +14,34 @@ namespace Fly.WebUI.Controllers
         private readonly IService<Flight, FlightParameter> _flightService;
         private readonly IService<Airport, AirportParameter> _airportService;
         private readonly IMapper _mapper;
+        //private readonly UserManager<User> _userManager;
 
         public AircraftsController(
             ILogger<HomeController> logger,
             IService<Aircraft, AircraftParameter> aircraftService,
             IService<Flight, FlightParameter> flightService,
             IService<Airport, AirportParameter> airportService,
-            IMapper mapper)
+            IMapper mapper
+            //UserManager<User> userManager
+            )
         {
             _logger = logger;
             _aircraftService = aircraftService;
             _flightService = flightService;
             _airportService = airportService;
             _mapper = mapper;
+            //_userManager = userManager;
         }
         public async Task<IActionResult> Index()
         {
             var result = await _aircraftService.GetListAsync(new AircraftParameter(), new Page());
-            return View(result.Data);
+            return View(result);
         }
 
         public async Task<IActionResult> Detalis(int id)
         {
             var result = await _aircraftService.GetAsync(id);
-            return View(result.Data);
+            return View(result);
         }
     }
 }

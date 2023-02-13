@@ -63,13 +63,12 @@ public class AircraftService : IService<Aircraft, AircraftParameter>
         }
     }
 
-    public async Task<PagedResponse<ICollection<Aircraft>>> GetListAsync(AircraftParameter parameter, Page page)
+    public async Task<PagedResponse<Aircraft>> GetListAsync(AircraftParameter parameter, Page page)
     {
         try
         {
-            var items = await _repository.ListAsync(new AircraftListSpec(parameter, page));
-            var count = await _repository.CountAsync();
-            return new PagedResponse<ICollection<Aircraft>>(items, count, page);
+            var items = await _repository.ListAsync(new AircraftListSpec(parameter));
+            return PagedResponse<Aircraft>.ToPagedList(items, page);
         }
         catch (Exception ex)
         {

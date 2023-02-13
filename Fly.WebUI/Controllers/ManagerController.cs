@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using Fly.Core.Entities;
-using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.WebUI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fly.WebUI.Controllers
 {
+    [Authorize]
     public class ManagerController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -15,9 +16,10 @@ namespace Fly.WebUI.Controllers
         private readonly IService<Flight, FlightParameter> _flightService;
         private readonly IService<Airport, AirportParameter> _airportService;
         private readonly IMapper _mapper;
+        private readonly Manager _manager;
 
         public ManagerController(
-            ILogger<HomeController> logger, 
+            ILogger<HomeController> logger,
             IService<Aircraft, AircraftParameter> aircraftService,
             IService<Flight, FlightParameter> flightService,
             IService<Airport, AirportParameter> airportService,

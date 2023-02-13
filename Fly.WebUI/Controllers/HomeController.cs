@@ -17,7 +17,7 @@ public class HomeController : Controller
     private readonly IMapper _mapper;
 
     public HomeController(
-        ILogger<HomeController> logger, 
+        ILogger<HomeController> logger,
         IService<Flight, FlightParameter> service,
         IMapper mapper)
     {
@@ -53,8 +53,8 @@ public class HomeController : Controller
     public async Task<IActionResult> Search(FlightParameterViewModel parameters)
     {
         var par = _mapper.Map<FlightParameter>(parameters);
-        var result = await _service.GetListAsync(par, new Page() { PageNumber = parameters.PageNumber, PageSize = parameters.PageSize});
-        ViewData["result"] = result.Data;
+        var result = await _service.GetListAsync(par, new Page() { PageNumber = parameters.PageNumber, PageSize = parameters.PageSize });
+        ViewData["result"] = result;
         return View();
     }
 

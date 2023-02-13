@@ -26,7 +26,7 @@ public class TicketsController : ControllerBase
     {
         var result = await _service.GetListAsync(parameter, page);
         Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(result.MetaData));
-        return result.Data;
+        return result;
     }
 
     [HttpGet("{id}")]
@@ -37,7 +37,7 @@ public class TicketsController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Policy = "ManagerAndAdminOnly")]
     [ValidateModel]
     public async Task Post([FromBody] Ticket value)
     {
@@ -45,7 +45,7 @@ public class TicketsController : ControllerBase
     }
 
     [HttpPut]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Policy = "ManagerAndAdminOnly")]
     [ValidateModel]
     public async Task Put([FromBody] Ticket value)
     {
@@ -53,7 +53,7 @@ public class TicketsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Policy = "ManagerAndAdminOnly")]
     public async Task Delete(int id)
     {
         await _service.DeleteAsync(id);

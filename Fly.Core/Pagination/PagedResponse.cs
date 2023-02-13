@@ -1,9 +1,9 @@
 ﻿namespace Fly.Core.Pagination;
 
-public class PagedResponse<T> : Response<T>
+public class PagedResponse<T> : List<T>
 {
     public MetaData MetaData { get; set; }
-    public PagedResponse(T items, int count, Page page) : base(items)
+    public PagedResponse(List<T> items, int count, Page page) : base(items)
     {
         MetaData = new MetaData
         {
@@ -14,8 +14,17 @@ public class PagedResponse<T> : Response<T>
         };
     }
 
-    public PagedResponse(T items, MetaData metaData) : base(items)
+    public PagedResponse(List<T> items, MetaData metaData) : base(items)
     {
         MetaData = metaData;
+    }
+
+    public static PagedResponse<T> ToPagedList(IEnumerable<T> source, Page page)
+    {
+        var count = source.Count();
+        var items = source
+        .Skip((page.PageNumber - 1) * page.PageSize)
+        .Take(page.PageSize).ToList();
+        return new PagedResponse<T>(items, count, page);
     }
 }

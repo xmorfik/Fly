@@ -1,6 +1,4 @@
-﻿using Fly.Core.Entities;
-
-namespace Fly.WebUI.Models;
+﻿namespace Fly.WebUI.Models;
 
 public class FlightCreateViewModel
 {

@@ -26,7 +26,7 @@ public class FlightsController : ControllerBase
     {
         var result = await _service.GetListAsync(parameter, page);
         Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(result.MetaData));
-        return result.Data;
+        return result;
     }
 
     [HttpGet("{id}")]
@@ -38,12 +38,14 @@ public class FlightsController : ControllerBase
 
     [HttpPost]
     [ValidateModel]
+    [Authorize(Policy = "ManagerAndAdminOnly")]
     public async Task Post([FromBody] Flight value)
     {
         await _service.CreateAsync(value);
     }
 
     [HttpPut]
+    [Authorize(Policy = "ManagerAndAdminOnly")]
     [ValidateModel]
     public async Task Put([FromBody] Flight value)
     {
@@ -51,6 +53,7 @@ public class FlightsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Policy = "ManagerAndAdminOnly")]
     public async Task Delete(int id)
     {
         await _service.DeleteAsync(id);
