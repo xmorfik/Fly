@@ -1,4 +1,7 @@
-﻿namespace Fly.WebUI.Extensions
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.IdentityModel.Tokens;
+
+namespace Fly.WebUI.Extensions
 {
     public static class ConfigureIdentityExtension
     {
@@ -17,15 +20,23 @@
                 options.ClientId = "web1";
                 options.ClientSecret = "secret";
                 options.ResponseType = "code";
-                //options.SignedOutCallbackPath = "/home/index";
-
+                
                 options.SaveTokens = true;
 
                 options.Scope.Clear();
                 options.Scope.Add("openid");
+                options.Scope.Add("profile");
                 options.Scope.Add("offline_access");
                 options.Scope.Add("api1");
-                options.Scope.Add("Role");
+                options.Scope.Add("Roles");
+
+                options.GetClaimsFromUserInfoEndpoint = true;
+                options.ClaimActions.MapUniqueJsonKey("Roles", "Role");
+
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    RoleClaimType = "Role"
+                };
             });
 
             services.AddAuthorization(options =>

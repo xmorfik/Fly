@@ -35,6 +35,7 @@ namespace Fly.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            var claim = User.Claims;
             return View();
         }
 

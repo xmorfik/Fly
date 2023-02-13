@@ -10,13 +10,13 @@ namespace Fly.IdentityServer
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResource("Role", new [] { "Administrator" })
+                new IdentityResource("Roles", "User role(s)", new List<string> { "Role" })
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
                 {
-                    new ApiScope("api1", "Web Api ", new List<string>() { "Role" })
+                    new ApiScope("api1", "Web Api ")
                 };
 
         public static IEnumerable<Client> Clients =>
@@ -40,8 +40,10 @@ namespace Fly.IdentityServer
                             IdentityServerConstants.StandardScopes.OpenId,
                             IdentityServerConstants.StandardScopes.Profile,
                             "api1",
-                            "Role"
-                        }
+                            "Roles"
+                        },
+
+                        AlwaysIncludeUserClaimsInIdToken = true
                     }
                 };
     }
