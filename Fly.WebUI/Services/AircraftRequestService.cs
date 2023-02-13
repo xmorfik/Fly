@@ -14,20 +14,14 @@ namespace Fly.WebUI.Services
     public class AircraftRequestService : IService<Aircraft, AircraftParameter>
     {
         private readonly ILogger<AircraftRequestService> _logger;
-        private readonly IHttpClientFactory _factory;
-        private readonly ApiConfiguration _apiConfiguration;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ApiHttpClientService _httpClientService;
 
         public AircraftRequestService(
             ILogger<AircraftRequestService> logger,
-            IHttpClientFactory factory,
-            IOptions<ApiConfiguration> apiConfiguration,
-            IHttpContextAccessor httpContextAccessor)
+            ApiHttpClientService httpClientService)
         {
             _logger = logger;
-            _apiConfiguration = apiConfiguration.Value;
-            _factory = factory;
-            _httpContextAccessor = httpContextAccessor;
+            _httpClientService = httpClientService;
         }
 
         public async Task CreateAsync(Aircraft item)
@@ -36,11 +30,8 @@ namespace Fly.WebUI.Services
             {
                 var itemJson = JsonConvert.SerializeObject(item);
                 var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
-                var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-                var client = _factory.CreateClient();
-                client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
-                client.SetBearerToken(accessToken);
-                await client.PostAsync("aircrafts", content);
+                var client = await _httpClientService.GetClientAsync();
+                await client.PostAsync("Aircrafts", content);
             }
             catch (Exception ex)
             {
@@ -53,11 +44,8 @@ namespace Fly.WebUI.Services
         {
             try
             {
-                var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-                var client = _factory.CreateClient();
-                client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
-                client.SetBearerToken(accessToken);
-                await client.DeleteAsync($"aircrafts/{id}");
+                var client = await _httpClientService.GetClientAsync();
+                await client.DeleteAsync($"Aircrafts/{id}");
             }
             catch (Exception ex)
             {
@@ -70,11 +58,8 @@ namespace Fly.WebUI.Services
         {
             try
             {
-                var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-                var client = _factory.CreateClient();
-                client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
-                client.SetBearerToken(accessToken);
-                var response = await client.GetAsync($"aircrafts/{id}");
+                var client = await _httpClientService.GetClientAsync();
+                var response = await client.GetAsync($"Aircrafts/{id}");
                 var responseString = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<Response<Aircraft>>(responseString);
 
@@ -96,13 +81,10 @@ namespace Fly.WebUI.Services
         {
             var queryParameters = WebSerializer.ToQueryString(parameter);
             var queryPage = WebSerializer.ToQueryString(page);
-            var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-            var client = _factory.CreateClient();
-            client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
-            client.SetBearerToken(accessToken);
+            var client = await _httpClientService.GetClientAsync();
             try
             {
-                var response = await client.GetAsync("aircrafts?" + queryParameters.TrimStart('&') + '&' + queryPage);
+                var response = await client.GetAsync("Aircrafts?" + queryParameters.TrimStart('&') + '&' + queryPage);
                 var responseString = await response.Content.ReadAsStringAsync();
                 var headerValues = response.Headers.GetValues("X-Pagination");
                 var jsonMetaData = headerValues.FirstOrDefault();
@@ -122,13 +104,10 @@ namespace Fly.WebUI.Services
         {
             try
             {
-                var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-                var client = _factory.CreateClient();
-                client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
-                client.SetBearerToken(accessToken);
+                var client = await _httpClientService.GetClientAsync();
                 var itemJson = JsonConvert.SerializeObject(item);
                 var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
-                await client.PutAsync("aircrafts", content);
+                await client.PutAsync("Aircrafts", content);
             }
             catch (Exception ex)
             {

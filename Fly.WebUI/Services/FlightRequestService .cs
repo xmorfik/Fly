@@ -14,20 +14,14 @@ namespace Fly.WebUI.Services
     public class FlightRequestService : IService<Flight, FlightParameter>
     {
         private readonly ILogger<FlightRequestService> _logger;
-        private readonly IHttpClientFactory _factory;
-        private readonly ApiConfiguration _apiConfiguration;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ApiHttpClientService _httpClientService;
 
         public FlightRequestService(
-            ILogger<FlightRequestService> logger,
-            IHttpClientFactory factory,
-            IOptions<ApiConfiguration> apiConfiguration,
-            IHttpContextAccessor httpContextAccessor)
+            ILogger<FlightRequestService> logger, 
+            ApiHttpClientService httpClientService)
         {
             _logger = logger;
-            _apiConfiguration = apiConfiguration.Value;
-            _factory = factory;
-            _httpContextAccessor = httpContextAccessor;
+            _httpClientService = httpClientService;
         }
 
         public async Task CreateAsync(Flight item)
@@ -36,10 +30,7 @@ namespace Fly.WebUI.Services
             {
                 var itemJson = JsonConvert.SerializeObject(item);
                 var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
-                var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-                var client = _factory.CreateClient();
-                client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
-                client.SetBearerToken(accessToken);
+                var client = await _httpClientService.GetClientAsync();
                 await client.PostAsync("Flights", content);
             }
             catch (Exception ex)
@@ -53,10 +44,7 @@ namespace Fly.WebUI.Services
         {
             try
             {
-                var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-                var client = _factory.CreateClient();
-                client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
-                client.SetBearerToken(accessToken);
+                var client = await _httpClientService.GetClientAsync();
                 await client.DeleteAsync($"Flights/{id}");
             }
             catch (Exception ex)
@@ -70,10 +58,7 @@ namespace Fly.WebUI.Services
         {
             try
             {
-                var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-                var client = _factory.CreateClient();
-                client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
-                client.SetBearerToken(accessToken);
+                var client = await _httpClientService.GetClientAsync();
                 var response = await client.GetAsync($"Flights/{id}");
                 var responseString = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<Response<Flight>>(responseString);
@@ -96,10 +81,7 @@ namespace Fly.WebUI.Services
         {
             var queryParameters = WebSerializer.ToQueryString(parameter);
             var queryPage = WebSerializer.ToQueryString(page);
-            var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-            var client = _factory.CreateClient();
-            client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
-            client.SetBearerToken(accessToken);
+            var client = await _httpClientService.GetClientAsync();
             try
             {
                 var response = await client.GetAsync("flights?" + queryParameters.TrimStart('&') + '&' + queryPage);
@@ -122,10 +104,7 @@ namespace Fly.WebUI.Services
         {
             try
             {
-                var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-                var client = _factory.CreateClient();
-                client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
-                client.SetBearerToken(accessToken);
+                var client = await _httpClientService.GetClientAsync();
                 var itemJson = JsonConvert.SerializeObject(item);
                 var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
                 await client.PutAsync("Flights", content);
