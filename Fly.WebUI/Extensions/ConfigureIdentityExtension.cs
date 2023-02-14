@@ -39,7 +39,6 @@ namespace Fly.WebUI.Extensions
                     RoleClaimType = "Role"
                 };
             });
-
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdministratorOnly", policy =>
@@ -48,6 +47,8 @@ namespace Fly.WebUI.Extensions
                                   policy.RequireClaim("Role", "Passenger"));
                 options.AddPolicy("ManagerOnly", policy =>
                                   policy.RequireClaim("Role", "Manager"));
+                options.AddPolicy("ManagerAndAdminOnly", policy =>
+                                  policy.RequireClaim("Role", "Manager", "Administrator"));
             });
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();

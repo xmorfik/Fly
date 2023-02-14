@@ -7,7 +7,6 @@
     <img class="card-img-top" src="~/pexels-francesco-ungaro-281260.jpg" style="max-height:240px">
     <div class="card-body">
         <form asp-action="Index">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row">
                 <div class="col">
                     <label class="control-label">@Localizer["Time"]</label>
@@ -37,12 +36,6 @@
                                     @Html.DisplayFor(modelItem => item.DepartureAirport.City.Name)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.ArrivalAirport.IATALocationIdentifier)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ArrivalAirport.City.Name)
-                                </td>
-                                <td>
                                     @Html.DisplayFor(modelItem => item.Aircraft.ModelType)
                                 </td>
                                 <td>
@@ -55,7 +48,7 @@
                                     @Html.DisplayFor(modelItem => item.Tickets.Count)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Details", "Details", new {  id=item.Id})
+                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                                 </td>
                             </tr>
                         }

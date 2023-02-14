@@ -33,5 +33,32 @@ namespace Fly.WebUI.Controllers
             ViewData["flights"] = response;
             return View(flightViewModel);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var item = await _service.GetAsync(id);
+            return View(item.Data);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Detalis(int id)
+        {
+            var item = await _service.GetAsync(id);
+            return View(item.Data);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var item = await _service.GetAsync(id);
+            return View(item.Data);
+        }
     }
 }
