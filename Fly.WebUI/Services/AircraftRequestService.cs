@@ -3,9 +3,6 @@ using Fly.Core.Entities;
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
-using IdentityModel.Client;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Text;
 

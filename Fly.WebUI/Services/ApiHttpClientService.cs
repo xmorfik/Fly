@@ -1,10 +1,6 @@
 ﻿using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Polly;
-using Polly.Fallback;
-using Polly.Retry;
 
 namespace Fly.WebUI.Services
 {
@@ -15,7 +11,7 @@ namespace Fly.WebUI.Services
         private readonly ApiConfiguration _apiConfiguration;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ApiHttpClientService( 
+        public ApiHttpClientService(
             ILogger<ApiHttpClientService> logger,
             IHttpClientFactory factory,
             IOptions<ApiConfiguration> apiConfiguration,

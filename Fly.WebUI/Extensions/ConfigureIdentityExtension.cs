@@ -21,7 +21,7 @@ namespace Fly.WebUI.Extensions
                 options.ClientId = "web1";
                 options.ClientSecret = "secret";
                 options.ResponseType = "code";
-                
+
                 options.SaveTokens = true;
 
                 options.Scope.Clear();

@@ -3,9 +3,6 @@ using Fly.Core.Entities;
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
-using IdentityModel.Client;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -17,7 +14,7 @@ namespace Fly.WebUI.Services
         private readonly ApiHttpClientService _httpClientService;
 
         public FlightRequestService(
-            ILogger<FlightRequestService> logger, 
+            ILogger<FlightRequestService> logger,
             ApiHttpClientService httpClientService)
         {
             _logger = logger;
