@@ -16,7 +16,7 @@ namespace Fly.IdentityServer
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
                 {
-                    new ApiScope("api1", "Web Api ")
+                    new ApiScope("api1", "Web Api ", new List<string> { "Roles" })
                 };
 
         public static IEnumerable<Client> Clients =>

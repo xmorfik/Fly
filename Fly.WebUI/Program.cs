@@ -2,6 +2,7 @@ using Fly.WebUI;
 using Fly.WebUI.Extensions;
 using Fly.WebUI.Services;
 using Polly;
+using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddHttpClient<ApiHttpClientService>().AddPolicyHandler(Policy.H
  (r => !r.IsSuccessStatusCode).RetryAsync());
 builder.Services.AddMapper();
 builder.Services.AddScoped<ApiHttpClientService>();
+
 
 var app = builder.Build();
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Fly.WebUI.Extensions
 {
@@ -48,6 +49,8 @@ namespace Fly.WebUI.Extensions
                 options.AddPolicy("ManagerOnly", policy =>
                                   policy.RequireClaim("Role", "Manager"));
             });
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
         }
     }
 }
