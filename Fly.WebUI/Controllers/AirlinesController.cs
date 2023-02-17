@@ -42,7 +42,7 @@ public class AirlinesController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Detalis(int id)
+    public async Task<IActionResult> Details(int id)
     {
         var item = await _service.GetAsync(id);
         return View(item.Data);
