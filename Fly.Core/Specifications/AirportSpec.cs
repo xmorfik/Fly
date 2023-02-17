@@ -7,6 +7,10 @@ public class AirportSpec : Specification<Airport>
 {
     public AirportSpec(int id)
     {
-        Query.Where(x => x.Id == id).AsNoTracking();
+        Query.Include(x => x.Aircrafts);
+
+        Query.Include(x => x.City);
+
+        Query.Where(x => x.Id == id);
     }
 }

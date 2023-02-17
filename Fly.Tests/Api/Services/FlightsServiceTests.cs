@@ -28,7 +28,7 @@ public class FlightsServiceTests
     {
         var service = new FlightService(_repository.Object, _logger.Object);
         var result = await service.GetListAsync(new FlightParameter(), new Page());
-        var data = result.Data;
+        var data = result;
         data.Count().Should().Be(_flights.Count);
     }
 }

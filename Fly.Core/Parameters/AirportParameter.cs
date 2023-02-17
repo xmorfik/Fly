@@ -2,7 +2,8 @@
 
 public class AirportParameter
 {
-    public string? AirporId { get; set; }
-    public string? Address { get; set; }
+    public string? Name { get; set; }
     public string? CityName { get; set; }
+    public string? IsoRegion { get; set; }
+    public string? IsoCountry { get; set; }
 }

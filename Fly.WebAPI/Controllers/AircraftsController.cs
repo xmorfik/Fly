@@ -2,13 +2,16 @@
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
+using Fly.WebAPI.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Fly.WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Policy = "ManagerAndAdminOnly")]
 public class AircraftsController : ControllerBase
 {
     private readonly IService<Aircraft, AircraftParameter> _service;
@@ -19,35 +22,34 @@ public class AircraftsController : ControllerBase
     }
 
     [HttpGet]
-    [AllowAnonymous]
-    public async Task<PagedResponse<ICollection<Aircraft>>> Get([FromQuery] AircraftParameter parameter, [FromQuery] Page page)
+    public async Task<ICollection<Aircraft>> Get([FromQuery] AircraftParameter parameter, [FromQuery] Page page)
     {
-        return await _service.GetListAsync(parameter, page);
+        var result = await _service.GetListAsync(parameter, page);
+        Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(result.MetaData));
+        return result;
     }
 
     [HttpGet("{id}")]
-    [AllowAnonymous]
     public async Task<Response<Aircraft>> Get(int id)
     {
         return await _service.GetAsync(id);
     }
 
     [HttpPost]
-    [Authorize]
+    [ValidateModel]
     public async Task Post([FromBody] Aircraft value)
     {
         await _service.CreateAsync(value);
     }
 
     [HttpPut]
-    [Authorize(Roles = "Manager")]
+    [ValidateModel]
     public async Task Put([FromBody] Aircraft value)
     {
         await _service.UpdateAsync(value);
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Manager")]
     public async Task Delete(int id)
     {
         await _service.DeleteAsync(id);

@@ -1,18 +1,12 @@
-﻿using Fly.Core.Entities;
-using Fly.Core.Parameters;
-using Fly.Core.Services;
-using Fly.Shared.DataTransferObjects;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fly.WebUI.Controllers;
 
 public class AccountController : Controller
 {
-    private readonly IService<Aircraft, AircraftParameter> _service;
-    public AccountController(IService<Aircraft, AircraftParameter> service)
+    public AccountController()
     {
-        _service = service;
     }
 
     public IActionResult Index()
@@ -28,13 +22,16 @@ public class AccountController : Controller
         });
     }
 
-    public IActionResult Register()
+    public async Task<IActionResult> Logout()
     {
-        return Redirect("");
+        await HttpContext.SignOutAsync("Cookie");
+        await HttpContext.SignOutAsync("oidc");
+
+        return Redirect("/"); ;
     }
 
-    public IActionResult Register(UserForRegistrationDto user)
+    public IActionResult Register()
     {
-        return View();
+        return Redirect("https://localhost:5004/account/register");
     }
 }

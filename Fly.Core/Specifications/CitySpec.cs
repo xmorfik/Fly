@@ -7,6 +7,6 @@ public class CitySpec : Specification<City>
 {
     public CitySpec(int id)
     {
-        Query.Where(x => x.Id == id).AsNoTracking();
+        Query.Where(x => x.Id == id);
     }
 }

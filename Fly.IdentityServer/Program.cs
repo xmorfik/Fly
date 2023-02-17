@@ -20,6 +20,8 @@ try
         .ConfigureServices()
         .ConfigurePipeline();
 
+    SeedData.EnsureSeedData(app);
+
     app.Run();
 }
 catch (Exception ex)

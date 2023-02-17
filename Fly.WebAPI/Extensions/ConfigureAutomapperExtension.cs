@@ -4,7 +4,7 @@ namespace Fly.WebAPI.Extensions;
 
 public static class ConfigureAutomapperExtension
 {
-    public static IServiceCollection AddAutoMapper(this IServiceCollection services)
+    public static IServiceCollection AddMapper(this IServiceCollection services)
     {
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

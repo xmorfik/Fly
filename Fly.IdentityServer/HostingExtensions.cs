@@ -5,62 +5,61 @@ using Fly.WebAPI.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Serilog;
 
-namespace Fly.IdentityServer
+namespace Fly.IdentityServer;
+
+internal static class HostingExtensions
 {
-    internal static class HostingExtensions
+    public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
-        public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
-        {
-            builder.Services.AddRazorPages();
+        builder.Services.AddRazorPages();
 
-            builder.Services.AddPostgres(builder.Configuration);
+        builder.Services.AddSqlServer(builder.Configuration);
 
-            builder.Services.AddIdentity<User, IdentityRole>()
-            .AddEntityFrameworkStores<FlyDbContext>()
-            .AddDefaultTokenProviders();
+        builder.Services.AddIdentity<User, IdentityRole>()
+        .AddEntityFrameworkStores<FlyDbContext>()
+        .AddDefaultTokenProviders();
 
-            builder.Services.AddIdentityServer(options =>
-                {
-                    options.Events.RaiseErrorEvents = true;
-                    options.Events.RaiseInformationEvents = true;
-                    options.Events.RaiseFailureEvents = true;
-                    options.Events.RaiseSuccessEvents = true;
-                })
-                .AddAspNetIdentity<User>()
-                .AddInMemoryIdentityResources(Config.IdentityResources)
-                .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddInMemoryClients(Config.Clients)
-                .AddDeveloperSigningCredential();
-
-            var configuration = builder.Configuration;
-            builder.Services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
+        builder.Services.AddIdentityServer(options =>
             {
-                microsoftOptions.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-                microsoftOptions.ClientId = configuration["Authentication:Microsoft:ClientId"];
-                microsoftOptions.ClientSecret = configuration["Authentication:Microsoft:ClientSecret"];
-            });
+                options.Events.RaiseErrorEvents = true;
+                options.Events.RaiseInformationEvents = true;
+                options.Events.RaiseFailureEvents = true;
+                options.Events.RaiseSuccessEvents = true;
+            })
+            .AddAspNetIdentity<User>()
+            .AddInMemoryIdentityResources(Config.IdentityResources)
+            .AddInMemoryApiScopes(Config.ApiScopes)
+            .AddInMemoryClients(Config.Clients)
+            .AddDeveloperSigningCredential();
 
-            return builder.Build();
+        var configuration = builder.Configuration;
+        builder.Services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
+        {
+            microsoftOptions.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+            microsoftOptions.ClientId = configuration["Authentication:Microsoft:ClientId"];
+            microsoftOptions.ClientSecret = configuration["Authentication:Microsoft:ClientSecret"];
+        });
+
+        return builder.Build();
+    }
+
+    public static WebApplication ConfigurePipeline(this WebApplication app)
+    {
+        app.UseSerilogRequestLogging();
+
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
         }
 
-        public static WebApplication ConfigurePipeline(this WebApplication app)
-        {
-            app.UseSerilogRequestLogging();
+        app.UseStaticFiles();
+        app.UseRouting();
 
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+        app.UseIdentityServer();
 
-            app.UseStaticFiles();
-            app.UseRouting();
+        app.UseAuthorization();
+        app.MapRazorPages();
 
-            app.UseIdentityServer();
-
-            app.UseAuthorization();
-            app.MapRazorPages();
-
-            return app;
-        }
+        return app;
     }
 }

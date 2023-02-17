@@ -1,0 +1,114 @@
+﻿@using Fly.Core.Entities;
+@using Microsoft.AspNetCore.Mvc.Localization;
+@model FlightsViewModel
+@inject IViewLocalizer Localizer
+
+<div class="card">
+    <img class="card-img-top" src="~/flight.jpg">
+    <div class="card-body">
+        <form asp-action="Index">
+            <div class="row">
+                <div class="col">
+                    <label class="control-label">@Localizer["Time"]</label>
+                    <input asp-for="FlightParameter.DepartureDateTime" class="form-control" />
+                </div>
+                <div class="col">
+                    <label class="control-label">@Localizer["DepartureCity"]</label>
+                    <input asp-for="FlightParameter.DepartureCity" class="form-control" />
+                </div>
+                <div class="col">
+                    <label class="control-label">@Localizer["ArrivalCity"]</label>
+                    <input asp-for="FlightParameter.ArrivalCity" class="form-control" />
+                </div>
+                <div class="col">
+                    <br/>
+                    <input type="submit" value=@Localizer["Search"] class="btn btn-primary" />
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                 DepartureAirport
+                            </th>
+                            <th>
+                                 ArrivalAirport
+                            </th>
+                            <th>
+                                 Aircraft
+                            </th>
+                            <th>
+                                 Departure
+                            </th>
+                            <th>
+                                 Arrival
+                            </th>
+                           
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.PagedResponse)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DepartureAirport.Name)
+                                    @Html.DisplayFor(modelItem => item.DepartureAirport.City.IsoCountry)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ArrivalAirport.Name)
+                                    @Html.DisplayFor(modelItem => item.DepartureAirport.City.IsoCountry)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Aircraft.ModelType)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DepartureDateTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ArrivalDateTime)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="col">
+                    <input asp-for="MetaData.PageSize" min="1" value="@Model.MetaData.PageSize" class="form-control" />
+                </div>
+                <div class="col">
+                    <input hidden="true" asp-for="MetaData.CurrentPage" value="@Model.MetaData.CurrentPage" id="pageNumber" class="form-control" />
+                </div>
+                @if (Model.MetaData.HasPrevious)
+                {
+                    <div class="col">
+                            <input type="submit" value="Prev" onclick="decrementValue()" class="btn btn-primary" />
+                    </div>
+                }
+                @if (Model.MetaData.HasNext)
+                {
+                    <div class="col">
+                            <input type="submit" value="Next" onclick="incrementValue()" class="btn btn-primary" />
+                    </div>
+                }
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function incrementValue(){
+        var value = parseInt(document.getElementById('pageNumber').value, 10);
+        value++;
+        document.getElementById('pageNumber').value = value;
+    }
+
+    function decrementValue() {
+        var value = parseInt(document.getElementById('pageNumber').value, 10);
+        value--;
+        document.getElementById('pageNumber').value = value;
+    }
+</script>

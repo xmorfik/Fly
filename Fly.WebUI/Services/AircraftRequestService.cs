@@ -1,136 +1,119 @@
-﻿using Cysharp.Web;
-using Fly.Core.Entities;
+﻿using Fly.Core.Entities;
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
-using IdentityModel.Client;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.Options;
+using Fly.WebUI.Interfaces;
 using Newtonsoft.Json;
 using System.Text;
 
-namespace Fly.WebUI.RequestServices
+namespace Fly.WebUI.Services;
+
+public class AircraftRequestService : IService<Aircraft, AircraftParameter>
 {
-    public class AircraftRequestService : IService<Aircraft, AircraftParameter>
+    private readonly ILogger<AircraftRequestService> _logger;
+    private readonly ApiHttpClientService _httpClientService;
+    private readonly IParametersParser _parser;
+
+    public AircraftRequestService(
+        ILogger<AircraftRequestService> logger,
+        ApiHttpClientService httpClientService,
+        IParametersParser parser)
     {
-        private readonly ILogger<AircraftRequestService> _logger;
-        private readonly IHttpClientFactory _factory;
-        private readonly ApiConfiguration _apiConfiguration;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        _logger = logger;
+        _httpClientService = httpClientService;
+        _parser = parser;
+    }
 
-        public AircraftRequestService(
-            ILogger<AircraftRequestService> logger,
-            IHttpClientFactory factory,
-            IOptions<ApiConfiguration> apiConfiguration,
-            IHttpContextAccessor httpContextAccessor)
+    public async Task CreateAsync(Aircraft item)
+    {
+        try
         {
-            _logger = logger;
-            _apiConfiguration = apiConfiguration.Value;
-            _factory = factory;
-            _httpContextAccessor = httpContextAccessor;
+            var itemJson = JsonConvert.SerializeObject(item);
+            var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
+            var client = await _httpClientService.GetClientAsync();
+            await client.PostAsync("aircrafts", content);
         }
-
-        public async Task CreateAsync(Aircraft item)
+        catch (Exception ex)
         {
-            try
-            {
-                var itemJson = JsonConvert.SerializeObject(item);
-                var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
-                var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-                var client = _factory.CreateClient();
-                client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
-                client.SetBearerToken(accessToken);
-                await client.PostAsync("aircrafts", content);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-                throw;
-            }
+            _logger.LogError(ex.Message);
+            throw;
         }
+    }
 
-        public async Task DeleteAsync(int id)
+    public async Task DeleteAsync(int id)
+    {
+        try
         {
-            try
-            {
-                var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-                var client = _factory.CreateClient();
-                client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
-                client.SetBearerToken(accessToken);
-                await client.DeleteAsync($"aircrafts/{id}");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-                throw;
-            }
+            var client = await _httpClientService.GetClientAsync();
+            await client.DeleteAsync($"aircrafts/{id}");
         }
-
-        public async Task<Response<Aircraft>> GetAsync(int id)
+        catch (Exception ex)
         {
-            try
-            {
-                var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-                var client = _factory.CreateClient();
-                client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
-                client.SetBearerToken(accessToken);
-                var response = await client.GetAsync($"aircrafts/{id}");
-                var responseString = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<Response<Aircraft>>(responseString);
-
-                if (result == null)
-                {
-                    return new Response<Aircraft>(new Aircraft()) { Succeeded = false };
-                }
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-                throw;
-            }
+            _logger.LogError(ex.Message);
+            throw;
         }
+    }
 
-        public async Task<PagedResponse<ICollection<Aircraft>>> GetListAsync(AircraftParameter parameter, Page page)
+    public async Task<Response<Aircraft>> GetAsync(int id)
+    {
+        try
         {
-            try
+            var client = await _httpClientService.GetClientAsync();
+            var response = await client.GetAsync($"aircrafts/{id}");
+
+            var responseString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<Response<Aircraft>>(responseString);
+
+            if (result == null)
             {
-                var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-                var client = _factory.CreateClient();
-                client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
-                client.SetBearerToken(accessToken);
-                var queryParameters = WebSerializer.ToQueryString(parameter);
-                var queryPage = WebSerializer.ToQueryString(page);
-                var response = await client.GetAsync("aircrafts?" + queryParameters + queryPage);
-                var responseString = await response.Content.ReadAsStringAsync();
-                var items = JsonConvert.DeserializeObject<PagedResponse<ICollection<Aircraft>>>(responseString);
-                return items;
+                return new Response<Aircraft>(new Aircraft()) { Succeeded = false };
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-                throw;
-            }
+
+            return result;
         }
-
-        public async Task UpdateAsync(Aircraft item)
+        catch (Exception ex)
         {
-            try
-            {
-                var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
-                var client = _factory.CreateClient();
-                client.BaseAddress = new Uri(_apiConfiguration.Uri + _apiConfiguration.Part);
-                client.SetBearerToken(accessToken);
-                var itemJson = JsonConvert.SerializeObject(item);
-                var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
-                await client.PutAsync("aircrafts", content);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-                throw;
-            }
+            _logger.LogError(ex.Message);
+            throw;
+        }
+    }
+
+    public async Task<PagedResponse<Aircraft>> GetListAsync(AircraftParameter parameter, Page page)
+    {
+        var parser = new ParametersParser();
+        var str = parser.Parse(parameter, page);
+        var client = await _httpClientService.GetClientAsync();
+        try
+        {
+            var response = await client.GetAsync("aircrafts?" + str);
+            var responseString = await response.Content.ReadAsStringAsync();
+            var headerValues = response.Headers.GetValues("X-Pagination");
+            var jsonMetaData = headerValues.FirstOrDefault();
+            var items = JsonConvert.DeserializeObject<List<Aircraft>>(responseString);
+            var metaData = JsonConvert.DeserializeObject<MetaData>(jsonMetaData);
+            var pagedResponse = new PagedResponse<Aircraft>(items, metaData);
+            return pagedResponse;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            throw;
+        }
+    }
+
+    public async Task UpdateAsync(Aircraft item)
+    {
+        try
+        {
+            var client = await _httpClientService.GetClientAsync();
+            var itemJson = JsonConvert.SerializeObject(item);
+            var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
+            await client.PutAsync("aircrafts", content);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            throw;
         }
     }
 }

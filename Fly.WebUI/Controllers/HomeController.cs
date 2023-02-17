@@ -1,4 +1,5 @@
-﻿using Fly.Core.Entities;
+﻿using AutoMapper;
+using Fly.Core.Entities;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.WebUI.Models;
@@ -11,21 +12,20 @@ namespace Fly.WebUI.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private readonly IService<Aircraft, AircraftParameter> _service;
+    private readonly IService<Flight, FlightParameter> _service;
+    private readonly IMapper _mapper;
 
-    public HomeController(ILogger<HomeController> logger, IService<Aircraft, AircraftParameter> service)
+    public HomeController(
+        ILogger<HomeController> logger,
+        IService<Flight, FlightParameter> service,
+        IMapper mapper)
     {
         _logger = logger;
         _service = service;
+        _mapper = mapper;
     }
 
     public async Task<IActionResult> Index()
-    {
-        return View();
-    }
-
-    [HttpGet]
-    public IActionResult Search()
     {
         return View();
     }
@@ -41,10 +41,10 @@ public class HomeController : Controller
         return LocalRedirect(returnUrl);
     }
 
-    [HttpPost]
-    public IActionResult Search(FlightParameter parameters)
+    [HttpGet]
+    public IActionResult Search()
     {
-        return View();
+        return RedirectToAction("index", "flights", null);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

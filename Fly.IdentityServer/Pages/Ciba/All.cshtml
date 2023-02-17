@@ -12,8 +12,8 @@
                 </div>
                 <div class="card-body">
                     @if (Model.Logins?.Any() == true)
-                    {
-                        <table class="table table-bordered table-striped table-sm">
+                {
+                    <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
                                     <th>Id</th>
@@ -24,8 +24,8 @@
                             </thead>
                             <tbody>
                                 @foreach (var login in Model.Logins)
-                                {
-                                    <tr>
+                            {
+                                <tr>
                                         <td>@login.InternalId</td>
                                         <td>@login.Client.ClientId</td>
                                         <td>@login.BindingMessage</td>
@@ -33,14 +33,14 @@
                                             <a asp-page="Consent" asp-route-id="@login.InternalId" class="btn btn-primary">Process</a>
                                         </td>
                                     </tr>
-                                }
+                            }
                             </tbody>
                         </table>
-                    }
-                    else
-                    {
-                        <div>No Pending Login Requests</div>
-                    }
+                }
+                else
+                {
+                    <div>No Pending Login Requests</div>
+                }
                 </div>
             </div>
         </div>

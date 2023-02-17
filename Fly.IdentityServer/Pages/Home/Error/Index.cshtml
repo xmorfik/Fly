@@ -12,24 +12,24 @@
                 Sorry, there was an error
 
                 @if (Model.View.Error != null)
-                {
-                    <strong>
+            {
+                <strong>
                         <em>
                             : @Model.View.Error.Error
                         </em>
                     </strong>
 
-                    if (Model.View.Error.ErrorDescription != null)
-                    {
-                        <div>@Model.View.Error.ErrorDescription</div>
-                    }
+                if (Model.View.Error.ErrorDescription != null)
+                {
+                    <div>@Model.View.Error.ErrorDescription</div>
                 }
+            }
             </div>
 
             @if (Model?.View?.Error?.RequestId != null)
-            {
-                <div class="request-id">Request Id: @Model.View.Error.RequestId</div>
-            }
+        {
+            <div class="request-id">Request Id: @Model.View.Error.RequestId</div>
+        }
         </div>
     </div>
 </div>

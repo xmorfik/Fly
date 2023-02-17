@@ -4,5 +4,6 @@ public enum AircraftState
 {
     InAir,
     OnService,
-    Free,
+    InAeroport,
+    NonFlying
 }

@@ -9,5 +9,5 @@ public interface IService<T, TParameter> where T : class, IAggregateEntities
     public Task UpdateAsync(T item);
     public Task DeleteAsync(int id);
     public Task<Response<T>> GetAsync(int id);
-    public Task<PagedResponse<ICollection<T>>> GetListAsync(TParameter parameter, Page page);
+    public Task<PagedResponse<T>> GetListAsync(TParameter parameter, Page page);
 }

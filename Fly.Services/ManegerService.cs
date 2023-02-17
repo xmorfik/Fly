@@ -63,13 +63,12 @@ public class ManagerService : IService<Manager, ManagerParameter>
         }
     }
 
-    public async Task<PagedResponse<ICollection<Manager>>> GetListAsync(ManagerParameter parameter, Page page)
+    public async Task<PagedResponse<Manager>> GetListAsync(ManagerParameter parameter, Page page)
     {
         try
         {
-            var items = await _repository.ListAsync(new ManagerListSpec(parameter, page));
-
-            return new PagedResponse<ICollection<Manager>>(items, page);
+            var items = await _repository.ListAsync(new ManagerListSpec(parameter));
+            return PagedResponse<Manager>.ToPagedList(items, page);
         }
         catch (Exception ex)
         {

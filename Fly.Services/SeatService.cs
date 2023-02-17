@@ -63,13 +63,12 @@ public class SeatService : IService<Seat, SeatParameter>
         }
     }
 
-    public async Task<PagedResponse<ICollection<Seat>>> GetListAsync(SeatParameter parameter, Page page)
+    public async Task<PagedResponse<Seat>> GetListAsync(SeatParameter parameter, Page page)
     {
         try
         {
-            var items = await _repository.ListAsync(new SeatListSpec(parameter, page));
-
-            return new PagedResponse<ICollection<Seat>>(items, page);
+            var items = await _repository.ListAsync(new SeatListSpec(parameter));
+            return PagedResponse<Seat>.ToPagedList(items, page);
         }
         catch (Exception ex)
         {
