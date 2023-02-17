@@ -1,69 +1,131 @@
-﻿@model IEnumerable<Fly.Core.Entities.Aircraft>
+﻿@using Fly.Core.Entities;
+@using Microsoft.AspNetCore.Mvc.Localization;
+@model AircraftsViewModel;
+@inject IViewLocalizer Localizer
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ModelType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SerialNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ManufactureDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FlightHours)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AircraftState)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AirlineId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AirportId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModelType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SerialNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ManufactureDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FlightHours)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AircraftState)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Airline.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Airport.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id=item.Id }) 
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="card">
+    <img class="card-img-top" src="~/aircraft.jpg">
+    <div class="card-body">
+        <form asp-action="Index">
+            <div class="row">
+                <div class="col">
+                    <label class="control-label">Model Type</label>
+                    <input asp-for="AircraftParameter.ModelType" class="form-control" />
+                </div>
+                <div class="col">
+                    <label class="control-label">Aircraft State</label>
+                    <input asp-for="AircraftParameter.AircraftState" class="form-control" />
+                </div>
+                <div class="col">
+                    <label class="control-label">Airline</label>
+                    <input asp-for="AircraftParameter.Airline" class="form-control" />
+                </div>
+                <div class="col">
+                    <br />
+                    <input type="submit" onclick="setStartPage()" value=@Localizer["Search"] class="btn btn-primary" />
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                 Model Type
+                            </th>
+                            <th>
+                                 Serial Number
+                            </th>
+                            <th>
+                                 Manufacture Date 
+                            </th>
+                            <th>
+                                 Flight Hours 
+                            </th> 
+                            <th>
+                                 Aircraft State 
+                            </th>
+                            <th>
+                                 Airline Name 
+                            </th>
+                            <th>
+                                 Airport Name
+                            </th>
+                            <th>
+                                 Id
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.PagedResponse)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ModelType)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SerialNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ManufactureDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FlightHours)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AircraftState)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Airline.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Airport.City)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Details", "Details", new { id=item.Id })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="col">
+                    <input asp-for="MetaData.PageSize" min="1" value="@Model.MetaData.PageSize" class="form-control" />
+                </div>
+                <div class="col">
+                    <input hidden="true" asp-for="MetaData.CurrentPage" value="@Model.MetaData.CurrentPage" id="pageNumber" class="form-control" />
+                </div>
+                @if (Model.MetaData.HasPrevious)
+                {
+                    <div class="col">
+                        <input type="submit" value="Prev" onclick="decrementValue()" class="btn btn-outline-primary" />
+                    </div>
+                }
+                @if (Model.MetaData.HasNext)
+                {
+                    <div class="col">
+                        <input type="submit" value="Next" onclick="incrementValue()" class="btn btn-outline-primary" />
+                    </div>
+                }
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function incrementValue() {
+        var value = parseInt(document.getElementById('pageNumber').value, 10);
+        value++;
+        document.getElementById('pageNumber').value = value;
+    }
+
+    function decrementValue() {
+        var value = parseInt(document.getElementById('pageNumber').value, 10);
+        value--;
+        document.getElementById('pageNumber').value = value;
+    }
+
+    function setStartPage() {
+        document.getElementById('pageNumber').value = 1;
+    }
+</script>

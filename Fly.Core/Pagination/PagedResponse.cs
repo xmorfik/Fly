@@ -3,6 +3,10 @@
 public class PagedResponse<T> : List<T>
 {
     public MetaData MetaData { get; set; }
+    public PagedResponse(List<T> items, MetaData metaData) : base(items)
+    {
+        MetaData = metaData;
+    }
     public PagedResponse(List<T> items, int count, Page page) : base(items)
     {
         MetaData = new MetaData
@@ -12,11 +16,6 @@ public class PagedResponse<T> : List<T>
             CurrentPage = page.PageNumber,
             TotalPages = (int)Math.Ceiling(count / (double)page.PageSize)
         };
-    }
-
-    public PagedResponse(List<T> items, MetaData metaData) : base(items)
-    {
-        MetaData = metaData;
     }
 
     public static PagedResponse<T> ToPagedList(IEnumerable<T> source, Page page)

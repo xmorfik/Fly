@@ -1,44 +1,87 @@
-﻿using AutoMapper;
-using Fly.Core.Entities;
+﻿using Fly.Core.Entities;
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
+using Fly.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Fly.WebUI.Controllers
+namespace Fly.WebUI.Controllers;
+
+public class AirportsController : Controller
 {
-    public class AirportsController : Controller
+    private readonly IService<Airport, AirportParameter> _service;
+
+    public AirportsController(IService<Airport, AirportParameter> service)
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly IService<Aircraft, AircraftParameter> _aircraftService;
-        private readonly IService<Flight, FlightParameter> _flightService;
-        private readonly IService<Airport, AirportParameter> _airportService;
-        private readonly IMapper _mapper;
+        _service = service;
+    }
 
-        public AirportsController(
-            ILogger<HomeController> logger,
-            IService<Aircraft, AircraftParameter> aircraftService,
-            IService<Flight, FlightParameter> flightService,
-            IService<Airport, AirportParameter> airportService,
-            IMapper mapper)
-        {
-            _logger = logger;
-            _aircraftService = aircraftService;
-            _flightService = flightService;
-            _airportService = airportService;
-            _mapper = mapper;
-        }
+    [HttpGet]
+    public async Task<IActionResult> Index()
+    {
+        var airportViewModel = new AirportsViewModel();
+        var response = await _service.GetListAsync(new AirportParameter(), new Page());
+        airportViewModel.PagedResponse = response;
+        airportViewModel.MetaData = response.MetaData;
+        return View(airportViewModel);
+    }
 
-        public async Task<IActionResult> Index()
-        {
-            var result = await _airportService.GetListAsync(new AirportParameter(), new Page());
-            return View(result);
-        }
+    [HttpGet]
+    public async Task<IActionResult> Create()
+    {
+        return View();
+    }
 
-        public async Task<IActionResult> Detalis(int id)
-        {
-            var result = await _airportService.GetAsync(id);
-            return View(result);
-        }
+    [HttpGet]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var item = await _service.GetAsync(id);
+        return View(item.Data);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Detalis(int id)
+    {
+        var item = await _service.GetAsync(id);
+        return View(item.Data);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
+    {
+        var item = await _service.GetAsync(id);
+        return View(item.Data);
+    }
+
+
+    [HttpPost]
+    public async Task<IActionResult> Index(AirportsViewModel airportViewModel)
+    {
+        var response = await _service.GetListAsync(airportViewModel.AirportParameter, airportViewModel.MetaData.ToPage());
+        airportViewModel.PagedResponse = response;
+        airportViewModel.MetaData = response.MetaData;
+        return View(airportViewModel);
+    }
+
+
+    [HttpPost]
+    public async Task<IActionResult> Create(Airport item)
+    {
+        await _service.CreateAsync(item);
+        return RedirectToAction("index");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(Airport item)
+    {
+        await _service.DeleteAsync(item.Id ?? 0);
+        return RedirectToAction("index");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(Airport item)
+    {
+        await _service.UpdateAsync(item);
+        return View(item);
     }
 }

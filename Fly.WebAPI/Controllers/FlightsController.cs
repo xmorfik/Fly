@@ -37,8 +37,8 @@ public class FlightsController : ControllerBase
     }
 
     [HttpPost]
-    [ValidateModel]
     [Authorize(Policy = "ManagerAndAdminOnly")]
+    [ValidateModel]
     public async Task Post([FromBody] Flight value)
     {
         await _service.CreateAsync(value);

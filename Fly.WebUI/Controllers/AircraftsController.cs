@@ -1,47 +1,87 @@
-﻿using AutoMapper;
-using Fly.Core.Entities;
+﻿using Fly.Core.Entities;
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
+using Fly.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Fly.WebUI.Controllers
+namespace Fly.WebUI.Controllers;
+
+public class AircraftsController : Controller
 {
-    public class AircraftsController : Controller
+    private readonly IService<Aircraft, AircraftParameter> _service;
+
+    public AircraftsController(IService<Aircraft, AircraftParameter> service)
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly IService<Aircraft, AircraftParameter> _aircraftService;
-        private readonly IService<Flight, FlightParameter> _flightService;
-        private readonly IService<Airport, AirportParameter> _airportService;
-        private readonly IMapper _mapper;
-        //private readonly UserManager<User> _userManager;
+        _service = service;
+    }
 
-        public AircraftsController(
-            ILogger<HomeController> logger,
-            IService<Aircraft, AircraftParameter> aircraftService,
-            IService<Flight, FlightParameter> flightService,
-            IService<Airport, AirportParameter> airportService,
-            IMapper mapper
-            //UserManager<User> userManager
-            )
-        {
-            _logger = logger;
-            _aircraftService = aircraftService;
-            _flightService = flightService;
-            _airportService = airportService;
-            _mapper = mapper;
-            //_userManager = userManager;
-        }
-        public async Task<IActionResult> Index()
-        {
-            var result = await _aircraftService.GetListAsync(new AircraftParameter(), new Page());
-            return View(result);
-        }
+    [HttpGet]
+    public async Task<IActionResult> Index()
+    {
+        var aircraftViewModel = new AircraftsViewModel();
+        var response = await _service.GetListAsync(new AircraftParameter(), new Page());
+        aircraftViewModel.PagedResponse = response;
+        aircraftViewModel.MetaData = response.MetaData;
+        return View(aircraftViewModel);
+    }
 
-        public async Task<IActionResult> Detalis(int id)
-        {
-            var result = await _aircraftService.GetAsync(id);
-            return View(result);
-        }
+    [HttpGet]
+    public async Task<IActionResult> Create()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var item = await _service.GetAsync(id);
+        return View(item.Data);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Detalis(int id)
+    {
+        var item = await _service.GetAsync(id);
+        return View(item.Data);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
+    {
+        var item = await _service.GetAsync(id);
+        return View(item.Data);
+    }
+
+
+    [HttpPost]
+    public async Task<IActionResult> Index(AircraftsViewModel aircraftViewModel)
+    {
+        var response = await _service.GetListAsync(aircraftViewModel.AircraftParameter, aircraftViewModel.MetaData.ToPage());
+        aircraftViewModel.PagedResponse = response;
+        aircraftViewModel.MetaData = response.MetaData;
+        return View(aircraftViewModel);
+    }
+
+
+    [HttpPost]
+    public async Task<IActionResult> Create(Aircraft item)
+    {
+        await _service.CreateAsync(item);
+        return RedirectToAction("index");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(Aircraft item)
+    {
+        await _service.DeleteAsync(item.Id ?? 0);
+        return RedirectToAction("index");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(Aircraft item)
+    {
+        await _service.UpdateAsync(item);
+        return View(item);
     }
 }

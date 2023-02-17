@@ -8,6 +8,6 @@ public class CityListSpec : Specification<City>
 {
     public CityListSpec(CityParameter parameter)
     {
-        Query.Where(x => parameter == null || x.Name.Contains(parameter.Name));
+        Query.Where(x => parameter.Name == null || x.Name.Contains(parameter.Name));
     }
 }

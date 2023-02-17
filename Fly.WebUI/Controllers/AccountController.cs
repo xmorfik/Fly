@@ -5,7 +5,6 @@ namespace Fly.WebUI.Controllers;
 
 public class AccountController : Controller
 {
-
     public AccountController()
     {
     }

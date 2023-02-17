@@ -1,11 +1,12 @@
-﻿using Fly.Core.Pagination;
+﻿using Fly.Core.Entities;
+using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 
-namespace Fly.WebUI.Models
+namespace Fly.WebUI.Models;
+
+public class FlightsViewModel
 {
-    public class FlightsViewModel
-    {
-        public MetaData MetaData { get; set; } = new();
-        public FlightParameter FlightParameter { get; set; } = new();
-    }
+    public MetaData MetaData { get; set; }
+    public FlightParameter FlightParameter { get; set; } = new();
+    public PagedResponse<Flight> PagedResponse { get; set; }
 }

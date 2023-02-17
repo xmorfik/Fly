@@ -14,8 +14,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddCustomLocalization();
 builder.Services.AddServices();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddHttpClient<ApiHttpClientService>().AddPolicyHandler(Policy.HandleResult<HttpResponseMessage>
- (r => !r.IsSuccessStatusCode).RetryAsync());
+builder.Services.AddHttpClient<ApiHttpClientService>()
+    .AddPolicyHandler(Policy.HandleResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode).RetryAsync());
 builder.Services.AddMapper();
 builder.Services.AddScoped<ApiHttpClientService>();
 

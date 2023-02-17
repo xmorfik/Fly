@@ -37,7 +37,7 @@ public class AirlinesController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Policy = "ManagerAndAdminOnly")]
+    [Authorize(Policy = "AdministratorOnly")]
     [ValidateModel]
     public async Task Post([FromBody] Airline value)
     {
@@ -45,7 +45,7 @@ public class AirlinesController : ControllerBase
     }
 
     [HttpPut]
-    [Authorize(Policy = "ManagerAndAdminOnly")]
+    [Authorize(Policy = "AdministratorOnly")]
     [ValidateModel]
     public async Task Put([FromBody] Airline value)
     {
@@ -53,7 +53,7 @@ public class AirlinesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Policy = "ManagerAndAdminOnly")]
+    [Authorize(Policy = "AdministratorOnly")]
     public async Task Delete(int id)
     {
         await _service.DeleteAsync(id);

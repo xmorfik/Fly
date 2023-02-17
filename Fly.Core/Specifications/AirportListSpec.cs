@@ -12,10 +12,12 @@ public class AirportListSpec : Specification<Airport>
 
         Query.Include(x => x.City);
 
-        Query.Where(x => parameter.Address == null || x.Address.Contains(parameter.Address));
-
         Query.Where(x => parameter.CityName == null || x.City.Name.Contains(parameter.CityName));
 
-        Query.Where(x => parameter.IATALocationIdentifier == null || x.IATALocationIdentifier.Contains(parameter.IATALocationIdentifier));
+        Query.Where(x => parameter.IsoRegion == null || x.City.IsoRegion.Contains(parameter.IsoRegion));
+
+        Query.Where(x => parameter.IsoCountry == null || x.City.IsoCountry.Contains(parameter.IsoCountry));
+
+        Query.Where(x => parameter.Name == null || x.Name.Contains(parameter.Name));
     }
 }

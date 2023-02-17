@@ -18,22 +18,22 @@ public class SeedData
             context.Database.Migrate();
 
             var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-            var alice = userMgr.FindByNameAsync("andrii").Result;
-            if (alice == null)
+            var andrii = userMgr.FindByNameAsync("andrii").Result;
+            if (andrii == null)
             {
-                alice = new User
+                andrii = new User
                 {
                     UserName = "andrii",
                     Email = "a.dukhno@outlook.com",
                     EmailConfirmed = true,
                 };
-                var result = userMgr.CreateAsync(alice, "PassWord123$").Result;
+                var result = userMgr.CreateAsync(andrii, "PassWord123$").Result;
                 if (!result.Succeeded)
                 {
                     throw new Exception(result.Errors.First().Description);
                 }
 
-                result = userMgr.AddClaimsAsync(alice, new Claim[]{
+                result = userMgr.AddClaimsAsync(andrii, new Claim[]{
                             new Claim(JwtClaimTypes.Name, "andrii"),
                             new Claim(JwtClaimTypes.GivenName, "_"),
                             new Claim(JwtClaimTypes.FamilyName, "_"),
@@ -44,11 +44,77 @@ public class SeedData
                 {
                     throw new Exception(result.Errors.First().Description);
                 }
-                Log.Debug("alice created");
+                Log.Debug("andrii created");
             }
             else
             {
-                Log.Debug("alice already exists");
+                Log.Debug("andrii already exists");
+            }
+
+            var manager = userMgr.FindByNameAsync("manager").Result;
+            if (manager == null)
+            {
+                manager = new User
+                {
+                    UserName = "manager",
+                    Email = "manager@manager.com",
+                    EmailConfirmed = true,
+                };
+                var result = userMgr.CreateAsync(manager, "PassWord123$").Result;
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
+
+                result = userMgr.AddClaimsAsync(manager, new Claim[]{
+                            new Claim(JwtClaimTypes.Name, "manager"),
+                            new Claim(JwtClaimTypes.GivenName, "_"),
+                            new Claim(JwtClaimTypes.FamilyName, "_"),
+                            new Claim(JwtClaimTypes.WebSite, "_"),
+                            new Claim("Role", "Manager"),
+                        }).Result;
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
+                Log.Debug("manager created");
+            }
+            else
+            {
+                Log.Debug("manager already exists");
+            }
+
+            var passenger = userMgr.FindByNameAsync("passenger").Result;
+            if (passenger == null)
+            {
+                passenger = new User
+                {
+                    UserName = "passenger",
+                    Email = "passenger@passenger.com",
+                    EmailConfirmed = true,
+                };
+                var result = userMgr.CreateAsync(passenger, "PassWord123$").Result;
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
+
+                result = userMgr.AddClaimsAsync(passenger, new Claim[]{
+                            new Claim(JwtClaimTypes.Name, "passenger"),
+                            new Claim(JwtClaimTypes.GivenName, "_"),
+                            new Claim(JwtClaimTypes.FamilyName, "_"),
+                            new Claim(JwtClaimTypes.WebSite, "_"),
+                            new Claim("Role", "Passenger"),
+                        }).Result;
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
+                Log.Debug("passenger created");
+            }
+            else
+            {
+                Log.Debug("passenger already exists");
             }
         }
     }

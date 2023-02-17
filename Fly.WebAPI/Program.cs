@@ -5,7 +5,7 @@ using Fly.WebAPI.Middlewares;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
-builder.Services.AddPostgres(builder.Configuration);
+builder.Services.AddSqlServer(builder.Configuration);
 builder.Services.AddRepositories();
 builder.Services.AddServices();
 builder.Services.AddMapper();

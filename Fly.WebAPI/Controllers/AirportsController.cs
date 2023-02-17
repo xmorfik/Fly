@@ -11,6 +11,7 @@ namespace Fly.WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Policy = "AdministratorOnly")]
 public class AirportsController : ControllerBase
 {
     private readonly IService<Airport, AirportParameter> _service;
@@ -21,7 +22,7 @@ public class AirportsController : ControllerBase
     }
 
     [HttpGet]
-    [AllowAnonymous]
+    [Authorize(Policy = "AdministratorOnly")]
     public async Task<ICollection<Airport>> Get([FromQuery] AirportParameter parameter, [FromQuery] Page page)
     {
         var result = await _service.GetListAsync(parameter, page);
@@ -30,14 +31,14 @@ public class AirportsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [AllowAnonymous]
+    [Authorize(Policy = "AdministratorOnly")]
     public async Task<Response<Airport>> Get(int id)
     {
         return await _service.GetAsync(id);
     }
 
     [HttpPost]
-    [Authorize(Policy = "ManagerAndAdminOnly")]
+    [Authorize(Policy = "AdministratorOnly")]
     [ValidateModel]
     public async Task Post([FromBody] Airport value)
     {
@@ -45,7 +46,7 @@ public class AirportsController : ControllerBase
     }
 
     [HttpPut]
-    [Authorize(Policy = "ManagerAndAdminOnly")]
+    [Authorize(Policy = "AdministratorOnly")]
     [ValidateModel]
     public async Task Put([FromBody] Airport value)
     {
@@ -53,7 +54,7 @@ public class AirportsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Policy = "ManagerAndAdminOnly")]
+    [Authorize(Policy = "AdministratorOnly")]
     public async Task Delete(int id)
     {
         await _service.DeleteAsync(id);

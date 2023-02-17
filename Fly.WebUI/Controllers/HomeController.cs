@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Fly.Core.Entities;
-using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.WebUI.Models;
@@ -45,23 +44,7 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Search()
     {
-        ViewData["result"] = new List<Flight>();
-        return View();
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Search(FlightParameterViewModel parameters)
-    {
-        var par = _mapper.Map<FlightParameter>(parameters);
-        var result = await _service.GetListAsync(par, new Page() { PageNumber = parameters.PageNumber, PageSize = parameters.PageSize });
-        ViewData["result"] = result;
-        return View();
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> Result(PagedResponse<ICollection<Flight>> response)
-    {
-        return View(response);
+        return RedirectToAction("index", "flights", null);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

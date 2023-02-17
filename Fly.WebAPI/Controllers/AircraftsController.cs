@@ -11,6 +11,7 @@ namespace Fly.WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Policy = "ManagerAndAdminOnly")]
 public class AircraftsController : ControllerBase
 {
     private readonly IService<Aircraft, AircraftParameter> _service;
@@ -21,7 +22,6 @@ public class AircraftsController : ControllerBase
     }
 
     [HttpGet]
-    [AllowAnonymous]
     public async Task<ICollection<Aircraft>> Get([FromQuery] AircraftParameter parameter, [FromQuery] Page page)
     {
         var result = await _service.GetListAsync(parameter, page);
@@ -30,14 +30,12 @@ public class AircraftsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [AllowAnonymous]
     public async Task<Response<Aircraft>> Get(int id)
     {
         return await _service.GetAsync(id);
     }
 
     [HttpPost]
-    [Authorize(Policy = "ManagerAndAdminOnly")]
     [ValidateModel]
     public async Task Post([FromBody] Aircraft value)
     {
@@ -45,7 +43,6 @@ public class AircraftsController : ControllerBase
     }
 
     [HttpPut]
-    [Authorize(Policy = "ManagerAndAdminOnly")]
     [ValidateModel]
     public async Task Put([FromBody] Aircraft value)
     {
@@ -53,7 +50,6 @@ public class AircraftsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Policy = "ManagerAndAdminOnly")]
     public async Task Delete(int id)
     {
         await _service.DeleteAsync(id);
