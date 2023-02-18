@@ -11,12 +11,12 @@ namespace Fly.WebUI.Services;
 public class ManagerRequestService : IService<Manager, ManagerParameter>
 {
     private readonly ILogger<ManagerRequestService> _logger;
-    private readonly ApiHttpClientService _httpClientService;
+    private readonly IApiHttpClientService _httpClientService;
     private readonly IParametersParser _parser;
 
     public ManagerRequestService(
         ILogger<ManagerRequestService> logger,
-        ApiHttpClientService httpClientService,
+        IApiHttpClientService httpClientService,
         IParametersParser parser)
     {
         _logger = logger;

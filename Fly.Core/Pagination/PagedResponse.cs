@@ -1,6 +1,6 @@
 ﻿namespace Fly.Core.Pagination;
 
-public class PagedResponse<T> : List<T>
+public class PagedResponse<T> : List<T> 
 {
     public MetaData MetaData { get; set; }
     public PagedResponse(List<T> items, MetaData metaData) : base(items)

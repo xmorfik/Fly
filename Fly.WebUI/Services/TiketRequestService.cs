@@ -11,12 +11,12 @@ namespace Fly.WebUI.Services;
 public class TicketRequestService : IService<Ticket, TicketParameter>
 {
     private readonly ILogger<TicketRequestService> _logger;
-    private readonly ApiHttpClientService _httpClientService;
+    private readonly IApiHttpClientService _httpClientService;
     private readonly IParametersParser _parser;
 
     public TicketRequestService(
         ILogger<TicketRequestService> logger,
-        ApiHttpClientService httpClientService,
+        IApiHttpClientService httpClientService,
         IParametersParser parser)
     {
         _logger = logger;

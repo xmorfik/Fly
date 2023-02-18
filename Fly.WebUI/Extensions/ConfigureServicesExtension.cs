@@ -19,6 +19,7 @@ public static class ConfigureServices
         services.AddScoped<IService<City, CityParameter>, CityRequestService>();
         services.AddScoped<IService<Manager, ManagerParameter>, ManagerRequestService>();
         services.AddTransient<IParametersParser, ParametersParser>();
+        services.AddScoped<IApiHttpClientService, ApiHttpClientService>();
 
         return services;
     }

@@ -11,12 +11,12 @@ namespace Fly.WebUI.Services;
 public class FlightRequestService : IService<Flight, FlightParameter>
 {
     private readonly ILogger<FlightRequestService> _logger;
-    private readonly ApiHttpClientService _httpClientService;
+    private readonly IApiHttpClientService _httpClientService;
     private readonly IParametersParser _parser;
 
     public FlightRequestService(
         ILogger<FlightRequestService> logger,
-        ApiHttpClientService httpClientService,
+        IApiHttpClientService httpClientService,
         IParametersParser parser)
     {
         _logger = logger;

@@ -1,10 +1,11 @@
-﻿using IdentityModel.Client;
+﻿using Fly.WebUI.Interfaces;
+using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 
 namespace Fly.WebUI.Services;
 
-public class ApiHttpClientService
+public class ApiHttpClientService : IApiHttpClientService
 {
     private readonly ILogger<ApiHttpClientService> _logger;
     private readonly IHttpClientFactory _factory;

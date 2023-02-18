@@ -9,7 +9,9 @@ public static class ConfigureCorsExtension
             options.AddPolicy("CorsPolicy", builder =>
             builder.AllowAnyOrigin()
             .AllowAnyMethod()
-            .AllowAnyHeader());
+            .AllowAnyHeader()
+            .AllowCredentials()
+            .WithOrigins("https://localhost:5002"));
         });
     }
 }
