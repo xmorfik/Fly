@@ -1,4 +1,3 @@
-using Duende.IdentityServer;
 using Fly.Core.Entities;
 using Fly.Data;
 using Fly.WebAPI.Extensions;

@@ -17,6 +17,25 @@
     {
       "library": "microsoft-signalr@7.0.3",
       "destination": "wwwroot/lib/microsoft-signalr/"
+    },
+    {
+      "library": "leaflet.markercluster@1.5.3",
+      "destination": "wwwroot/lib/leaflet.markercluster/",
+      "files": [
+        "leaflet.markercluster.js"
+      ]
+    },
+    {
+      "provider": "unpkg",
+      "library": "leaflet-rotatedmarker@0.2.0",
+      "destination": "wwwroot/lib/leaflet-rotatedmarker/",
+      "files": [
+        "example.html",
+        "leaflet.rotatedMarker.js",
+        "LICENSE",
+        "package.json",
+        "README.md"
+      ]
     }
   ]
 }

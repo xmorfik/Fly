@@ -1,5 +1,5 @@
-﻿using Fly.WebAPI.Hubs;
-using Microsoft.AspNetCore.Http;
+﻿using Fly.Shared.DataTransferObjects;
+using Fly.WebAPI.Hubs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
@@ -10,6 +10,7 @@ namespace Fly.WebAPI.Controllers
     public class LocationsController : ControllerBase
     {
         IHubContext<LocationHub> _hub;
+        Random Random = new Random();
         public LocationsController(IHubContext<LocationHub> hub)
         {
             _hub = hub;
@@ -18,8 +19,31 @@ namespace Fly.WebAPI.Controllers
         [HttpPost]
         public async Task Get()
         {
-            await _hub.Clients.All.SendAsync("Send", "Yeeeeeees");
-            await _hub.Clients.All.SendAsync("Message", "Message");
+            var locationsTemp = new List<LocationDto>()
+            {
+                new LocationDto()
+                {
+                    Latitude=50 + Random.NextDouble(),
+                    Longitude= 30 + Random.NextDouble(),
+                    DirectionAngle= 60+Random.Next(360),
+                    AircraftId= 0
+                },
+                new LocationDto()
+                {
+                    Latitude=60 + Random.NextDouble(),
+                    Longitude= 30 + Random.NextDouble(),
+                    DirectionAngle= 60+Random.Next(360),
+                    AircraftId= 0
+                },
+                new LocationDto()
+                {
+                    Latitude=70 + Random.NextDouble(),
+                    Longitude= 30 +Random.NextDouble(),
+                    DirectionAngle= 60+Random.Next(360),
+                    AircraftId= 0
+                }
+            };
+            await _hub.Clients.All.SendAsync("Locations", locationsTemp);
         }
     }
 }
