@@ -7,7 +7,7 @@ public class LocationHistotyDto
 {
     [RedisIdField]
     [Indexed]
-    public int? AircraftId { get; set; }
-    [Indexed]
-    public List<LocationDto>? LocationDtos { get; set; }
+    public int? Id { get; set; }
+    [Indexed(CascadeDepth = 1)]
+    public List<LocationDto>? LocationDtos { get; set; } = new List<LocationDto>();
 }

@@ -2,8 +2,10 @@
 
 public static class ConfigureCorsExtension
 {
-    public static void ConfigureCors(this IServiceCollection services)
+    public static void ConfigureCors(this IServiceCollection services, IConfiguration configuration)
     {
+        var cfg = configuration.GetSection(ClientUrl.Configuration).Get<ClientUrl>();
+
         services.AddCors(options =>
         {
             options.AddPolicy("CorsPolicy", builder =>
@@ -11,7 +13,7 @@ public static class ConfigureCorsExtension
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials()
-            .WithOrigins("https://localhost:5002"));
+            .WithOrigins($"{cfg.Url}"));
         });
     }
 }

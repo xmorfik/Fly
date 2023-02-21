@@ -11,9 +11,9 @@ public class Flight : BaseEntity
     public int? AircraftId { get; set; }
     public Aircraft? Aircraft { get; set; }
 
-    public DateTime? DepartureDateTime { get; set; }
+    public DateTime DepartureDateTime { get; set; }
 
-    public DateTime? ArrivalDateTime { get; set; }
+    public DateTime ArrivalDateTime { get; set; }
 
     public ICollection<Ticket>? Tickets { get; set; }
 }

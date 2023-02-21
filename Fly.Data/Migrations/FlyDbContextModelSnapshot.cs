@@ -413,19 +413,19 @@ namespace Fly.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a3750890-d1d9-41aa-ae01-7ab8f7dcce27",
+                            Id = "f0f126a2-0891-432a-8ca6-26827c81bf02",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "590b2ae8-001e-4c04-b1ed-5445d629a2eb",
+                            Id = "084fed94-7bae-47ba-894a-590560ca1937",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "07bfe71d-30f4-4d9b-b381-c9ed20253f62",
+                            Id = "a07381ba-41af-45fb-9d04-2133b2b4a4e7",
                             Name = "Passenger",
                             NormalizedName = "PASSENGER"
                         });

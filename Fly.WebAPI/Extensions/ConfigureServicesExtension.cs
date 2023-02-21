@@ -3,6 +3,8 @@ using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.Services;
 using Fly.Shared.DataTransferObjects;
+using Fly.WebAPI.Hubs;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Fly.WebAPI.Extensions;
 
@@ -19,6 +21,9 @@ public static class ConfigureServicesExtension
         services.AddScoped<IService<Ticket, TicketParameter>, TicketService>();
         services.AddScoped<IService<Manager, ManagerParameter>, ManagerService>();
         services.AddScoped<IAircraftLocationService<LocationDto>, AircraftLocationService>();
+        services.AddScoped<ScheduleService>();
+        services.AddScoped<TrackingService>();
+        services.AddScoped<FlightsRouteBuilder>();
 
         return services;
     }

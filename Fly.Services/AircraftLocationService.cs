@@ -25,14 +25,10 @@ public class AircraftLocationService : IAircraftLocationService<LocationDto>
         try
         {
             await _aircraftLocations.InsertAsync(item);
-            await _aircraftLocationsHistory.InsertAsync(new LocationHistotyDto()
-            {
-                AircraftId = item.AircraftId,
-                LocationDtos = new List<LocationDto>()
-                {
-                    item
-                }
-            });
+            var history = new LocationHistotyDto();
+            history.Id = item.AircraftId;
+            history.LocationDtos.Add(item);
+            //await _aircraftLocationsHistory.InsertAsync(history);
         }
         catch (Exception ex)
         {
@@ -47,10 +43,9 @@ public class AircraftLocationService : IAircraftLocationService<LocationDto>
         {
             var item = new LocationDto() { AircraftId = id };
             await _aircraftLocations.DeleteAsync(item);
-            await _aircraftLocationsHistory.DeleteAsync(new LocationHistotyDto()
-            {
-                AircraftId = item.AircraftId,
-            });
+            var history = new LocationHistotyDto();
+            history.Id = id;
+            await _aircraftLocationsHistory.DeleteAsync(history);
         }
         catch (Exception ex)
         {
@@ -65,7 +60,7 @@ public class AircraftLocationService : IAircraftLocationService<LocationDto>
         {
             await _aircraftLocationsHistory.UpdateAsync(new LocationHistotyDto()
             {
-                AircraftId = id,
+                Id = id,
                 LocationDtos = new List<LocationDto>()
             });
         }
@@ -80,7 +75,7 @@ public class AircraftLocationService : IAircraftLocationService<LocationDto>
     {
         try
         {
-            var result = await _aircraftLocationsHistory.FirstOrDefaultAsync(x => x.AircraftId == id);
+            var result = await _aircraftLocationsHistory.FirstOrDefaultAsync(x => x.Id == id);
             return result.LocationDtos;
         }
         catch (Exception ex)
@@ -94,7 +89,7 @@ public class AircraftLocationService : IAircraftLocationService<LocationDto>
     {
         try
         {
-            var locationDtos = await _aircraftLocations.ToListAsync();
+            var locationDtos =  await _aircraftLocations.ToListAsync();
             return locationDtos;
         }
         catch (Exception ex)
@@ -108,7 +103,7 @@ public class AircraftLocationService : IAircraftLocationService<LocationDto>
     {
         try
         {
-            var history = await _aircraftLocationsHistory.FindByIdAsync(item.AircraftId.ToString());
+            var history = await _aircraftLocationsHistory.FirstOrDefaultAsync(x => x.Id == item.AircraftId);
             history.LocationDtos.Add(item);
             await _aircraftLocations.UpdateAsync(item);
             await _aircraftLocationsHistory.UpdateAsync(history);

@@ -14,32 +14,56 @@
 		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 	}).addTo(map);
 
+	const icon = L.icon({
+		iconUrl: 'plane-icon.png',
+		iconSize: [20, 20],
+		iconAnchor: [10, 10]
+	});
+
 	const hubConnection = new signalR.HubConnectionBuilder()
 		.withUrl("https://localhost:5000/locations")
         .build();
 
-	const icon = L.icon({
-		iconUrl: 'plane.png',
-		iconSize: [40, 40],
-		iconAnchor: [20, 20]
-
-	});
-
-	let markers = L.markerClusterGroup()
+	let markers = [];
+	let polyline;
+	let route = [];
 
 	hubConnection.on("Locations", function (locations) {
-		markers.eachLayer(layer => {            
-			markers.removeLayer(layer);
-		});
+		if (markers.length > 0) {
+			markers.forEach(function (item, i, markers) {
+				map.removeLayer(item);
+			});
+			markers = [];
+		}
 		locations.forEach(function (item, i, locations) {
-			console.log(i + " : " + item.latitude + " / " + item.longitude);
-			var marker = L.marker([item.latitude, item.longitude], { icon: icon, rotationAngle: item.directionAngle});
-			markers.addLayer(marker);
+			console.log(i + " : " + item.latitude + " / " + item.longitude + " : " + item.aircraftId);
+			let marker = L.marker([item.latitude, item.longitude], { icon: icon, rotationAngle: item.directionAngle, attributes: item.aircraftId }).on('click', markerOnClick).addTo(map);
+			markers.push(marker);
 		});
     });
 
-	map.addLayer(markers);
+	hubConnection.on("LocationsHistory", function (locations) {
+		if(route.length>0){
+			map.removeLayer(polyline);
+			route = [];
+		}
+		locations.forEach(function (item, i, locations) {
+			console.log(i + " : " + item.latitude + " / " + item.longitude);
+			route.push([item.latitude, item.longitude]);
+		});
+		polyline = L.polyline(route, { color: 'orange' }).addTo(map);
+    });
 
-    hubConnection.start().then(() => console.log('Connection started.......!')).catch(err => console.log('Error while connect with server'));
+	hubConnection.start().then(() => 
+	{ 
+		console.log('Connection started.......!'); 
+		hubConnection.invoke("SendLocationsAsync"); 
+	}).catch(err => console.log('Error while connect with server'));
+
+	function markerOnClick(e) {
+		console.log(e.target.options.attributes);
+		let id = e.target.options.attributes;
+		hubConnection.invoke("SendLocationsHistoryAsync", id);
+	}
 </script>
 

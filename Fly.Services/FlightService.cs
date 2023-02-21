@@ -12,18 +12,24 @@ public class FlightService : IService<Flight, FlightParameter>
 {
     private readonly IRepository<Flight> _repository;
     private readonly ILogger<FlightService> _logger;
+    private readonly ScheduleService _scheduleService;
 
-    public FlightService(IRepository<Flight> repository, ILogger<FlightService> logger)
+    public FlightService(
+        IRepository<Flight> repository, 
+        ILogger<FlightService> logger,
+        ScheduleService scheduleService)
     {
         _repository = repository;
         _logger = logger;
+        _scheduleService = scheduleService;
     }
 
     public async Task CreateAsync(Flight item)
     {
         try
         {
-            await _repository.AddAsync(item);
+            var result = await _repository.AddAsync(item);
+            _scheduleService.Schedule(result);
         }
         catch (Exception ex)
         {

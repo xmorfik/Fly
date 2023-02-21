@@ -77,7 +77,8 @@
                                     @Html.DisplayFor(modelItem => item.Airline.Name)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Airport.City)
+                                    @Html.DisplayFor(modelItem => item.Airport.Name)
+                                    @Html.DisplayFor(modelItem => item.Airport.City.IsoCountry)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Id)

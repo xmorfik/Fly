@@ -10,7 +10,7 @@ public class AircraftListSpec : Specification<Aircraft>
     {
         Query.Include(x => x.Airline);
 
-        Query.Include(x => x.Airport);
+        Query.Include(x => x.Airport).ThenInclude(x => x.City);
 
         Query.Where(x => parameter.AircraftState == null || x.AircraftState == parameter.AircraftState);
 

@@ -3,14 +3,6 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "leaflet@1.9.3",
-      "destination": "wwwroot/lib/leaflet/",
-      "files": [
-        "leaflet.min.js",
-        "leaflet.min.css"
-      ]
-    },
-    {
       "library": "bootstrap-icons@1.10.3",
       "destination": "wwwroot/lib/bootstrap-icons/"
     },
@@ -35,6 +27,20 @@
         "LICENSE",
         "package.json",
         "README.md"
+      ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "leaflet@1.9.3",
+      "destination": "wwwroot/lib/leaflet/",
+      "files": [
+        "images/layers-2x.png",
+        "leaflet.min.js",
+        "leaflet.min.css",
+        "images/layers.png",
+        "images/marker-icon-2x.png",
+        "images/marker-icon.png",
+        "images/marker-shadow.png"
       ]
     }
   ]

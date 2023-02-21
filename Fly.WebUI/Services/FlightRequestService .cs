@@ -31,7 +31,8 @@ public class FlightRequestService : IService<Flight, FlightParameter>
             var itemJson = JsonConvert.SerializeObject(item);
             var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
             var client = await _httpClientService.GetClientAsync();
-            await client.PostAsync("flights", content);
+            var response = await client.PostAsync("flights", content);
+            _logger.LogInformation($"Response : {response.StatusCode} : {response.ReasonPhrase}");
         }
         catch (Exception ex)
         {
@@ -45,7 +46,8 @@ public class FlightRequestService : IService<Flight, FlightParameter>
         try
         {
             var client = await _httpClientService.GetClientAsync();
-            await client.DeleteAsync($"flights/{id}");
+            var response = await client.DeleteAsync($"flights/{id}");
+            _logger.LogInformation($"Response : {response.StatusCode} : {response.ReasonPhrase}");
         }
         catch (Exception ex)
         {
@@ -85,6 +87,7 @@ public class FlightRequestService : IService<Flight, FlightParameter>
         try
         {
             var response = await client.GetAsync("flights?" + paramsStr);
+            _logger.LogInformation($"Response : {response.StatusCode} : {response.ReasonPhrase}");
             var responseString = await response.Content.ReadAsStringAsync();
             var headerValues = response.Headers.GetValues("X-Pagination");
             var jsonMetaData = headerValues.FirstOrDefault();
@@ -107,7 +110,8 @@ public class FlightRequestService : IService<Flight, FlightParameter>
             var client = await _httpClientService.GetClientAsync();
             var itemJson = JsonConvert.SerializeObject(item);
             var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
-            await client.PutAsync("flights", content);
+            var response = await client.PutAsync("flights", content);
+            _logger.LogInformation($"Response : {response.StatusCode} : {response.ReasonPhrase}");
         }
         catch (Exception ex)
         {

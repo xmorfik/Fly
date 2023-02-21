@@ -1,5 +1,8 @@
-﻿using Fly.Shared.DataTransferObjects;
+﻿using Fly.Core.Services;
+using Fly.Services;
+using Fly.Shared.DataTransferObjects;
 using Fly.WebAPI.Hubs;
+using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
@@ -9,41 +12,32 @@ namespace Fly.WebAPI.Controllers
     [ApiController]
     public class LocationsController : ControllerBase
     {
-        IHubContext<LocationHub> _hub;
+        private readonly IHubContext<LocationHub> _hub;
+        private readonly IAircraftLocationService<LocationDto> _aircraftLocationService;
+
         Random Random = new Random();
-        public LocationsController(IHubContext<LocationHub> hub)
+        public LocationsController(
+            IHubContext<LocationHub> hub, 
+            IAircraftLocationService<LocationDto> aircraftLocationService)
         {
+            RecurringJob.AddOrUpdate(() => Get(), Cron.Minutely);
+            _aircraftLocationService = aircraftLocationService;
             _hub = hub;
         }
 
-        [HttpPost]
+
+        [HttpGet]
         public async Task Get()
         {
-            var locationsTemp = new List<LocationDto>()
-            {
-                new LocationDto()
-                {
-                    Latitude=50 + Random.NextDouble(),
-                    Longitude= 30 + Random.NextDouble(),
-                    DirectionAngle= 60+Random.Next(360),
-                    AircraftId= 0
-                },
-                new LocationDto()
-                {
-                    Latitude=60 + Random.NextDouble(),
-                    Longitude= 30 + Random.NextDouble(),
-                    DirectionAngle= 60+Random.Next(360),
-                    AircraftId= 0
-                },
-                new LocationDto()
-                {
-                    Latitude=70 + Random.NextDouble(),
-                    Longitude= 30 +Random.NextDouble(),
-                    DirectionAngle= 60+Random.Next(360),
-                    AircraftId= 0
-                }
-            };
-            await _hub.Clients.All.SendAsync("Locations", locationsTemp);
+            var locations = await _aircraftLocationService.GetСurrentLocations();
+            await _hub.Clients.All.SendAsync("Locations", locations);
+        }
+
+        [HttpPost]
+        public async Task Post(int id)
+        {
+            var locations = await _aircraftLocationService.GetLocations(id);
+            await _hub.Clients.All.SendAsync("LocationsHistory", locations);
         }
     }
 }

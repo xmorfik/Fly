@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -445,9 +446,9 @@ namespace Fly.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "07bfe71d-30f4-4d9b-b381-c9ed20253f62", null, "Passenger", "PASSENGER" },
-                    { "590b2ae8-001e-4c04-b1ed-5445d629a2eb", null, "Administrator", "ADMINISTRATOR" },
-                    { "a3750890-d1d9-41aa-ae01-7ab8f7dcce27", null, "Manager", "MANAGER" }
+                    { "084fed94-7bae-47ba-894a-590560ca1937", null, "Administrator", "ADMINISTRATOR" },
+                    { "a07381ba-41af-45fb-9d04-2133b2b4a4e7", null, "Passenger", "PASSENGER" },
+                    { "f0f126a2-0891-432a-8ca6-26827c81bf02", null, "Manager", "MANAGER" }
                 });
 
             migrationBuilder.CreateIndex(

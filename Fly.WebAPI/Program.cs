@@ -1,6 +1,7 @@
 using Fly.WebAPI.Extensions;
 using Fly.WebAPI.Hubs;
 using Fly.WebAPI.Middlewares;
+using Hangfire;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,15 +11,18 @@ builder.Services.AddRepositories();
 builder.Services.AddServices();
 builder.Services.AddMapper();
 builder.Services.AddAuthentication();
-builder.Services.ConfigureCors();
+builder.Services.ConfigureCors(builder.Configuration);
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureRedis(builder.Configuration);
 builder.Services.AddSignalR();
+builder.Services.ConfigureHangfire(builder.Configuration);
+
 builder.Services.AddControllers().AddNewtonsoftJson(x =>
 {
     x.SerializerSettings.MaxDepth = 1;
     x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 });
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwagger();
 
@@ -58,5 +62,7 @@ app.UseSwaggerUI(s =>
 
 app.MapControllers();
 app.MapHub<LocationHub>("/locations");
+
+app.UseHangfireDashboard("/dashboard");
 
 app.Run();

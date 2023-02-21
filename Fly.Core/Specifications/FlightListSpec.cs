@@ -16,8 +16,12 @@ public class FlightListSpec : Specification<Flight>
 
         Query.Where(x => parameter.DepartureDateTime == null || x.DepartureDateTime >= parameter.DepartureDateTime);
 
+        Query.Where(x => parameter.ArrivalDateTime == null || x.ArrivalDateTime >= parameter.ArrivalDateTime);
+
         Query.Where(x => parameter.DepartureCity == null || x.DepartureAirport.City.Name.Contains(parameter.DepartureCity));
 
         Query.Where(x => parameter.ArrivalCity == null || x.ArrivalAirport.City.Name.Contains(parameter.ArrivalCity));
+
+        Query.OrderByDescending(x => x.DepartureDateTime);
     }
 }
