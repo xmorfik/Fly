@@ -1,5 +1,6 @@
 ﻿namespace Fly.Core.Interfaces;
 
-internal interface IRouteBuilder
+public interface IRouteBuilder<T, TResult>
 {
+    public TResult GetLocation(T t);
 }

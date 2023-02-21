@@ -1,9 +1,6 @@
 ﻿using Ardalis.Specification;
-using FluentAssertions;
 using Fly.Core.Entities;
 using Fly.Core.Interfaces;
-using Fly.Core.Pagination;
-using Fly.Core.Parameters;
 using Fly.Services;
 using Fly.Tests.Helpers;
 using Microsoft.Extensions.Logging;

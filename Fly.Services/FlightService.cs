@@ -12,12 +12,12 @@ public class FlightService : IService<Flight, FlightParameter>
 {
     private readonly IRepository<Flight> _repository;
     private readonly ILogger<FlightService> _logger;
-    private readonly ScheduleService _scheduleService;
+    private readonly IScheduleService<Flight> _scheduleService;
 
     public FlightService(
-        IRepository<Flight> repository, 
+        IRepository<Flight> repository,
         ILogger<FlightService> logger,
-        ScheduleService scheduleService)
+        IScheduleService<Flight> scheduleService)
     {
         _repository = repository;
         _logger = logger;

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Fly.WebUI.Controllers;
 
-[Authorize (Policy = "AdministratorOnly")]
+[Authorize(Policy = "AdministratorOnly")]
 public class AirlinesController : Controller
 {
     private readonly IService<Airline, AirlineParameter> _service;

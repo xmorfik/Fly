@@ -2,7 +2,7 @@
 
 namespace Fly.Shared.DataTransferObjects;
 
-[Document(StorageType = StorageType.Json, Prefixes = new[] { "Location" })]
+[Document(StorageType = StorageType.Json, Prefixes = new[] { "Locations" })]
 public class LocationDto
 {
     [RedisIdField]

@@ -1,5 +1,4 @@
 ﻿using Fly.Core.Services;
-using Fly.Services;
 using Fly.Shared.DataTransferObjects;
 using Fly.WebAPI.Hubs;
 using Hangfire;
@@ -17,10 +16,10 @@ namespace Fly.WebAPI.Controllers
 
         Random Random = new Random();
         public LocationsController(
-            IHubContext<LocationHub> hub, 
+            IHubContext<LocationHub> hub,
             IAircraftLocationService<LocationDto> aircraftLocationService)
         {
-            RecurringJob.AddOrUpdate(() => Get(), Cron.Minutely);
+            RecurringJob.AddOrUpdate(() => Get(), Cron.Minutely());
             _aircraftLocationService = aircraftLocationService;
             _hub = hub;
         }
@@ -36,8 +35,8 @@ namespace Fly.WebAPI.Controllers
         [HttpPost]
         public async Task Post(int id)
         {
-            var locations = await _aircraftLocationService.GetLocations(id);
-            await _hub.Clients.All.SendAsync("LocationsHistory", locations);
+            //var locations = await _aircraftLocationService.GetLocations(id);
+            await _hub.Clients.All.SendAsync("LocationsHistory", new LocationDto());
         }
     }
 }

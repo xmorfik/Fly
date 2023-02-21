@@ -1,10 +1,9 @@
 ﻿using Fly.Core.Entities;
+using Fly.Core.Interfaces;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.Services;
 using Fly.Shared.DataTransferObjects;
-using Fly.WebAPI.Hubs;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Fly.WebAPI.Extensions;
 
@@ -21,9 +20,9 @@ public static class ConfigureServicesExtension
         services.AddScoped<IService<Ticket, TicketParameter>, TicketService>();
         services.AddScoped<IService<Manager, ManagerParameter>, ManagerService>();
         services.AddScoped<IAircraftLocationService<LocationDto>, AircraftLocationService>();
-        services.AddScoped<ScheduleService>();
-        services.AddScoped<TrackingService>();
-        services.AddScoped<FlightsRouteBuilder>();
+        services.AddScoped<IScheduleService<Flight>, ScheduleService>();
+        services.AddScoped<ITrackingService, TrackingService>();
+        services.AddScoped<IRouteBuilder<Flight, LocationDto>, FlightsRouteBuilder>();
 
         return services;
     }

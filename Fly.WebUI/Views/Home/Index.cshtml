@@ -57,7 +57,8 @@
 	hubConnection.start().then(() => 
 	{ 
 		console.log('Connection started.......!'); 
-		hubConnection.invoke("SendLocationsAsync"); 
+		setInterval(function () {
+		hubConnection.invoke("SendLocationsAsync"); }, 10000); 
 	}).catch(err => console.log('Error while connect with server'));
 
 	function markerOnClick(e) {
@@ -65,5 +66,7 @@
 		let id = e.target.options.attributes;
 		hubConnection.invoke("SendLocationsHistoryAsync", id);
 	}
+
+	
 </script>
 

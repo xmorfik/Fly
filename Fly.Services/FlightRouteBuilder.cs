@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
 using Fly.Core.Entities;
+using Fly.Core.Interfaces;
 using Fly.Shared.DataTransferObjects;
 using GeoCoordinatePortable;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Serialization;
-using System.Dynamic;
 
 namespace Fly.Services;
 
-public class FlightsRouteBuilder
+public class FlightsRouteBuilder : IRouteBuilder<Flight, LocationDto>
 {
     private readonly IMapper _mapper;
     private readonly ILogger<FlightsRouteBuilder> _logger;
@@ -22,12 +21,12 @@ public class FlightsRouteBuilder
 
     public LocationDto GetLocation(Flight flight)
     {
-        var xDiff = flight.ArrivalAirport.Latitude - flight.DepartureAirport.Latitude;
+        var xDiff = flight.DepartureAirport.Latitude - flight.ArrivalAirport.Latitude;
         var yDiff = flight.ArrivalAirport.Longitude - flight.DepartureAirport.Longitude;
         var totalTimeSpan = flight.ArrivalDateTime - flight.DepartureDateTime;
         var timePassed = DateTime.Now - flight.DepartureDateTime;
-        var progress = Math.Round((double)(timePassed / totalTimeSpan),2);
-        if(progress >= 1)
+        var progress = Math.Round((double)(timePassed / totalTimeSpan), 2);
+        if (progress >= 1)
         {
             return new LocationDto
             {
@@ -43,18 +42,12 @@ public class FlightsRouteBuilder
         var result = new LocationDto()
         {
             AircraftId = flight.AircraftId,
-            Latitude = startLatitude + xDiff * progress,
+            Latitude = startLatitude + -xDiff * progress,
             Longitude = startLongitude + yDiff * progress,
             DirectionAngle = angle
         };
         _logger.LogInformation($"Calculated location for flight {flight.Id} : {result.Latitude}/{result.Longitude}, angle : {result.DirectionAngle} on {DateTime.Now}");
         return result;
-    }
-
-    public async Task BuildRoute(Flight flight)
-    {
-        var distance = CalculateDistance(flight);
-        var angle = CalculatePlaneAngle(flight);
     }
 
     private int CalculateDistance(Flight flight)

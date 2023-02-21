@@ -1,20 +1,16 @@
 ﻿using Fly.Core.Entities;
+using Fly.Core.Interfaces;
 using Hangfire;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fly.Services;
 
-public class ScheduleService
+public class ScheduleService : IScheduleService<Flight>
 {
     private readonly ILogger<ScheduleService> _logger;
-    private readonly TrackingService _trakingService;
-    public ScheduleService(ILogger<ScheduleService> logger, 
-        TrackingService trakingService)
+    private readonly ITrackingService _trakingService;
+    public ScheduleService(ILogger<ScheduleService> logger,
+        ITrackingService trakingService)
     {
         _logger = logger;
         _trakingService = trakingService;
@@ -22,20 +18,20 @@ public class ScheduleService
 
     public void Schedule(Flight flight)
     {
-        var departureSpan = ( flight.DepartureDateTime - DateTime.Now);
+        var departureSpan = (flight.DepartureDateTime - DateTime.Now);
         var arrivalSpan = (flight.ArrivalDateTime - DateTime.Now);
         var id = flight.Id ?? 0;
-        BackgroundJob.Schedule(() => StartFlight(id), departureSpan);
-        BackgroundJob.Schedule(() => StopFlight(id), arrivalSpan);
+        BackgroundJob.Schedule(() => Start(id), departureSpan);
+        BackgroundJob.Schedule(() => Stop(id), arrivalSpan);
     }
 
-    public async Task StartFlight(int id)
+    public async Task Start(int id)
     {
         await _trakingService.Track(id);
         _logger.LogInformation($"Flight {id} started {DateTime.Now}");
     }
 
-    public async Task StopFlight(int id)
+    public async Task Stop(int id)
     {
         await _trakingService.Stop(id);
         _logger.LogInformation($"Flight {id} stopped {DateTime.Now}");
