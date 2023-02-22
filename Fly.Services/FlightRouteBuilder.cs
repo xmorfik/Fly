@@ -25,17 +25,7 @@ public class FlightsRouteBuilder : IRouteBuilder<Flight, LocationDto>
         var yDiff = flight.ArrivalAirport.Longitude - flight.DepartureAirport.Longitude;
         var totalTimeSpan = flight.ArrivalDateTime - flight.DepartureDateTime;
         var timePassed = DateTime.Now - flight.DepartureDateTime;
-        var progress = Math.Round((double)(timePassed / totalTimeSpan), 2);
-        if (progress >= 1)
-        {
-            return new LocationDto
-            {
-                AircraftId = flight.AircraftId,
-                Latitude = flight.ArrivalAirport.Latitude,
-                Longitude = flight.ArrivalAirport.Longitude,
-                DirectionAngle = 90
-            };
-        }
+        var progress = Math.Abs(Math.Round((double)(timePassed / totalTimeSpan), 2));
         var angle = CalculatePlaneAngle(flight);
         var startLatitude = flight.DepartureAirport.Latitude;
         var startLongitude = flight.DepartureAirport.Longitude;
@@ -44,9 +34,10 @@ public class FlightsRouteBuilder : IRouteBuilder<Flight, LocationDto>
             AircraftId = flight.AircraftId,
             Latitude = startLatitude + -xDiff * progress,
             Longitude = startLongitude + yDiff * progress,
+            DateTime = DateTime.Now,
             DirectionAngle = angle
         };
-        _logger.LogInformation($"Calculated location for flight {flight.Id} : {result.Latitude}/{result.Longitude}, angle : {result.DirectionAngle} on {DateTime.Now}");
+        _logger.LogInformation($"Calculated location for flight {flight.Id} : {result.Latitude}/{result.Longitude}, angle : {result.DirectionAngle} on {DateTime.Now}, progress: {progress}");
         return result;
     }
 

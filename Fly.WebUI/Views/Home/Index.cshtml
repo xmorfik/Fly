@@ -27,6 +27,7 @@
 	let markers = [];
 	let polyline;
 	let route = [];
+	let line = [];
 
 	hubConnection.on("Locations", function (locations) {
 		if (markers.length > 0) {
@@ -42,21 +43,37 @@
 		});
     });
 
-	hubConnection.on("LocationsHistory", function (locations) {
-		if(route.length>0){
+	//hubConnection.on("SendLocationsHistoryAsync", function (locations) {
+	//	if(route.length>0){
+	//		map.removeLayer(polyline);
+	//		route = [];
+	//	}
+	//	locations.forEach(function (item, i, locations) {
+	//		console.log(i + " : " + item.latitude + " / " + item.longitude);
+	//		route.push([item.latitude, item.longitude]);
+	//	});
+	//	polyline = L.polyline(route, { color: 'orange' }).addTo(map);
+ //  });
+
+
+	hubConnection.on("Flight", function (flight) {
+		console.log(flight);
+
+		if(line.length>0){
 			map.removeLayer(polyline);
-			route = [];
+			line = [];
 		}
-		locations.forEach(function (item, i, locations) {
-			console.log(i + " : " + item.latitude + " / " + item.longitude);
-			route.push([item.latitude, item.longitude]);
-		});
-		polyline = L.polyline(route, { color: 'orange' }).addTo(map);
-    });
+
+		line.push([flight.departureLatitude, flight.departureLongitude]);
+		line.push([flight.arrivalLatitude, flight.arrivalLongitude]);
+
+		polyline = L.polyline(line, { color: 'orange' }).addTo(map);
+	});
 
 	hubConnection.start().then(() => 
 	{ 
 		console.log('Connection started.......!'); 
+		hubConnection.invoke("SendLocationsAsync");
 		setInterval(function () {
 		hubConnection.invoke("SendLocationsAsync"); }, 10000); 
 	}).catch(err => console.log('Error while connect with server'));
@@ -64,9 +81,8 @@
 	function markerOnClick(e) {
 		console.log(e.target.options.attributes);
 		let id = e.target.options.attributes;
-		hubConnection.invoke("SendLocationsHistoryAsync", id);
+		hubConnection.invoke("GetFlight", id);
 	}
 
-	
 </script>
 

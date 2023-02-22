@@ -19,11 +19,11 @@ namespace Fly.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var ManagerViewModel = new ManagersViewModel();
+            var managerViewModel = new ManagersViewModel();
             var response = await _service.GetListAsync(new ManagerParameter(), new Page());
-            ManagerViewModel.PagedResponse = response;
-            ManagerViewModel.MetaData = response.MetaData;
-            return View(ManagerViewModel);
+            managerViewModel.PagedResponse = response;
+            managerViewModel.MetaData = response.MetaData;
+            return View(managerViewModel);
         }
 
         [HttpGet]
@@ -55,12 +55,12 @@ namespace Fly.WebUI.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Index(ManagersViewModel ManagerViewModel)
+        public async Task<IActionResult> Index(ManagersViewModel managerViewModel)
         {
-            var response = await _service.GetListAsync(ManagerViewModel.ManagerParameter, ManagerViewModel.MetaData.ToPage());
-            ManagerViewModel.PagedResponse = response;
-            ManagerViewModel.MetaData = response.MetaData;
-            return View(ManagerViewModel);
+            var response = await _service.GetListAsync(managerViewModel.ManagerParameter, managerViewModel.MetaData.ToPage());
+            managerViewModel.PagedResponse = response;
+            managerViewModel.MetaData = response.MetaData;
+            return View(managerViewModel);
         }
 
 

@@ -4,9 +4,9 @@ using Fly.Core.Parameters;
 
 namespace Fly.WebUI.Models;
 
-public class SeatsViewModel
+public class SeatsViewModel : ViewModelBase
 {
-    public MetaData MetaData { get; set; }
     public SeatParameter SeatParameter { get; set; } = new();
     public PagedResponse<Seat> PagedResponse { get; set; }
+
 }

@@ -15,4 +15,17 @@ public class FlightSpec : Specification<Flight>, ISingleResultSpecification
 
         Query.Where(x => x.Id == id);
     }
+
+    public FlightSpec(DateTime date, int aircarfatId)
+    {
+        Query.Include(x => x.Aircraft);
+
+        Query.Include(x => x.DepartureAirport);
+
+        Query.Include(x => x.ArrivalAirport);
+
+        Query.Where(x => x.AircraftId == aircarfatId).OrderByDescending(x => x.DepartureDateTime);
+
+        Query.Where(x => x.DepartureDateTime <= date);
+    }
 }

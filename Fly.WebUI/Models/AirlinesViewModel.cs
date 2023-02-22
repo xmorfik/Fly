@@ -4,9 +4,10 @@ using Fly.Core.Parameters;
 
 namespace Fly.WebUI.Models;
 
-public class AirlinesViewModel
+public class AirlinesViewModel : ViewModelBase
 {
-    public MetaData MetaData { get; set; }
+
     public AirlineParameter AirlineParameter { get; set; } = new();
     public PagedResponse<Airline> PagedResponse { get; set; }
+
 }

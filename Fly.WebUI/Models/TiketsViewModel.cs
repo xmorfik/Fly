@@ -4,9 +4,8 @@ using Fly.Core.Parameters;
 
 namespace Fly.WebUI.Models;
 
-public class TicketsViewModel
+public class TicketsViewModel : ViewModelBase
 {
-    public MetaData MetaData { get; set; }
     public TicketParameter TicketParameter { get; set; } = new();
     public PagedResponse<Ticket> PagedResponse { get; set; }
 }

@@ -14,7 +14,6 @@ namespace Fly.WebAPI.Controllers
         private readonly IHubContext<LocationHub> _hub;
         private readonly IAircraftLocationService<LocationDto> _aircraftLocationService;
 
-        Random Random = new Random();
         public LocationsController(
             IHubContext<LocationHub> hub,
             IAircraftLocationService<LocationDto> aircraftLocationService)
@@ -35,7 +34,7 @@ namespace Fly.WebAPI.Controllers
         [HttpPost]
         public async Task Post(int id)
         {
-            //var locations = await _aircraftLocationService.GetLocations(id);
+            var locations = await _aircraftLocationService.GetLocations(id);
             await _hub.Clients.All.SendAsync("LocationsHistory", new LocationDto());
         }
     }

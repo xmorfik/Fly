@@ -31,13 +31,7 @@ public class TrackingService : ITrackingService
         {
             return;
         }
-        var location = new LocationDto
-        {
-            AircraftId = flight.AircraftId,
-            Longitude = flight.DepartureAirport.Longitude,
-            Latitude = flight.DepartureAirport.Latitude,
-            DirectionAngle = 90
-        };
+        var location = _flightsRouteBuilder.GetLocation(flight);
         await _aircraftLocationService.CreateAsync(location);
     }
 

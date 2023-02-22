@@ -4,9 +4,9 @@ using Fly.Core.Parameters;
 
 namespace Fly.WebUI.Models;
 
-public class ManagersViewModel
+public class ManagersViewModel : ViewModelBase
 {
-    public MetaData MetaData { get; set; }
     public ManagerParameter ManagerParameter { get; set; } = new();
     public PagedResponse<Manager> PagedResponse { get; set; }
+
 }

@@ -1,4 +1,8 @@
-﻿using Fly.Core.Services;
+﻿using AutoMapper;
+using Fly.Core.Entities;
+using Fly.Core.Interfaces;
+using Fly.Core.Services;
+using Fly.Core.Specifications;
 using Fly.Shared.DataTransferObjects;
 using Microsoft.Extensions.Logging;
 using Redis.OM;
@@ -8,14 +12,25 @@ namespace Fly.Services;
 
 public class AircraftLocationService : IAircraftLocationService<LocationDto>
 {
+    private readonly IRepository<AircraftLocation> _repository;
+    private readonly IRepository<Flight> _repositoryFlights;
     private readonly RedisCollection<LocationDto> _aircraftLocations;
     private readonly RedisConnectionProvider _provider;
     private readonly ILogger<AircraftLocationService> _logger;
-    public AircraftLocationService(RedisConnectionProvider provider, ILogger<AircraftLocationService> logger)
+    private readonly IMapper _mapper;
+    public AircraftLocationService(
+        RedisConnectionProvider provider,
+        ILogger<AircraftLocationService> logger,
+        IRepository<Flight> repositoryFlights,
+        IRepository<AircraftLocation> repository,
+        IMapper mapper)
     {
-        _provider = provider;
         _aircraftLocations = (RedisCollection<LocationDto>)provider.RedisCollection<LocationDto>();
+        _provider = provider;
         _logger = logger;
+        _mapper = mapper;
+        _repository = repository;
+        _repositoryFlights = repositoryFlights;
     }
 
     public async Task CreateAsync(LocationDto item)
@@ -23,6 +38,7 @@ public class AircraftLocationService : IAircraftLocationService<LocationDto>
         try
         {
             await _aircraftLocations.InsertAsync(item);
+            await _repository.AddAsync(_mapper.Map<AircraftLocation>(item));
         }
         catch (Exception ex)
         {
@@ -45,7 +61,27 @@ public class AircraftLocationService : IAircraftLocationService<LocationDto>
         }
     }
 
-    public async Task<ICollection<LocationDto>> GetСurrentLocations()
+    public async Task<IEnumerable<LocationDto>> GetLocations(int id)
+    {
+        try
+        {
+            var flight = await _repositoryFlights.FirstOrDefaultAsync(new FlightSpec(DateTime.Now, id));
+            var locations = await _repository.ListAsync(new AircraftLocationSpec(flight.DepartureDateTime, flight.ArrivalDateTime, id));
+            var locationDtos = new List<LocationDto>();
+            foreach (var location in locations)
+            {
+                locationDtos.Add(_mapper.Map<LocationDto>(location));
+            }
+            return locationDtos;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            throw;
+        }
+    }
+
+    public async Task<IEnumerable<LocationDto>> GetСurrentLocations()
     {
         try
         {
@@ -64,6 +100,7 @@ public class AircraftLocationService : IAircraftLocationService<LocationDto>
         try
         {
             await _aircraftLocations.UpdateAsync(item);
+            await _repository.AddAsync(_mapper.Map<AircraftLocation>(item));
         }
         catch (Exception ex)
         {
