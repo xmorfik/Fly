@@ -40,78 +40,80 @@
                     <br/>
                     <input type="submit" onclick="setStartPage()" value=@Localizer["Search"] class="btn btn-primary" />
                 </div>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                 Price
-                            </th>
-                            <th>
-                                 Ticket State
-                            </th>
-                            <th>
-                                 Sold Date
-                            </th>
-                            <th>
-                                Departure
-                            </th>
-                            <th>
-                                Arrival
-                            </th>
-                            <th>
-                                Class
-                            </th>
-                            <th>
-                                Name
-                            </th>
-                            <th>
-                                Last Name
-                            </th>
-                            
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.PagedResponse)
-                        {
+                <br />
+                <div class="card-body">
+                    <table class="table rounded rounded-6 overflow-hidden table-sm table-dark table-hover">
+                        <thead>
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Price)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TicketState)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SoldDate)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Flight.DepartureDateTime)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Flight.ArrivalDateTime)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Seat.SeatClass)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Passenger.FirstName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Passenger.LastName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Id)
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                                <th>
+                                    Price
+                                </th>
+                                <th>
+                                    Ticket State
+                                </th>
+                                <th>
+                                    Sold Date
+                                </th>
+                                <th>
+                                    Departure
+                                </th>
+                                <th>
+                                    Arrival
+                                </th>
+                                <th>
+                                    Class
+                                </th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Last Name
+                                </th>
 
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PagedResponse)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Price)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TicketState)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SoldDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Flight.DepartureDateTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Flight.ArrivalDateTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Seat.SeatClass)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Passenger.FirstName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Passenger.LastName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                                        @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
                 <div class="col">
                     <input asp-for="MetaData.PageSize" min="1" value="@Model.MetaData.PageSize" class="form-control" />
                 </div>

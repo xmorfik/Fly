@@ -18,14 +18,14 @@ public class Page
         get => _pageSize;
         set
         {
-            _pageSize = value < 1 ? 10 : value;
+            _pageSize = value < 1 ? 30 : value;
         }
     }
 
     public Page()
     {
         PageNumber = 1;
-        PageSize = 10;
+        PageSize = 30;
     }
 
     public Page(int pageNumber, int pageSize)
