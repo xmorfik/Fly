@@ -1,8 +1,88 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+﻿<div class="card">
+	<div id="map" style="width: 100%; height: 820px;"></div>
 </div>
+
+<script src="~/lib/leaflet-rotatedmarker/leaflet.rotatedMarker.js"></script>
+<script src="~/lib/microsoft-signalr/signalr.min.js"></script>
+<script src="~/lib/leaflet.markercluster/leaflet.markercluster.js"></script>
+
+<script>
+	const map = L.map('map').setView([50.4501, 30.5234], 6);
+
+	const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		maxZoom: 19,
+		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+	}).addTo(map);
+
+	const icon = L.icon({
+		iconUrl: 'plane-icon.png',
+		iconSize: [20, 20],
+		iconAnchor: [10, 10]
+	});
+
+	const hubConnection = new signalR.HubConnectionBuilder()
+		.withUrl("https://localhost:5000/locations")
+        .build();
+
+	let markers = [];
+	let polyline;
+	let route = [];
+	let line = [];
+
+	hubConnection.on("Locations", function (locations) {
+		if (markers.length > 0) {
+			markers.forEach(function (item, i, markers) {
+				map.removeLayer(item);
+			});
+			markers = [];
+		}
+		locations.forEach(function (item, i, locations) {
+			console.log(i + " : " + item.latitude + " / " + item.longitude + " : " + item.aircraftId);
+			let marker = L.marker([item.latitude, item.longitude], { icon: icon, rotationAngle: item.directionAngle, attributes: item.aircraftId }).on('click', markerOnClick).addTo(map);
+			markers.push(marker);
+		});
+    });
+
+	//hubConnection.on("SendLocationsHistoryAsync", function (locations) {
+	//	if(route.length>0){
+	//		map.removeLayer(polyline);
+	//		route = [];
+	//	}
+	//	locations.forEach(function (item, i, locations) {
+	//		console.log(i + " : " + item.latitude + " / " + item.longitude);
+	//		route.push([item.latitude, item.longitude]);
+	//	});
+	//	polyline = L.polyline(route, { color: 'orange' }).addTo(map);
+ //  });
+
+
+	hubConnection.on("Flight", function (flight) {
+		console.log(flight);
+
+		if(line.length>0){
+			map.removeLayer(polyline);
+			line = [];
+		}
+
+		line.push([flight.departureLatitude, flight.departureLongitude]);
+		line.push([flight.arrivalLatitude, flight.arrivalLongitude]);
+
+		polyline = L.polyline(line, { color: 'orange' }).addTo(map);
+	});
+
+	hubConnection.start().then(() => 
+	{ 
+		console.log('Connection started.......!'); 
+		hubConnection.invoke("SendLocationsAsync");
+		setInterval(function () {
+		hubConnection.invoke("SendLocationsAsync"); }, 10000); 
+	}).catch(err => console.log('Error while connect with server'));
+
+	function markerOnClick(e) {
+		console.log(e.target.options.attributes);
+		let id = e.target.options.attributes;
+		hubConnection.invoke("GetFlight", id);
+	}
+
+</script>
+

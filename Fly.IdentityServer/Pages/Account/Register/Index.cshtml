@@ -1,0 +1,38 @@
+﻿@page
+@model Fly.IdentityServer.Pages.Account.Register.IndexModel
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-antiforgery="true">
+            <div class="form-group">
+                <label asp-for="UserForRegistrationDto.FirstName" class="control-label"></label>
+                <input asp-for="UserForRegistrationDto.FirstName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="UserForRegistrationDto.LastName" class="control-label"></label>
+                <input asp-for="UserForRegistrationDto.LastName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="UserForRegistrationDto.UserName" class="control-label"></label>
+                <input asp-for="UserForRegistrationDto.UserName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="UserForRegistrationDto.Password" class="control-label"></label>
+                <input asp-for="UserForRegistrationDto.Password" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="UserForRegistrationDto.Email" class="control-label"></label>
+                <input asp-for="UserForRegistrationDto.Email" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="UserForRegistrationDto.PhoneNumber" class="control-label"></label>
+                <input asp-for="UserForRegistrationDto.PhoneNumber" class="form-control" />
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Register" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

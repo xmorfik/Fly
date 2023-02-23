@@ -1,23 +1,38 @@
+using Fly.WebUI;
+using Fly.WebUI.Extensions;
+using Fly.WebUI.Services;
+using Polly;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.Configure<ApiConfiguration>(
+    builder.Configuration.GetSection(ApiConfiguration.Configuration));
+builder.Services.ConfigureIdentity();
+
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllersWithViews();
+builder.Services.AddCustomLocalization();
+builder.Services.AddServices();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient<ApiHttpClientService>()
+    .AddPolicyHandler(Policy.HandleResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode).RetryAsync());
+builder.Services.AddMapper();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
+app.UseRequestLocalization();
 app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

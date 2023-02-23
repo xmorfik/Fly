@@ -1,0 +1,47 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "bootstrap-icons@1.10.3",
+      "destination": "wwwroot/lib/bootstrap-icons/"
+    },
+    {
+      "library": "microsoft-signalr@7.0.3",
+      "destination": "wwwroot/lib/microsoft-signalr/"
+    },
+    {
+      "library": "leaflet.markercluster@1.5.3",
+      "destination": "wwwroot/lib/leaflet.markercluster/",
+      "files": [
+        "leaflet.markercluster.js"
+      ]
+    },
+    {
+      "provider": "unpkg",
+      "library": "leaflet-rotatedmarker@0.2.0",
+      "destination": "wwwroot/lib/leaflet-rotatedmarker/",
+      "files": [
+        "example.html",
+        "leaflet.rotatedMarker.js",
+        "LICENSE",
+        "package.json",
+        "README.md"
+      ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "leaflet@1.9.3",
+      "destination": "wwwroot/lib/leaflet/",
+      "files": [
+        "images/layers-2x.png",
+        "leaflet.min.js",
+        "leaflet.min.css",
+        "images/layers.png",
+        "images/marker-icon-2x.png",
+        "images/marker-icon.png",
+        "images/marker-shadow.png"
+      ]
+    }
+  ]
+}
