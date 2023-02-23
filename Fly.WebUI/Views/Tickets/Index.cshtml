@@ -73,8 +73,9 @@
                                 <th>
                                     Last Name
                                 </th>
-
-                                <th></th>
+                                <th>
+                                    
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -104,9 +105,6 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Passenger.LastName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Id)
                                     </td>
                                     <td>
                                         @if (User.IsInRole("Administrator"))

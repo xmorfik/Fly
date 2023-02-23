@@ -10,13 +10,14 @@ public static class Config
         {
             new IdentityResources.OpenId(),
             new IdentityResources.Profile(),
-            new IdentityResource("Roles", "User role(s)", new List<string> { "Role" })
+            new IdentityResource("Roles", "User role(s)", new List<string> { "Role" }),
+            new IdentityResource("Airline", "Airline", new List<string> { "Airline" })
         };
 
     public static IEnumerable<ApiScope> ApiScopes =>
         new ApiScope[]
             {
-                new ApiScope("api1", "Web Api ", new List<string> { "Role" })
+                new ApiScope("api1", "Web Api ", new List<string> { "Role" ,  "Airline" })
             };
 
     public static IEnumerable<Client> Clients =>
@@ -40,7 +41,8 @@ public static class Config
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         "api1",
-                        "Roles"
+                        "Roles",
+                        "Airline"
                     },
 
                     AlwaysIncludeUserClaimsInIdToken = true

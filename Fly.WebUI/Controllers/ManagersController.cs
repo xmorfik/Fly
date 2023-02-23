@@ -29,7 +29,7 @@ namespace Fly.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            return View();
+            return Redirect("https://localhost:5004/account/register/manager");
         }
 
         [HttpGet]
@@ -61,14 +61,6 @@ namespace Fly.WebUI.Controllers
             managerViewModel.PagedResponse = response;
             managerViewModel.MetaData = response.MetaData;
             return View(managerViewModel);
-        }
-
-
-        [HttpPost]
-        public async Task<IActionResult> Create(Manager item)
-        {
-            await _service.CreateAsync(item);
-            return RedirectToAction("index");
         }
 
         [HttpPost]
