@@ -11,23 +11,28 @@ namespace Fly.Services;
 public class FlightService : IService<Flight, FlightParameter>
 {
     private readonly IRepository<Flight> _repository;
+    private readonly IRepository<Aircraft> _aircarftRepository;
     private readonly ILogger<FlightService> _logger;
     private readonly IScheduleService<Flight> _scheduleService;
 
     public FlightService(
         IRepository<Flight> repository,
         ILogger<FlightService> logger,
-        IScheduleService<Flight> scheduleService)
+        IScheduleService<Flight> scheduleService,
+        IRepository<Aircraft> aircarftRepository)
     {
         _repository = repository;
         _logger = logger;
         _scheduleService = scheduleService;
+        _aircarftRepository = aircarftRepository;
     }
 
     public async Task CreateAsync(Flight item)
     {
         try
         {
+            var aircarft = await _aircarftRepository.FirstOrDefaultAsync(new AircraftSpec(item.AircraftId ?? 0));
+            item.DepartureAirportId = aircarft.AirportId;
             var result = await _repository.AddAsync(item);
             _scheduleService.Schedule(result);
         }
