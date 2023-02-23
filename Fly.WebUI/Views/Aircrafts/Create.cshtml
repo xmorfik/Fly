@@ -30,12 +30,15 @@
                     <span asp-validation-for="FlightHours" class="text-danger"></span>
                 </div>
             <br />
-                <div class="form-group">
-                    <label asp-for="AirlineId" class="control-label"></label>
-                    <input asp-for="AirlineId" class="form-control" />
-                    <span asp-validation-for="AirlineId" class="text-danger"></span>
+                @if(User.IsInRole("Administrator"))
+                {
+                    <div class="form-group">
+                        <label asp-for="AirlineId" class="control-label"></label>
+                        <input asp-for="AirlineId" class="form-control" />
+                        <span asp-validation-for="AirlineId" class="text-danger"></span>
                 </div>
-            <br />
+                <br />
+                }
                 <div class="form-group">
                     <label asp-for="AirportId" class="control-label"></label>
                     <input asp-for="AirportId" class="form-control" />
