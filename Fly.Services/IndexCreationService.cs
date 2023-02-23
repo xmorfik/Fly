@@ -15,7 +15,6 @@ public class IndexCreationService : IHostedService
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         await _provider.Connection.CreateIndexAsync(typeof(LocationDto));
-        await _provider.Connection.CreateIndexAsync(typeof(LocationHistotyDto));
     }
 
     public Task StopAsync(CancellationToken cancellationToken)

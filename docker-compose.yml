@@ -3,23 +3,27 @@ version: '3.4'
 services:
   fly.webapi:
     image: flywebapi
+    ports:
+        - "5001:5001"
     build:
       context: .
       dockerfile: Fly.WebAPI/Dockerfile
 
   fly.webui:
     image: flywebui
+    ports:
+        - "5003:5003"
     build:
       context: .
       dockerfile: Fly.WebUI/Dockerfile
 
-  postgresdb:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: Qwerty123456
+  sqlserver:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
     ports:
-      - "5432:5432"
+        - "1433:1433"
+    environment:
+        SA_PASSWORD: "Qwerty123456"
+        ACCEPT_EULA: "Y"
 
   redis:
     image: redis/redis-stack:latest
@@ -31,6 +35,8 @@ services:
 
   fly.identityserver:
     image: flyidentityserver
+    ports:
+        - "5004:5004"
     build:
       context: .
       dockerfile: Fly.IdentityServer/Dockerfile

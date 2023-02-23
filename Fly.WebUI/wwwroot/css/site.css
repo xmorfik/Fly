@@ -21,3 +21,8 @@ body {
   margin-bottom: 60px;
 }
 
+.bdr {
+    border-radius: 6px;
+    overflow: hidden;
+}
+
