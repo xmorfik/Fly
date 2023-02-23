@@ -12,7 +12,7 @@ public class Aircraft : BaseEntity
 
     public int? FlightHours { get; set; }
 
-    public AircraftState? AircraftState { get; set; }
+    public AircraftState AircraftState { get; set; }
 
     public int? AirlineId { get; set; }
     public Airline? Airline { get; set; }

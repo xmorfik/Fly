@@ -32,7 +32,8 @@ public class AircraftsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<Response<Aircraft>> Get(int id)
     {
-        return await _service.GetAsync(id);
+        var result = await _service.GetAsync(id);
+        return result;
     }
 
     [HttpPost]
