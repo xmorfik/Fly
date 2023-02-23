@@ -1,4 +1,5 @@
-﻿using Fly.Core.Entities;
+﻿using AutoMapper;
+using Fly.Core.Entities;
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
@@ -10,10 +11,12 @@ namespace Fly.WebUI.Controllers;
 public class AircraftsController : Controller
 {
     private readonly IService<Aircraft, AircraftParameter> _service;
-
-    public AircraftsController(IService<Aircraft, AircraftParameter> service)
+    private readonly IMapper _mapper;
+    public AircraftsController(IService<Aircraft, AircraftParameter> service,
+        IMapper mapper)
     {
         _service = service;
+        _mapper = mapper;
     }
 
     [HttpGet]
@@ -65,9 +68,10 @@ public class AircraftsController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> Create(Aircraft item)
+    public async Task<IActionResult> Create(CreateAircarftVm item)
     {
-        await _service.CreateAsync(item);
+        var result = _mapper.Map<Aircraft>(item);
+        await _service.CreateAsync(result);
         return RedirectToAction("index");
     }
 

@@ -1,6 +1,5 @@
-﻿namespace Fly.WebUI.Models
+﻿namespace Fly.WebUI.Models;
+
+public class LoginViewModel
 {
-    public class LoginViewModel
-    {
-    }
 }

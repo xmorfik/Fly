@@ -1,4 +1,4 @@
-﻿namespace Fly.WebUI.Models;
+﻿namespace Fly.Shared.DataTransferObjects;
 
 public class CreateManagerDto
 {

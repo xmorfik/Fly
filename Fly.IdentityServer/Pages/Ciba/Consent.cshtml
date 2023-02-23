@@ -6,9 +6,9 @@
 <div class="ciba-consent">
     <div class="lead">
         @if (Model.View.ClientLogoUrl != null)
-    {
-        <div class="client-logo"><img src="@Model.View.ClientLogoUrl"></div>
-    }
+{
+    <div class="client-logo"><img src="@Model.View.ClientLogoUrl"></div>
+}
         <h1>
             @Model.View.ClientName
             <small class="text-muted">is requesting your permission</small>
@@ -30,8 +30,8 @@
         <div class="row">
             <div class="col-sm-8">
                 @if (Model.View.IdentityScopes.Any())
-            {
-                <div class="form-group">
+        {
+            <div class="form-group">
                         <div class="card">
                             <div class="card-header">
                                 <span class="glyphicon glyphicon-user"></span>
@@ -39,17 +39,17 @@
                             </div>
                             <ul class="list-group list-group-flush">
                                 @foreach (var scope in Model.View.IdentityScopes)
-                            {
-                                <partial name="_ScopeListItem" model="@scope" />
-                            }
+                        {
+                            <partial name="_ScopeListItem" model="@scope" />
+                        }
                             </ul>
                         </div>
                     </div>
-            }
+        }
 
                 @if (Model.View.ApiScopes.Any())
-            {
-                <div class="form-group">
+        {
+            <div class="form-group">
                         <div class="card">
                             <div class="card-header">
                                 <span class="glyphicon glyphicon-tasks"></span>
@@ -57,13 +57,13 @@
                             </div>
                             <ul class="list-group list-group-flush">
                                 @foreach (var scope in Model.View.ApiScopes)
-                            {
-                                <partial name="_ScopeListItem" model="scope" />
-                            }
+                        {
+                            <partial name="_ScopeListItem" model="scope" />
+                        }
                             </ul>
                         </div>
                     </div>
-            }
+        }
 
                 <div class="form-group">
                     <div class="card">
@@ -86,12 +86,12 @@
             </div>
             <div class="col-sm-4 col-lg-auto">
                 @if (Model.View.ClientUrl != null)
-            {
-                <a class="btn btn-outline-info" href="@Model.View.ClientUrl">
+        {
+            <a class="btn btn-outline-info" href="@Model.View.ClientUrl">
                         <span class="glyphicon glyphicon-info-sign"></span>
                         <strong>@Model.View.ClientName</strong>
                     </a>
-            }
+        }
             </div>
         </div>
     </form>

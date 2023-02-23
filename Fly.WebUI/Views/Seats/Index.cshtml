@@ -15,9 +15,9 @@
                 <br />
                 <div class="card-body">
                     @if (User.IsInRole("Administrator"))
-                    {
-                        @Html.ActionLink("Create", "Create")
-                    }
+                {
+                    @Html.ActionLink("Create", "Create")
+                }
                     <table class="table rounded rounded-6 overflow-hidden table-sm table-dark table-hover">
                         <thead>
                             <tr>
@@ -41,8 +41,8 @@
                         </thead>
                         <tbody>
                             @foreach (var item in Model.PagedResponse)
-                            {
-                                <tr>
+                        {
+                            <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Row)
                                     </td>
@@ -60,15 +60,15 @@
                                     </td>
                                     <td>
                                         @if (User.IsInRole("Administrator"))
-                                        {
-                                            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                                            <br />
-                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                                        }
+                                    {
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                                        <br />
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                    }
                                         @Html.ActionLink("Details", "Details", new { id=item.Id })
                                     </td>
                                 </tr>
-                            }
+                        }
                         </tbody>
                     </table>
                 </div>
@@ -80,17 +80,17 @@
                     <input hidden="true" asp-for="MetaData.CurrentPage" value="@Model.MetaData.CurrentPage" id="pageNumber" class="form-control" />
                 </div>
                 @if (Model.MetaData.HasPrevious)
-                {
-                    <div class="col">
+            {
+                <div class="col">
                         <input type="submit" value="Prev" onclick="decrementValue()" class="btn btn-outline-primary" />
                     </div>
-                }
+            }
                 @if (Model.MetaData.HasNext)
-                {
-                    <div class="col">
+            {
+                <div class="col">
                         <input type="submit" value="Next" onclick="incrementValue()" class="btn btn-outline-primary" />
                     </div>
-                }
+            }
             </div>
         </form>
     </div>

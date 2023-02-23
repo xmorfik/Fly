@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Fly.Core.Entities;
-using Fly.Core.Interfaces;
+using Fly.Core.Services;
 using Fly.Shared.DataTransferObjects;
 using GeoCoordinatePortable;
 using Microsoft.Extensions.Logging;

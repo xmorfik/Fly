@@ -11,16 +11,16 @@
                checked="@Model.Checked"
                disabled="@Model.Required" />
         @if (Model.Required)
-    {
-        <input type="hidden"
+{
+    <input type="hidden"
                    name="Input.ScopesConsented"
                    value="@Model.Value" />
-    }
+}
         <strong>@Model.DisplayName</strong>
         @if (Model.Emphasize)
-    {
-        <span class="glyphicon glyphicon-exclamation-sign"></span>
-    }
+{
+    <span class="glyphicon glyphicon-exclamation-sign"></span>
+}
     </label>
     @if (Model.Required)
 {
@@ -38,9 +38,9 @@
             <label>Will be available to these resource servers:</label>
             <ul>
             @foreach (var resource in Model.Resources)
-        {
-            <li>@resource.DisplayName</li>
-        }
+    {
+        <li>@resource.DisplayName</li>
+    }
             </ul>
         </div>
 }

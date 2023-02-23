@@ -6,7 +6,6 @@ using Fly.WebAPI.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Reflection.Metadata;
 using System.Security.Claims;
 
 namespace Fly.WebAPI.Controllers;
@@ -38,7 +37,7 @@ public class AircraftsController : ControllerBase
                 parameter.AirlineId = int.Parse(airlineId);
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError(ex.Message);
         }

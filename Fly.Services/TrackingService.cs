@@ -18,7 +18,7 @@ public class TrackingService : ITrackingService
     public TrackingService(
         IAircraftLocationService<LocationDto> aircraftLocationService,
         IRouteBuilder<Flight, LocationDto> flightsRouteBuilder,
-        IRepository<Flight> repository, 
+        IRepository<Flight> repository,
         IRepository<Aircraft> aircrafts)
     {
         RecurringJob.AddOrUpdate(() => Update(), "*/10 * * * * *");
