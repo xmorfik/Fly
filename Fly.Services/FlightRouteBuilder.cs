@@ -25,6 +25,10 @@ public class FlightsRouteBuilder : IRouteBuilder<Flight, LocationDto>
         var yDiff = flight.ArrivalAirport.Longitude - flight.DepartureAirport.Longitude;
         var totalTimeSpan = flight.ArrivalDateTime - flight.DepartureDateTime;
         var timePassed = DateTime.Now - flight.DepartureDateTime;
+        if(timePassed < TimeSpan.Zero)
+        {
+            timePassed = TimeSpan.Zero;
+        }
         var progress = Math.Abs(Math.Round((double)(timePassed / totalTimeSpan), 2));
         var angle = CalculatePlaneAngle(flight);
         var startLatitude = flight.DepartureAirport.Latitude;
