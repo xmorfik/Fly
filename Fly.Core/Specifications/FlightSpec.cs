@@ -24,10 +24,9 @@ public class FlightSpec : Specification<Flight>, ISingleResultSpecification
 
         Query.Include(x => x.ArrivalAirport);
 
-        Query.Where(x => x.AircraftId == aircarfatId).OrderByDescending(x => x.DepartureDateTime);
+        Query.Where(x => x.AircraftId == aircarfatId);
 
-        Query.Where(x => x.DepartureDateTime <= date);
+        Query.Where(x => x.Aircraft.AirportId == x.DepartureAirportId);
 
-        Query.Where(x => x.ArrivalDateTime >= date);
     }
 }
