@@ -29,10 +29,18 @@ public class FlightsRouteBuilder : IRouteBuilder<Flight, LocationDto>
         var angle = CalculatePlaneAngle(flight);
         var startLatitude = flight.DepartureAirport.Latitude;
         var startLongitude = flight.DepartureAirport.Longitude;
+        if (progress < 0)
+        {
+            progress = 0;
+        }
+        else if (progress > 1)
+        {
+            progress = 1;
+        }
         var result = new LocationDto()
         {
             AircraftId = flight.AircraftId,
-            Latitude = startLatitude + -xDiff * progress,
+            Latitude = startLatitude - xDiff * progress,
             Longitude = startLongitude + yDiff * progress,
             DateTime = DateTime.Now,
             DirectionAngle = angle

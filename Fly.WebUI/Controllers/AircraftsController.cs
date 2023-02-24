@@ -68,7 +68,7 @@ public class AircraftsController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> Create(CreateAircarftVm item)
+    public async Task<IActionResult> Create(CreateAircraftDto item)
     {
         var result = _mapper.Map<Aircraft>(item);
         await _service.CreateAsync(result);

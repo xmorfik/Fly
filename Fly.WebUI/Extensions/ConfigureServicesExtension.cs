@@ -22,6 +22,7 @@ public static class ConfigureServices
         services.AddTransient<IParametersParser, ParametersParser>();
         services.AddScoped<IApiHttpClientService, ApiHttpClientService>();
         services.AddScoped<ISeatsGeneratorService<SeatsDto>, SeatsGeneratorService>();
+        services.AddScoped<ITicketsGeneratorService<TicketsDto>, TicketsGeneratorService>();
 
         return services;
     }
