@@ -1,48 +1,91 @@
 ﻿@model Fly.Core.Entities.Flight
 
-<div>
-    <h4>Flight</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DepartureAirportId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DepartureAirportId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ArrivalAirportId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ArrivalAirportId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AircraftId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AircraftId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DepartureDateTime)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DepartureDateTime)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ArrivalDateTime)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ArrivalDateTime)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-    </dl>
+<div class="card text-center mx-auto" style="width:1000px">
+    <img class="card-img-top" src="~/flight.jpg">
+    <div class="card-body">
+        <dl class="row">
+            <dt class = "col-sm-2">
+                Departure Airport
+            </dt>
+            <dd class = "col-sm-10">
+                Airport Name :
+                @Html.DisplayFor(model => model.DepartureAirport.Name) 
+                    <br />
+                City :
+                @Html.DisplayFor(model => model.DepartureAirport.City.Name) 
+                    <br />
+                Country :
+                @Html.DisplayFor(model => model.DepartureAirport.City.IsoCountry)
+            </dd>
+            <dt class = "col-sm-2">
+                Arrival Airport
+            </dt>
+            <dd class = "col-sm-10">
+                Airport Name :
+                @Html.DisplayFor(model => model.ArrivalAirport.Name) 
+                <br />
+                City :
+                @Html.DisplayFor(model => model.ArrivalAirport.City.Name)
+                <br />
+                Country :
+                @Html.DisplayFor(model => model.ArrivalAirport.City.IsoCountry)
+            </dd>
+            <dt class = "col-sm-2">
+                Aircraft
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Aircraft.ModelType)
+                <br />
+                @Html.DisplayFor(model => model.Aircraft.AircraftState)
+                <br />
+                Seats :
+                @Html.DisplayFor(model => model.Aircraft.Seats.Count)
+                </dd>
+            <dt class = "col-sm-2">
+                Departure Date
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.DepartureDateTime)
+            </dd>
+            <dt class = "col-sm-2">
+                Arrival Date
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.ArrivalDateTime)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Id)
+            </dd>  
+        </dl>
+        <div class="card">
+            <div id="map" style="width: 100%; height: 500px;"></div>
+        </div>
+        <div>
+            @if (User.IsInRole("Administrator"))
+            {
+                <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+            }
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<script>
+    const map = L.map('map').setView([@Model.DepartureAirport.Longitude, @Model.DepartureAirport.Latitude], 6);
+
+    const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    L.marker([@Model.DepartureAirport.Latitude, @Model.DepartureAirport.Longitude]).addTo(map)
+        .bindPopup('@(Model.DepartureAirport.Name)')
+        .openPopup();
+
+    L.marker([@Model.ArrivalAirport.Latitude, @Model.ArrivalAirport.Longitude]).addTo(map)
+        .bindPopup('@(Model.ArrivalAirport.Name)')
+        .openPopup();
+</script>
