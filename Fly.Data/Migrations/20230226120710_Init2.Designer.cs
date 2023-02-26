@@ -4,6 +4,7 @@ using Fly.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fly.Data.Migrations
 {
     [DbContext(typeof(FlyDbContext))]
-    partial class FlyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230226120710_Init2")]
+    partial class Init2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -434,19 +437,19 @@ namespace Fly.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f0f126a2-0891-432a-8ca6-26827c81bf02",
+                            Id = "f4830d31-73e3-408f-bfcd-b4b06c5b5fc7",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "084fed94-7bae-47ba-894a-590560ca1937",
+                            Id = "dd5c33a9-4e05-4d3a-af86-7ca0a7ecdead",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "a07381ba-41af-45fb-9d04-2133b2b4a4e7",
+                            Id = "f913f73f-134c-484e-9457-bb8ca593e4d3",
                             Name = "Passenger",
                             NormalizedName = "PASSENGER"
                         });
