@@ -60,7 +60,11 @@ public class AircraftRequestService : IService<Aircraft, AircraftParameter>
         {
             var client = await _httpClientService.GetClientAsync();
             var response = await client.GetAsync($"aircrafts/{id}");
-
+            if(response.IsSuccessStatusCode!)
+            {
+                _logger.LogError(response.ReasonPhrase);
+                return new Response<Aircraft>(new Aircraft()) { Succeeded = false };
+            }
             var responseString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<Response<Aircraft>>(responseString);
 

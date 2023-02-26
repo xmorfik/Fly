@@ -59,10 +59,15 @@ public class AirlineRequestService : IService<Airline, AirlineParameter>
         try
         {
             var client = await _httpClientService.GetClientAsync();
-            var response = await client.GetAsync($"Airlines/{id}");
+            var response = await client.GetAsync($"airlines/{id}");
+            if (response.IsSuccessStatusCode!)
+            {
+                _logger.LogError(response.ReasonPhrase);
+                return new Response<Airline>(new Airline()) { Succeeded = false };
+            }
+
             var responseString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<Response<Airline>>(responseString);
-
             if (result == null)
             {
                 return new Response<Airline>(new Airline()) { Succeeded = false };

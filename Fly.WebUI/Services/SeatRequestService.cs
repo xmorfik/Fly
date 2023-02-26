@@ -60,6 +60,12 @@ public class SeatRequestService : IService<Seat, SeatParameter>
         {
             var client = await _httpClientService.GetClientAsync();
             var response = await client.GetAsync($"seats/{id}");
+            if (response.IsSuccessStatusCode!)
+            {
+                _logger.LogError(response.ReasonPhrase);
+                return new Response<Seat>(new Seat()) { Succeeded = false };
+            }
+
             var responseString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<Response<Seat>>(responseString);
 

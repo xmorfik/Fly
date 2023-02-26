@@ -60,9 +60,14 @@ public class TicketRequestService : IService<Ticket, TicketParameter>
         {
             var client = await _httpClientService.GetClientAsync();
             var response = await client.GetAsync($"tickets/{id}");
+            if (response.IsSuccessStatusCode!)
+            {
+                _logger.LogError(response.ReasonPhrase);
+                return new Response<Ticket>(new Ticket()) { Succeeded = false };
+            }
+
             var responseString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<Response<Ticket>>(responseString);
-
             if (result == null)
             {
                 return new Response<Ticket>(new Ticket()) { Succeeded = false };

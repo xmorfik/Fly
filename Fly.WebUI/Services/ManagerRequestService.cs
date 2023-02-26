@@ -60,6 +60,12 @@ public class ManagerRequestService : IService<Manager, ManagerParameter>
         {
             var client = await _httpClientService.GetClientAsync();
             var response = await client.GetAsync($"managers/{id}");
+            if (response.IsSuccessStatusCode!)
+            {
+                _logger.LogError(response.ReasonPhrase);
+                return new Response<Manager>(new Manager()) { Succeeded = false };
+            }
+
             var responseString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<Response<Manager>>(responseString);
 
