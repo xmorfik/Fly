@@ -75,6 +75,12 @@ public class ManagerService : IService<Manager, ManagerParameter>
         try
         {
             var items = await _repository.ListAsync(new ManagerListSpec(parameter));
+            if (items == null)
+            {
+                _logger
+                    .LogInformation
+                    ("Can't find " + JsonConvert.SerializeObject(parameter) + " , " + JsonConvert.SerializeObject(page));
+            }
             return PagedResponse<Manager>.ToPagedList(items, page);
         }
         catch (Exception ex)

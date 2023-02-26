@@ -75,6 +75,12 @@ public class TicketService : IService<Ticket, TicketParameter>
         try
         {
             var items = await _repository.ListAsync(new TicketListSpec(parameter));
+            if (items == null)
+            {
+                _logger
+                    .LogInformation
+                    ("Can't find " + JsonConvert.SerializeObject(parameter) + " , " + JsonConvert.SerializeObject(page));
+            }
             return PagedResponse<Ticket>.ToPagedList(items, page);
         }
         catch (Exception ex)

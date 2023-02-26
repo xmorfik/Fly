@@ -75,6 +75,12 @@ public class AircraftService : IService<Aircraft, AircraftParameter>
         try
         {
             var items = await _repository.ListAsync(new AircraftListSpec(parameter));
+            if (items == null)
+            {
+                _logger
+                    .LogInformation
+                    ("Can't find " + JsonConvert.SerializeObject(parameter) + " , " + JsonConvert.SerializeObject(page));
+            }
             return PagedResponse<Aircraft>.ToPagedList(items, page);
         }
         catch (Exception ex)

@@ -75,6 +75,12 @@ public class CityService : IService<City, CityParameter>
         try
         {
             var items = await _repository.ListAsync(new CityListSpec(parameter));
+            if (items == null)
+            {
+                _logger
+                    .LogInformation
+                    ("Can't find " + JsonConvert.SerializeObject(parameter) + " , " + JsonConvert.SerializeObject(page));
+            }
             return PagedResponse<City>.ToPagedList(items, page);
         }
         catch (Exception ex)

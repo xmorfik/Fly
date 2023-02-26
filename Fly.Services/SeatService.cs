@@ -75,6 +75,12 @@ public class SeatService : IService<Seat, SeatParameter>
         try
         {
             var items = await _repository.ListAsync(new SeatListSpec(parameter));
+            if (items == null)
+            {
+                _logger
+                    .LogInformation
+                    ("Can't find " + JsonConvert.SerializeObject(parameter) + " , " + JsonConvert.SerializeObject(page));
+            }
             return PagedResponse<Seat>.ToPagedList(items, page);
         }
         catch (Exception ex)

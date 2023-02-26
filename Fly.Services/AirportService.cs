@@ -75,6 +75,12 @@ public class AirportService : IService<Airport, AirportParameter>
         try
         {
             var items = await _repository.ListAsync(new AirportListSpec(parameter));
+            if (items == null)
+            {
+                _logger
+                    .LogInformation
+                    ("Can't find " + JsonConvert.SerializeObject(parameter) + " , " + JsonConvert.SerializeObject(page));
+            }
             return PagedResponse<Airport>.ToPagedList(items, page);
         }
         catch (Exception ex)
