@@ -68,6 +68,7 @@ public class SeatsController : Controller
 
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(SeatsDto item)
     {
         await _seatsGenerator.Generate(item);

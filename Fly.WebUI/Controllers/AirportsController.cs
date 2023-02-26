@@ -65,6 +65,7 @@ public class AirportsController : Controller
 
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Airport item)
     {
         await _service.CreateAsync(item);

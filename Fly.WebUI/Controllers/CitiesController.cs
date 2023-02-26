@@ -63,6 +63,7 @@ public class CitiesController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(City item)
     {
         await _service.CreateAsync(item);

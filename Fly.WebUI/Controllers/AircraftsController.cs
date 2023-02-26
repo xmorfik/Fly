@@ -68,6 +68,7 @@ public class AircraftsController : Controller
 
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateAircraftDto item)
     {
         var result = _mapper.Map<Aircraft>(item);

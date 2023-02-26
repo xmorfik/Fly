@@ -69,6 +69,7 @@ public class TicketsController : Controller
 
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(TicketsDto item)
     {
         await _ticketsGenerator.Generate(item);
