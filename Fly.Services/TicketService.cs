@@ -58,6 +58,7 @@ public class TicketService : IService<Ticket, TicketParameter>
             var result = await _repository.FirstOrDefaultAsync(new TicketSpec(id));
             if (result == null)
             {
+                _logger.LogError($"Can't find {id}");
                 return new Response<Ticket>(new Ticket()) { Succeeded = false };
             }
             return new Response<Ticket>(result);

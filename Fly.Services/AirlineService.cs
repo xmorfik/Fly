@@ -58,6 +58,7 @@ public class AirlineService : IService<Airline, AirlineParameter>
             var result = await _repository.FirstOrDefaultAsync(new AirlineSpec(id));
             if (result == null)
             {
+                _logger.LogError($"Can't find {id}");
                 return new Response<Airline>(new Airline()) { Succeeded = false };
             }
             return new Response<Airline>(result);

@@ -58,6 +58,7 @@ public class CityService : IService<City, CityParameter>
             var result = await _repository.FirstOrDefaultAsync(new CitySpec(id));
             if (result == null)
             {
+                _logger.LogError($"Can't find {id}");
                 return new Response<City>(new City()) { Succeeded = false };
             }
             return new Response<City>(result);

@@ -26,7 +26,7 @@ public class ManagerService : IService<Manager, ManagerParameter>
         {
             var result = await _repository.AddAsync(item);
             if (result == null)
-            {
+            { 
                 _logger.LogError("Can't create :" + JsonConvert.SerializeObject(item));
             }
             _logger.LogInformation(JsonConvert.SerializeObject(result) + " created");
@@ -58,6 +58,7 @@ public class ManagerService : IService<Manager, ManagerParameter>
             var result = await _repository.FirstOrDefaultAsync(new ManagerSpec(id));
             if (result == null)
             {
+                _logger.LogError($"Can't find {id}");
                 return new Response<Manager>(new Manager()) { Succeeded = false };
             }
             return new Response<Manager>(result);

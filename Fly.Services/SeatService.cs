@@ -58,6 +58,7 @@ public class SeatService : IService<Seat, SeatParameter>
             var result = await _repository.FirstOrDefaultAsync(new SeatSpec(id));
             if (result == null)
             {
+                _logger.LogError($"Can't find {id}");
                 return new Response<Seat>(new Seat()) { Succeeded = false };
             }
             return new Response<Seat>(result);

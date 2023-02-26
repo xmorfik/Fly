@@ -58,6 +58,7 @@ public class AirportService : IService<Airport, AirportParameter>
             var result = await _repository.FirstOrDefaultAsync(new AirportSpec(id));
             if (result == null)
             {
+                _logger.LogError($"Can't find {id}");
                 return new Response<Airport>(new Airport()) { Succeeded = false };
             }
             return new Response<Airport>(result);

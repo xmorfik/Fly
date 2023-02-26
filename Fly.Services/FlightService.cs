@@ -64,6 +64,7 @@ public class FlightService : IService<Flight, FlightParameter>
             var result = await _repository.FirstOrDefaultAsync(new FlightSpec(id));
             if (result == null)
             {
+                _logger.LogError($"Can't find {id}");
                 return new Response<Flight>(new Flight()) { Succeeded = false };
             }
             return new Response<Flight>(result);
