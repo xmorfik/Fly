@@ -24,7 +24,7 @@ namespace Fly.WebUI.Services
 
         public async Task Generate(TicketsDto ticketsDto)
         {
-            var flight = await _flights.GetAsync(ticketsDto.FlightId ?? 0);
+            var flight = await _flights.GetAsync(ticketsDto.FlightId);
             var aircarft = await _aircarfts.GetAsync(flight.Data.AircraftId ?? 0);
 
             foreach(var seat in aircarft.Data.Seats)
