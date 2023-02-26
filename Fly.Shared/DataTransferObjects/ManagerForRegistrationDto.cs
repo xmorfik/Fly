@@ -2,7 +2,7 @@
 
 namespace Fly.Shared.DataTransferObjects;
 
-public record UserForRegistrationDto
+public record ManagerForRegistrationDto
 {
     [Required]
     public string? FirstName { get; init; }
@@ -16,4 +16,6 @@ public record UserForRegistrationDto
     public string? Email { get; init; }
     [Required]
     public string? PhoneNumber { get; init; }
+    [Required]
+    public string? AirlineId { get; init; }
 }

@@ -5,33 +5,41 @@
 <div class="row">
     <div class="col-md-4">
         <form method="post" asp-antiforgery="true">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CreateManagerDto.FirstName" class="control-label"></label>
-                <input asp-for="CreateManagerDto.FirstName" class="form-control" />
+                <label asp-for="ManagerForRegistrationDto.FirstName" class="control-label"></label>
+                <input asp-for="ManagerForRegistrationDto.FirstName" class="form-control" />
+                <span asp-validation-for="ManagerForRegistrationDto.FirstName"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreateManagerDto.LastName" class="control-label"></label>
-                <input asp-for="CreateManagerDto.LastName" class="form-control" />
+                <label asp-for="ManagerForRegistrationDto.LastName" class="control-label"></label>
+                <input asp-for="ManagerForRegistrationDto.LastName" class="form-control" />
+                <span asp-validation-for="ManagerForRegistrationDto.LastName"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreateManagerDto.UserName" class="control-label"></label>
-                <input asp-for="CreateManagerDto.UserName" class="form-control" />
+                <label asp-for="ManagerForRegistrationDto.UserName" class="control-label"></label>
+                <input asp-for="ManagerForRegistrationDto.UserName" class="form-control" />
+                <span asp-validation-for="ManagerForRegistrationDto.UserName"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreateManagerDto.Password" class="control-label"></label>
-                <input asp-for="CreateManagerDto.Password" type="password" class="form-control" />
+                <label asp-for="ManagerForRegistrationDto.Password" class="control-label"></label>
+                <input asp-for="ManagerForRegistrationDto.Password" type="password" class="form-control" />
+                <span asp-validation-for="ManagerForRegistrationDto.Password"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreateManagerDto.Email" class="control-label"></label>
-                <input asp-for="CreateManagerDto.Email" class="form-control" />
+                <label asp-for="ManagerForRegistrationDto.Email" class="control-label"></label>
+                <input asp-for="ManagerForRegistrationDto.Email" class="form-control" />
+                <span asp-validation-for="ManagerForRegistrationDto.Email"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreateManagerDto.PhoneNumber" class="control-label"></label>
-                <input asp-for="CreateManagerDto.PhoneNumber" class="form-control" />
+                <label asp-for="ManagerForRegistrationDto.PhoneNumber" class="control-label"></label>
+                <input asp-for="ManagerForRegistrationDto.PhoneNumber" class="form-control" />
+                <span asp-validation-for="ManagerForRegistrationDto.PhoneNumber"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">Airline Id</label>
-                <input asp-for="CreateManagerDto.AirlineId" class="form-control" />
+                <input asp-for="ManagerForRegistrationDto.AirlineId" class="form-control" />
+                <span asp-validation-for="ManagerForRegistrationDto.AirlineId"></span>
             </div>
             <br />
             <div class="form-group">
@@ -40,3 +48,7 @@
         </form>
     </div>
 </div>
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

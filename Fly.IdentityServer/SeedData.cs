@@ -34,11 +34,7 @@ public class SeedData
                 }
 
                 result = userMgr.AddClaimsAsync(andrii, new Claim[]{
-                            new Claim(JwtClaimTypes.Name, "andrii"),
-                            new Claim(JwtClaimTypes.GivenName, "_"),
-                            new Claim(JwtClaimTypes.FamilyName, "_"),
-                            new Claim(JwtClaimTypes.WebSite, "_"),
-                            new Claim("Role", "Administrator"),
+                            new Claim("Role", "Administrator")
                         }).Result;
                 if (!result.Succeeded)
                 {
