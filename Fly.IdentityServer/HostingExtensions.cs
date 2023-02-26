@@ -1,5 +1,4 @@
 using Fly.Core.Entities;
-using Fly.Core.Services;
 using Fly.Data;
 using Fly.WebAPI.Extensions;
 using Microsoft.AspNetCore.Identity;

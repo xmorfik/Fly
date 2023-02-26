@@ -89,6 +89,11 @@ public class CityRequestService : IService<City, CityParameter>
         try
         {
             var response = await client.GetAsync("cities?" + paramsStr);
+            if (response.IsSuccessStatusCode!)
+            {
+                _logger.LogError(response.ReasonPhrase);
+                return new PagedResponse<City>(new List<City>(), new MetaData());
+            }
             var responseString = await response.Content.ReadAsStringAsync();
             var headerValues = response.Headers.GetValues("X-Pagination");
             var jsonMetaData = headerValues.FirstOrDefault();

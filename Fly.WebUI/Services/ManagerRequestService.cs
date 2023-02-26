@@ -91,6 +91,11 @@ public class ManagerRequestService : IService<Manager, ManagerParameter>
         try
         {
             var response = await client.GetAsync("managers?" + paramsStr);
+            if (response.IsSuccessStatusCode!)
+            {
+                _logger.LogError(response.ReasonPhrase);
+                return new PagedResponse<Manager>(new List<Manager>(), new MetaData());
+            }
             var responseString = await response.Content.ReadAsStringAsync();
             var headerValues = response.Headers.GetValues("X-Pagination");
             var jsonMetaData = headerValues.FirstOrDefault();

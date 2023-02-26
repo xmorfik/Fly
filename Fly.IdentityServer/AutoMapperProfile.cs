@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Fly.Core.Entities;
 using Fly.Shared.DataTransferObjects;
-using Fly.WebUI.Models;
 
 namespace Fly.IdentityServer;
 

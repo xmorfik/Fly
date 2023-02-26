@@ -92,6 +92,11 @@ public class FlightRequestService : IService<Flight, FlightParameter>
         try
         {
             var response = await client.GetAsync("flights?" + paramsStr);
+            if (response.IsSuccessStatusCode!)
+            {
+                _logger.LogError(response.ReasonPhrase);
+                return new PagedResponse<Flight>(new List<Flight>(), new MetaData());
+            }
             _logger.LogInformation($"Response : {response.StatusCode} : {response.ReasonPhrase}");
             var responseString = await response.Content.ReadAsStringAsync();
             var headerValues = response.Headers.GetValues("X-Pagination");

@@ -4,7 +4,6 @@ using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.Shared.DataTransferObjects;
 using Fly.WebUI.Models;
-using Fly.WebUI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fly.WebUI.Controllers;
@@ -14,7 +13,7 @@ public class TicketsController : Controller
     private readonly IService<Ticket, TicketParameter> _service;
     private readonly ITicketsGeneratorService<TicketsDto> _ticketsGenerator;
     public TicketsController(IService<Ticket, TicketParameter> service,
-        ITicketsGeneratorService<TicketsDto> ticketsGenerator )
+        ITicketsGeneratorService<TicketsDto> ticketsGenerator)
     {
         _service = service;
         _ticketsGenerator = ticketsGenerator;

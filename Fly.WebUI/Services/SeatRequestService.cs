@@ -91,6 +91,11 @@ public class SeatRequestService : IService<Seat, SeatParameter>
         try
         {
             var response = await client.GetAsync("seats?" + paramsStr);
+            if (response.IsSuccessStatusCode!)
+            {
+                _logger.LogError(response.ReasonPhrase);
+                return new PagedResponse<Seat>(new List<Seat>(), new MetaData());
+            }
             var responseString = await response.Content.ReadAsStringAsync();
             var headerValues = response.Headers.GetValues("X-Pagination");
             var jsonMetaData = headerValues.FirstOrDefault();

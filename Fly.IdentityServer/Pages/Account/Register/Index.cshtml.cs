@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
-using NuGet.Protocol;
 using Serilog;
 using System.Security.Claims;
 
@@ -23,10 +22,10 @@ public class IndexModel : PageModel
     private readonly IMapper _mapper;
     private readonly ClientUriConfiguration _clientConfiguration;
 
-    public IndexModel(UserManager<User> userManager, 
+    public IndexModel(UserManager<User> userManager,
         SignInManager<User> signInManager,
         FlyDbContext db,
-        IMapper mapper, 
+        IMapper mapper,
         IOptions<ClientUriConfiguration> clientUri)
     {
         _signInManager = signInManager;
@@ -64,10 +63,10 @@ public class IndexModel : PageModel
                 await _db.Passengers.AddAsync(passenger);
                 await _db.SaveChangesAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-               await _userManager.DeleteAsync(user);
-               Log.Error(ex.Message);
+                await _userManager.DeleteAsync(user);
+                Log.Error(ex.Message);
             }
 
             return Redirect(_clientConfiguration.Uri);

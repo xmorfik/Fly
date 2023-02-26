@@ -25,7 +25,7 @@ public class FlightsRouteBuilder : IRouteBuilder<Flight, LocationDto>
         var yDiff = flight.ArrivalAirport.Longitude - flight.DepartureAirport.Longitude;
         var totalTimeSpan = flight.ArrivalDateTime - flight.DepartureDateTime;
         var timePassed = DateTime.Now - flight.DepartureDateTime;
-        if(timePassed < TimeSpan.Zero)
+        if (timePassed < TimeSpan.Zero)
         {
             timePassed = TimeSpan.Zero;
         }

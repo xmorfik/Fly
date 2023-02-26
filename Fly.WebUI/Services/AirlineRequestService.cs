@@ -90,6 +90,11 @@ public class AirlineRequestService : IService<Airline, AirlineParameter>
         try
         {
             var response = await client.GetAsync("Airlines?" + paramsStr);
+            if (response.IsSuccessStatusCode!)
+            {
+                _logger.LogError(response.ReasonPhrase);
+                return new PagedResponse<Airline>(new List<Airline>(), new MetaData());
+            }
             var responseString = await response.Content.ReadAsStringAsync();
             var headerValues = response.Headers.GetValues("X-Pagination");
             var jsonMetaData = headerValues.FirstOrDefault();
