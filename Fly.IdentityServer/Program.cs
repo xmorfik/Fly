@@ -16,6 +16,10 @@ try
         .Enrich.FromLogContext()
         .ReadFrom.Configuration(ctx.Configuration));
 
+
+    builder.Services.Configure<ClientUriConfiguration>(
+        builder.Configuration.GetSection(ClientUriConfiguration.Configuration));
+
     var app = builder
         .ConfigureServices()
         .ConfigurePipeline();

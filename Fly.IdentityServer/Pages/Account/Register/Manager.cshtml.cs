@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Options;
 using Serilog;
 using System.Security.Claims;
 
@@ -16,20 +17,22 @@ public class ManagerModel : PageModel
 {
     [BindProperty]
     public ManagerForRegistrationDto ManagerForRegistrationDto { get; set; }
+
     private readonly UserManager<User> _userManager;
     private readonly FlyDbContext _db;
     private readonly IMapper _mapper;
-    private readonly SignInManager<User> _signInManager;
+    private readonly ClientUriConfiguration _clientConfiguration;
 
     public ManagerModel(UserManager<User> userManager,
         SignInManager<User> signInManager,
         FlyDbContext db,
+        IOptions<ClientUriConfiguration> clientUri,
         IMapper mapper)
     {
         _mapper = mapper;
         _userManager = userManager;
-        _signInManager = signInManager;
         _db = db;
+        _clientConfiguration = clientUri.Value;
     }
 
     public async Task<IActionResult> OnGet()
@@ -65,7 +68,7 @@ public class ManagerModel : PageModel
                 Log.Error(ex.Message);
             }
 
-            return Redirect("https://localhost:5002");
+            return Redirect(_clientConfiguration.Uri);
         }
         return Page();
     }

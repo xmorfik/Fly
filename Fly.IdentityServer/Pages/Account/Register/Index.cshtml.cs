@@ -5,6 +5,7 @@ using Fly.Shared.DataTransferObjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Options;
 using NuGet.Protocol;
 using Serilog;
 using System.Security.Claims;
@@ -15,20 +16,24 @@ public class IndexModel : PageModel
 {
     [BindProperty]
     public UserForRegistrationDto UserForRegistrationDto { get; set; }
+
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
     private readonly FlyDbContext _db;
     private readonly IMapper _mapper;
+    private readonly ClientUriConfiguration _clientConfiguration;
 
     public IndexModel(UserManager<User> userManager, 
         SignInManager<User> signInManager,
         FlyDbContext db,
-        IMapper mapper)
+        IMapper mapper, 
+        IOptions<ClientUriConfiguration> clientUri)
     {
         _signInManager = signInManager;
         _userManager = userManager;
         _mapper = mapper;
         _db = db;
+        _clientConfiguration = clientUri.Value;
     }
 
     public async Task<IActionResult> OnGet()
@@ -65,7 +70,7 @@ public class IndexModel : PageModel
                Log.Error(ex.Message);
             }
 
-            return Redirect("https://localhost:5002");
+            return Redirect(_clientConfiguration.Uri);
         }
 
         return Page();
