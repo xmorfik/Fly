@@ -71,6 +71,7 @@ public class ManagersController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Manager item)
     {
         await _service.UpdateAsync(item);

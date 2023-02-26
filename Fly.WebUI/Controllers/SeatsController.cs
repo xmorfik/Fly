@@ -83,6 +83,7 @@ public class SeatsController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Seat item)
     {
         await _service.UpdateAsync(item);

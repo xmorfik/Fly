@@ -78,6 +78,7 @@ public class CitiesController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(City item)
     {
         await _service.UpdateAsync(item);

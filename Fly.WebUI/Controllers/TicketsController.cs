@@ -84,6 +84,7 @@ public class TicketsController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Ticket item)
     {
         await _service.UpdateAsync(item);

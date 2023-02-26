@@ -80,6 +80,7 @@ public class FlightsController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Flight item)
     {
         await _service.UpdateAsync(item);
