@@ -1,4 +1,5 @@
 ﻿
+
 using Fly.Core.Entities;
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
@@ -50,7 +51,11 @@ public class AirportRequestService : IService<Airport, AirportParameter>
         try
         {
             var client = await _httpClientService.GetClientAsync();
-            await client.DeleteAsync($"airports/{id}");
+            var response = await client.DeleteAsync($"airports/{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError(response.ReasonPhrase);
+            }
         }
         catch (Exception ex)
         {
@@ -122,7 +127,11 @@ public class AirportRequestService : IService<Airport, AirportParameter>
             var client = await _httpClientService.GetClientAsync();
             var itemJson = JsonConvert.SerializeObject(item);
             var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
-            await client.PutAsync("airports", content);
+            var response = await client.PutAsync("airports", content);
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError(response.ReasonPhrase);
+            }
         }
         catch (Exception ex)
         {

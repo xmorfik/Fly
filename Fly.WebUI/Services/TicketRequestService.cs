@@ -1,4 +1,5 @@
 ﻿
+
 using Fly.Core.Entities;
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
@@ -32,7 +33,7 @@ public class TicketRequestService : IService<Ticket, TicketParameter>
             var itemJson = JsonConvert.SerializeObject(item);
             var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
             var client = await _httpClientService.GetClientAsync();
-            var response =  await client.PostAsync("tickets", content);
+            var response = await client.PostAsync("tickets", content);
             if (!response.IsSuccessStatusCode)
             {
                 _logger.LogError(response.ReasonPhrase);
@@ -50,7 +51,11 @@ public class TicketRequestService : IService<Ticket, TicketParameter>
         try
         {
             var client = await _httpClientService.GetClientAsync();
-            await client.DeleteAsync($"tickets/{id}");
+            var response = await client.DeleteAsync($"tickets/{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError(response.ReasonPhrase);
+            }
         }
         catch (Exception ex)
         {
@@ -122,7 +127,11 @@ public class TicketRequestService : IService<Ticket, TicketParameter>
             var client = await _httpClientService.GetClientAsync();
             var itemJson = JsonConvert.SerializeObject(item);
             var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
-            await client.PutAsync("tickets", content);
+            var response = await client.PutAsync("tickets", content);
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError(response.ReasonPhrase);
+            }
         }
         catch (Exception ex)
         {

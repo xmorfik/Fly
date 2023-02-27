@@ -1,4 +1,5 @@
 ﻿
+
 using Fly.Core.Entities;
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
@@ -50,7 +51,11 @@ public class CityRequestService : IService<City, CityParameter>
         try
         {
             var client = await _httpClientService.GetClientAsync();
-            await client.DeleteAsync($"cities/{id}");
+            var response = await client.DeleteAsync($"cities/{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError(response.ReasonPhrase);
+            }
         }
         catch (Exception ex)
         {
@@ -121,7 +126,11 @@ public class CityRequestService : IService<City, CityParameter>
             var client = await _httpClientService.GetClientAsync();
             var itemJson = JsonConvert.SerializeObject(item);
             var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
-            await client.PutAsync("cities", content);
+            var response = await client.PutAsync("cities", content);
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError(response.ReasonPhrase);
+            }
         }
         catch (Exception ex)
         {

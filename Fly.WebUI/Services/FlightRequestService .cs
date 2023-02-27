@@ -50,7 +50,10 @@ public class FlightRequestService : IService<Flight, FlightParameter>
         {
             var client = await _httpClientService.GetClientAsync();
             var response = await client.DeleteAsync($"flights/{id}");
-            _logger.LogInformation($"Response : {response.StatusCode} : {response.ReasonPhrase}");
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError(response.ReasonPhrase);
+            }
         }
         catch (Exception ex)
         {
@@ -124,7 +127,10 @@ public class FlightRequestService : IService<Flight, FlightParameter>
             var itemJson = JsonConvert.SerializeObject(item);
             var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
             var response = await client.PutAsync("flights", content);
-            _logger.LogInformation($"Response : {response.StatusCode} : {response.ReasonPhrase}");
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError(response.ReasonPhrase);
+            }
         }
         catch (Exception ex)
         {

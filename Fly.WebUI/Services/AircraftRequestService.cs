@@ -1,4 +1,5 @@
 ﻿
+
 using Fly.Core.Entities;
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
@@ -50,7 +51,11 @@ public class AircraftRequestService : IService<Aircraft, AircraftParameter>
         try
         {
             var client = await _httpClientService.GetClientAsync();
-            await client.DeleteAsync($"aircrafts/{id}");
+            var response = await client.DeleteAsync($"aircrafts/{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError(response.ReasonPhrase);
+            }
         }
         catch (Exception ex)
         {
@@ -95,7 +100,7 @@ public class AircraftRequestService : IService<Aircraft, AircraftParameter>
         try
         {
             var response = await client.GetAsync("aircrafts?" + str);
-            if(!response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
             {
                 _logger.LogError(response.ReasonPhrase);
                 return new PagedResponse<Aircraft>(new List<Aircraft>(), new MetaData());
@@ -122,7 +127,11 @@ public class AircraftRequestService : IService<Aircraft, AircraftParameter>
             var client = await _httpClientService.GetClientAsync();
             var itemJson = JsonConvert.SerializeObject(item);
             var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
-            await client.PutAsync("aircrafts", content);
+            var response = await client.PutAsync("aircrafts", content);
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError(response.ReasonPhrase);
+            }
         }
         catch (Exception ex)
         {
