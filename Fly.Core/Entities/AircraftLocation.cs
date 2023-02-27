@@ -16,4 +16,7 @@ public class AircraftLocation : BaseEntity
 
     public int? AircraftId { get; set; }
     public Aircraft? Aircraft { get; set; }
+
+	public int? FlightId { get; set; }
+	public Flight? Flight { get; set; }
 }

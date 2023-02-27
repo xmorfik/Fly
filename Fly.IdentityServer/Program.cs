@@ -24,7 +24,7 @@ try
         .ConfigureServices()
         .ConfigurePipeline();
 
-    //SeedData.EnsureSeedData(app);
+    SeedData.EnsureSeedData(app);
 
     app.Run();
 }

@@ -29,12 +29,17 @@ public class HomeController : Controller
         _httpClientService = httpClientService;
     }
 
-    public async Task<IActionResult> Index()
-    {
+	public async Task<IActionResult> Index(int? id)
+	{
+        if(id != null)
+        {
+			var result = await _service.GetAsync(id ?? 0);
+			return View(result.Data);
+		}
         return View();
-    }
+	}
 
-    [HttpPost]
+	[HttpPost]
     public IActionResult SetLanguage(string culture, string returnUrl)
     {
         Response.Cookies.Append(

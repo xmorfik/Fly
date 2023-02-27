@@ -44,6 +44,7 @@ public class FlightsRouteBuilder : IRouteBuilder<Flight, LocationDto>
         var result = new LocationDto()
         {
             AircraftId = flight.AircraftId,
+            FlightId = flight.Id,
             Latitude = startLatitude - xDiff * progress,
             Longitude = startLongitude + yDiff * progress,
             DateTime = DateTime.Now,

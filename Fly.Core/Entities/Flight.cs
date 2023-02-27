@@ -1,7 +1,11 @@
+using Fly.Core.Enums;
+
 namespace Fly.Core.Entities;
 
 public class Flight : BaseEntity
 {
+    public FlightState FlightState { get; set; }
+
     public int? DepartureAirportId { get; set; }
     public Airport? DepartureAirport { get; set; }
 
@@ -16,4 +20,6 @@ public class Flight : BaseEntity
     public DateTime ArrivalDateTime { get; set; }
 
     public ICollection<Ticket>? Tickets { get; set; }
+
+	public ICollection<AircraftLocation>? AircraftLocations { get; set; }
 }

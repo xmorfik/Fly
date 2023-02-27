@@ -31,13 +31,14 @@ public class TrackingService : ITrackingService
     public async Task Track(int id)
     {
         var flight = await _repository.FirstOrDefaultAsync(new FlightSpec(id));
+        var flightToUpdate = await _repository.GetByIdAsync(id);
+		flightToUpdate.FlightState = FlightState.InProgress;
+        await _repository.UpdateAsync(flightToUpdate);
+
         var aircarft = await _aircrafts.FirstOrDefaultAsync(new AircraftSpec(flight.AircraftId ?? 0));
         aircarft.AircraftState = AircraftState.InAir;
         await _aircrafts.UpdateAsync(aircarft);
-        if (flight == null)
-        {
-            return;
-        }
+
         var location = _flightsRouteBuilder.GetLocation(flight);
         await _aircraftLocationService.CreateAsync(location);
     }
@@ -45,21 +46,24 @@ public class TrackingService : ITrackingService
     public async Task Stop(int id)
     {
         var flight = await _repository.FirstOrDefaultAsync(new FlightSpec(id));
-        var aircarft = await _aircrafts.FirstOrDefaultAsync(new AircraftSpec(flight.AircraftId ?? 0));
+		var flightToUpdate = await _repository.GetByIdAsync(id);
+		flightToUpdate.FlightState = FlightState.Completed;
+		await _repository.UpdateAsync(flightToUpdate);
+
+		var aircarft = await _aircrafts.FirstOrDefaultAsync(new AircraftSpec(flight.AircraftId ?? 0));
         aircarft.AircraftState = AircraftState.InAirport;
         aircarft.AirportId = flight.ArrivalAirportId;
         aircarft.Airport = null;
         await _aircrafts.UpdateAsync(aircarft);
-        if (flight == null)
-        {
-            return;
-        }
-        await _aircraftLocationService.DeleteAsync(flight.AircraftId ?? 0);
+
+        await _aircraftLocationService.DeleteAsync(flight.Id ?? 0);
     }
 
     public async Task Update()
     {
-        var flights = await _repository.ListAsync(new FlightListSpec(new FlightParameter { ArrivalDateTime = DateTime.Now }));
+        var flights = await _repository.ListAsync(
+            new FlightListSpec(
+                new FlightParameter { FlightState = FlightState.InProgress}));
         foreach (var flight in flights)
         {
             var location = _flightsRouteBuilder.GetLocation(flight);

@@ -49,6 +49,9 @@
                                     Arrival
                                 </th>
                                 <th>
+                                    State
+                                </th>
+                                <th>
                                     Tikets
                                 </th>
 
@@ -75,6 +78,9 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.ArrivalDateTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FlightState)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Tickets.Count)

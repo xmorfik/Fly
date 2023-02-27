@@ -1,5 +1,18 @@
-﻿<div class="card">
-	<div id="map" style="width: 100%; height: 820px;"></div>
+﻿@using Fly.Core.Entities;
+@model Flight
+
+<div class="row">
+	<div class="card"  id="flightCard" style="width: 18rem; display:none">
+		<img class="card-img-top" src="~/aircraft.jpg">
+		<div class="card-body" id="cardBody">
+		</div>
+	</div>
+
+	<div class="col">
+		<div class="card">
+			<div id="map" style="width: 100%; height: 820px;"></div>
+		</div>
+	</div>
 </div>
 
 <script src="~/lib/leaflet-rotatedmarker/leaflet.rotatedMarker.js"></script>
@@ -7,7 +20,7 @@
 <script src="~/lib/leaflet.markercluster/leaflet.markercluster.js"></script>
 
 <script>
-	const map = L.map('map').setView([50.4501, 30.5234], 6);
+	const map = L.map('map').setView([ 50.4501, 50.4501], 3);
 
 	const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		maxZoom: 19,
@@ -26,6 +39,7 @@
 
 	let markers = [];
 	let polyline;
+	let selectedFlight;
 	let route = [];
 	let line = [];
 
@@ -36,9 +50,10 @@
 			});
 			markers = [];
 		}
+
 		locations.forEach(function (item, i, locations) {
 			console.log(i + " : " + item.latitude + " / " + item.longitude + " : " + item.aircraftId);
-			let marker = L.marker([item.latitude, item.longitude], { icon: icon, rotationAngle: item.directionAngle, attributes: item.aircraftId }).on('click', markerOnClick).addTo(map);
+			let marker = L.marker([item.latitude, item.longitude], { icon: icon, rotationAngle: item.directionAngle, attributes: item.flightId }).on('click', markerOnClick).addTo(map);
 			markers.push(marker);
 		});
     });
@@ -53,21 +68,46 @@
 	//		route.push([item.latitude, item.longitude]);
 	//	});
 	//	polyline = L.polyline(route, { color: 'orange' }).addTo(map);
- //  });
-
+    //});
 
 	hubConnection.on("Flight", function (flight) {
 		console.log(flight);
-
 		if(line.length>0){
 			map.removeLayer(polyline);
 			line = [];
 		}
-
 		line.push([flight.departureLatitude, flight.departureLongitude]);
 		line.push([flight.arrivalLatitude, flight.arrivalLongitude]);
+		selectedFlight = flight;
+		let html = '';
+		html = `
+			<h5 class="card-title" ><a href="/aircrafts/details/${flight.aircraftId}"class="card-link">${flight.aircraftName}</a></h5>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">
+					${flight.departureCity}
+				</li>
+				<li class="list-group-item">
+				<a href="/airports/details/${flight.departureAirportId}" class="card-link">
+					${flight.departureAirport}
+				</a></li>
 
+				<li class="list-group-item">
+					${flight.arrivalCity}
+				</li>
+				<li class="list-group-item">
+				<a href="/airports/details/${flight.arrivalAirportId}" class="card-link">
+					${flight.arrivalAirport}
+				</a></li>
+
+				<li class="list-group-item">
+				<a href="/flights/details/${flight.flightId}" class="card-link">
+					Details
+				</a></li>
+			</ul>
+		`;
+		$('#cardBody').html(html);
 		polyline = L.polyline(line, { color: 'orange' }).addTo(map);
+		showFlightCard();
 	});
 
 	hubConnection.start().then(() => 
@@ -82,5 +122,16 @@
 		hubConnection.invoke("GetFlight", id);
 	}
 
+	function showFlightCard() {
+		var x = document.getElementById("flightCard");
+		if (x.style.display === "none") {
+			x.style.display = "block";
+		} 
+	}
+
+	function hideFlightCard() {
+		var x = document.getElementById("flightCard");
+		x.style.display = "none";
+	}
 </script>
 

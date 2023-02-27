@@ -51,7 +51,7 @@ public class AircraftLocationService : IAircraftLocationService<LocationDto>
     {
         try
         {
-            var item = new LocationDto() { AircraftId = id };
+            var item = new LocationDto() { FlightId = id };
             await _aircraftLocations.DeleteAsync(item);
         }
         catch (Exception ex)
@@ -65,8 +65,8 @@ public class AircraftLocationService : IAircraftLocationService<LocationDto>
     {
         try
         {
-            var flight = await _repositoryFlights.FirstOrDefaultAsync(new FlightSpec(DateTime.Now, id));
-            var locations = await _repository.ListAsync(new AircraftLocationSpec(flight.DepartureDateTime, flight.ArrivalDateTime, id));
+            var flight = await _repositoryFlights.FirstOrDefaultAsync(new FlightSpec(id));
+            var locations = await _repository.ListAsync(new AircraftLocationSpec(flight.Id ?? 0,flight.AircraftId ?? 0));
             var locationDtos = new List<LocationDto>();
             foreach (var location in locations)
             {
