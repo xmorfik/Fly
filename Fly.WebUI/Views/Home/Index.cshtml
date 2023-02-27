@@ -74,8 +74,6 @@
 	{ 
 		console.log('Connection started.......!'); 
 		hubConnection.invoke("SendLocationsAsync");
-		setInterval(function () {
-		hubConnection.invoke("SendLocationsAsync"); }, 10000); 
 	}).catch(err => console.log('Error while connect with server'));
 
 	function markerOnClick(e) {
