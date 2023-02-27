@@ -1,4 +1,5 @@
-﻿using Fly.Core.Entities;
+﻿
+using Fly.Core.Entities;
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
@@ -31,7 +32,11 @@ public class ManagerRequestService : IService<Manager, ManagerParameter>
             var itemJson = JsonConvert.SerializeObject(item);
             var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
             var client = await _httpClientService.GetClientAsync();
-            await client.PostAsync("managers", content);
+            var response = await client.PostAsync("managers", content);
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError(response.ReasonPhrase);
+            }
         }
         catch (Exception ex)
         {
@@ -60,7 +65,7 @@ public class ManagerRequestService : IService<Manager, ManagerParameter>
         {
             var client = await _httpClientService.GetClientAsync();
             var response = await client.GetAsync($"managers/{id}");
-            if (response.IsSuccessStatusCode!)
+            if (!response.IsSuccessStatusCode)
             {
                 _logger.LogError(response.ReasonPhrase);
                 return new Response<Manager>(new Manager()) { Succeeded = false };
@@ -91,7 +96,7 @@ public class ManagerRequestService : IService<Manager, ManagerParameter>
         try
         {
             var response = await client.GetAsync("managers?" + paramsStr);
-            if (response.IsSuccessStatusCode!)
+            if (!response.IsSuccessStatusCode)
             {
                 _logger.LogError(response.ReasonPhrase);
                 return new PagedResponse<Manager>(new List<Manager>(), new MetaData());

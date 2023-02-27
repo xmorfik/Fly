@@ -1,4 +1,5 @@
-﻿using Fly.Core.Entities;
+﻿
+using Fly.Core.Entities;
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
@@ -31,7 +32,11 @@ public class TicketRequestService : IService<Ticket, TicketParameter>
             var itemJson = JsonConvert.SerializeObject(item);
             var content = new StringContent(itemJson, Encoding.UTF8, "application/json");
             var client = await _httpClientService.GetClientAsync();
-            await client.PostAsync("tickets", content);
+            var response =  await client.PostAsync("tickets", content);
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError(response.ReasonPhrase);
+            }
         }
         catch (Exception ex)
         {
@@ -60,7 +65,7 @@ public class TicketRequestService : IService<Ticket, TicketParameter>
         {
             var client = await _httpClientService.GetClientAsync();
             var response = await client.GetAsync($"tickets/{id}");
-            if (response.IsSuccessStatusCode!)
+            if (!response.IsSuccessStatusCode)
             {
                 _logger.LogError(response.ReasonPhrase);
                 return new Response<Ticket>(new Ticket()) { Succeeded = false };
@@ -90,7 +95,7 @@ public class TicketRequestService : IService<Ticket, TicketParameter>
         try
         {
             var response = await client.GetAsync("tickets?" + paramsStr);
-            if (response.IsSuccessStatusCode!)
+            if (!response.IsSuccessStatusCode)
             {
                 _logger.LogError(response.ReasonPhrase);
                 return new PagedResponse<Ticket>(new List<Ticket>(), new MetaData());
