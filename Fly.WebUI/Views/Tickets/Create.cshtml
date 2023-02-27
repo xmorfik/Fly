@@ -1,4 +1,5 @@
-﻿@model Fly.Core.Entities.Ticket
+﻿@using Fly.Shared.DataTransferObjects;
+@model TicketsDto
 
 <h4>Ticket</h4>
 <hr />
@@ -8,34 +9,24 @@
             <br />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div><br />
-            <div class="form-group">
-                <label asp-for="TicketState" class="control-label"></label>
-                <input asp-for="TicketState" class="form-control" />
-                <span asp-validation-for="TicketState" class="text-danger"></span>
-            </div><br />
-            <div class="form-group">
-                <label asp-for="SoldDate" class="control-label"></label>
-                <input asp-for="SoldDate" class="form-control" />
-                <span asp-validation-for="SoldDate" class="text-danger"></span>
-            </div><br />
-            <div class="form-group">
                 <label asp-for="FlightId" class="control-label"></label>
                 <input asp-for="FlightId" class="form-control" />
                 <span asp-validation-for="FlightId" class="text-danger"></span>
             </div><br />
             <div class="form-group">
-                <label asp-for="SeatId" class="control-label"></label>
-                <input asp-for="SeatId" class="form-control" />
-                <span asp-validation-for="SeatId" class="text-danger"></span>
+                <label asp-for="EconomClassPrice" class="control-label"></label>
+                <input asp-for="EconomClassPrice" class="form-control" />
+                <span asp-validation-for="EconomClassPrice" class="text-danger"></span>
             </div><br />
             <div class="form-group">
-                <label asp-for="PassengerId" class="control-label"></label>
-                <input asp-for="PassengerId" class="form-control" />
-                <span asp-validation-for="PassengerId" class="text-danger"></span>
+                <label asp-for="FirstClassPrice" class="control-label"></label>
+                <input asp-for="FirstClassPrice" class="form-control" />
+                <span asp-validation-for="FirstClassPrice" class="text-danger"></span>
+            </div><br />
+            <div class="form-group">
+                <label asp-for="BusinessClassPrice" class="control-label"></label>
+                <input asp-for="BusinessClassPrice" class="form-control" />
+                <span asp-validation-for="BusinessClassPrice" class="text-danger"></span>
             </div><br />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -48,6 +39,7 @@
     </div>
 </div>
 
+@Html.AntiForgeryToken();
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

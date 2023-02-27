@@ -7,19 +7,14 @@
             <br />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="DepartureAirportId" class="control-label"></label>
-                <input asp-for="DepartureAirportId" class="form-control" />
-                <span asp-validation-for="DepartureAirportId" class="text-danger"></span>
+                <label asp-for="AircraftId" class="control-label"></label>
+                <input asp-for="AircraftId" class="form-control" />
+                <span asp-validation-for="AircraftId" class="text-danger"></span>
             </div><br />
             <div class="form-group">
                 <label asp-for="ArrivalAirportId" class="control-label"></label>
                 <input asp-for="ArrivalAirportId" class="form-control" />
                 <span asp-validation-for="ArrivalAirportId" class="text-danger"></span>
-            </div><br />
-            <div class="form-group">
-                <label asp-for="AircraftId" class="control-label"></label>
-                <input asp-for="AircraftId" class="form-control" />
-                <span asp-validation-for="AircraftId" class="text-danger"></span>
             </div><br />
             <div class="form-group">
                 <label asp-for="DepartureDateTime" class="control-label"></label>
@@ -41,7 +36,7 @@
     </div>
 </div>
 
-
+@Html.AntiForgeryToken();
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

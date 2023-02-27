@@ -1,6 +1,7 @@
 ﻿using Fly.Core.Entities;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
+using Fly.Shared.DataTransferObjects;
 using Fly.WebUI.Interfaces;
 using Fly.WebUI.Services;
 
@@ -20,6 +21,8 @@ public static class ConfigureServices
         services.AddScoped<IService<Manager, ManagerParameter>, ManagerRequestService>();
         services.AddTransient<IParametersParser, ParametersParser>();
         services.AddScoped<IApiHttpClientService, ApiHttpClientService>();
+        services.AddScoped<ISeatsGeneratorService<SeatsDto>, SeatsGeneratorService>();
+        services.AddScoped<ITicketsGeneratorService<TicketsDto>, TicketsGeneratorService>();
 
         return services;
     }

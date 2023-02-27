@@ -60,6 +60,12 @@ public class ManagerRequestService : IService<Manager, ManagerParameter>
         {
             var client = await _httpClientService.GetClientAsync();
             var response = await client.GetAsync($"managers/{id}");
+            if (response.IsSuccessStatusCode!)
+            {
+                _logger.LogError(response.ReasonPhrase);
+                return new Response<Manager>(new Manager()) { Succeeded = false };
+            }
+
             var responseString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<Response<Manager>>(responseString);
 
@@ -85,6 +91,11 @@ public class ManagerRequestService : IService<Manager, ManagerParameter>
         try
         {
             var response = await client.GetAsync("managers?" + paramsStr);
+            if (response.IsSuccessStatusCode!)
+            {
+                _logger.LogError(response.ReasonPhrase);
+                return new PagedResponse<Manager>(new List<Manager>(), new MetaData());
+            }
             var responseString = await response.Content.ReadAsStringAsync();
             var headerValues = response.Headers.GetValues("X-Pagination");
             var jsonMetaData = headerValues.FirstOrDefault();

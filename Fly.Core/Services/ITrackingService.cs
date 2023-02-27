@@ -1,4 +1,4 @@
-﻿namespace Fly.Core.Interfaces;
+﻿namespace Fly.Core.Services;
 
 public interface ITrackingService
 {

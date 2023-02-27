@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Fly.Core.Entities;
-using Fly.Core.Interfaces;
+using Fly.Core.Services;
 using Fly.Shared.DataTransferObjects;
 using GeoCoordinatePortable;
 using Microsoft.Extensions.Logging;
@@ -25,14 +25,26 @@ public class FlightsRouteBuilder : IRouteBuilder<Flight, LocationDto>
         var yDiff = flight.ArrivalAirport.Longitude - flight.DepartureAirport.Longitude;
         var totalTimeSpan = flight.ArrivalDateTime - flight.DepartureDateTime;
         var timePassed = DateTime.Now - flight.DepartureDateTime;
+        if (timePassed < TimeSpan.Zero)
+        {
+            timePassed = TimeSpan.Zero;
+        }
         var progress = Math.Abs(Math.Round((double)(timePassed / totalTimeSpan), 2));
         var angle = CalculatePlaneAngle(flight);
         var startLatitude = flight.DepartureAirport.Latitude;
         var startLongitude = flight.DepartureAirport.Longitude;
+        if (progress < 0)
+        {
+            progress = 0;
+        }
+        else if (progress > 1)
+        {
+            progress = 1;
+        }
         var result = new LocationDto()
         {
             AircraftId = flight.AircraftId,
-            Latitude = startLatitude + -xDiff * progress,
+            Latitude = startLatitude - xDiff * progress,
             Longitude = startLongitude + yDiff * progress,
             DateTime = DateTime.Now,
             DirectionAngle = angle

@@ -11,6 +11,8 @@ public class AircraftSpec : Specification<Aircraft>
 
         Query.Include(x => x.Airport);
 
+        Query.Include(x => x.Seats);
+
         Query.Where(x => x.Id == id);
     }
 }

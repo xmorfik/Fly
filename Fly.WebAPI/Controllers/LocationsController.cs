@@ -5,37 +5,36 @@ using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
-namespace Fly.WebAPI.Controllers
+namespace Fly.WebAPI.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class LocationsController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class LocationsController : ControllerBase
+    private readonly IHubContext<LocationHub> _hub;
+    private readonly IAircraftLocationService<LocationDto> _aircraftLocationService;
+
+    public LocationsController(
+        IHubContext<LocationHub> hub,
+        IAircraftLocationService<LocationDto> aircraftLocationService)
     {
-        private readonly IHubContext<LocationHub> _hub;
-        private readonly IAircraftLocationService<LocationDto> _aircraftLocationService;
-
-        public LocationsController(
-            IHubContext<LocationHub> hub,
-            IAircraftLocationService<LocationDto> aircraftLocationService)
-        {
-            RecurringJob.AddOrUpdate(() => Get(), Cron.Minutely());
-            _aircraftLocationService = aircraftLocationService;
-            _hub = hub;
-        }
+        RecurringJob.AddOrUpdate(() => Get(), Cron.Minutely());
+        _aircraftLocationService = aircraftLocationService;
+        _hub = hub;
+    }
 
 
-        [HttpGet]
-        public async Task Get()
-        {
-            var locations = await _aircraftLocationService.GetСurrentLocations();
-            await _hub.Clients.All.SendAsync("Locations", locations);
-        }
+    [HttpGet]
+    public async Task Get()
+    {
+        var locations = await _aircraftLocationService.GetСurrentLocations();
+        await _hub.Clients.All.SendAsync("Locations", locations);
+    }
 
-        [HttpPost]
-        public async Task Post(int id)
-        {
-            var locations = await _aircraftLocationService.GetLocations(id);
-            await _hub.Clients.All.SendAsync("LocationsHistory", new LocationDto());
-        }
+    [HttpPost]
+    public async Task Post(int id)
+    {
+        var locations = await _aircraftLocationService.GetLocations(id);
+        await _hub.Clients.All.SendAsync("LocationsHistory", new LocationDto());
     }
 }

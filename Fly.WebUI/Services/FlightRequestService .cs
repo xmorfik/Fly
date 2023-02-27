@@ -62,9 +62,14 @@ public class FlightRequestService : IService<Flight, FlightParameter>
         {
             var client = await _httpClientService.GetClientAsync();
             var response = await client.GetAsync($"flights/{id}");
+            if (response.IsSuccessStatusCode!)
+            {
+                _logger.LogError(response.ReasonPhrase);
+                return new Response<Flight>(new Flight()) { Succeeded = false };
+            }
+
             var responseString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<Response<Flight>>(responseString);
-
             if (result == null)
             {
                 return new Response<Flight>(new Flight()) { Succeeded = false };
@@ -87,6 +92,11 @@ public class FlightRequestService : IService<Flight, FlightParameter>
         try
         {
             var response = await client.GetAsync("flights?" + paramsStr);
+            if (response.IsSuccessStatusCode!)
+            {
+                _logger.LogError(response.ReasonPhrase);
+                return new PagedResponse<Flight>(new List<Flight>(), new MetaData());
+            }
             _logger.LogInformation($"Response : {response.StatusCode} : {response.ReasonPhrase}");
             var responseString = await response.Content.ReadAsStringAsync();
             var headerValues = response.Headers.GetValues("X-Pagination");

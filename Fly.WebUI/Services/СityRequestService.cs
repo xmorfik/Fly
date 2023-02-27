@@ -60,9 +60,14 @@ public class CityRequestService : IService<City, CityParameter>
         {
             var client = await _httpClientService.GetClientAsync();
             var response = await client.GetAsync($"cities/{id}");
+            if (response.IsSuccessStatusCode!)
+            {
+                _logger.LogError(response.ReasonPhrase);
+                return new Response<City>(new City()) { Succeeded = false };
+            }
+
             var responseString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<Response<City>>(responseString);
-
             if (result == null)
             {
                 return new Response<City>(new City()) { Succeeded = false };
@@ -84,6 +89,11 @@ public class CityRequestService : IService<City, CityParameter>
         try
         {
             var response = await client.GetAsync("cities?" + paramsStr);
+            if (response.IsSuccessStatusCode!)
+            {
+                _logger.LogError(response.ReasonPhrase);
+                return new PagedResponse<City>(new List<City>(), new MetaData());
+            }
             var responseString = await response.Content.ReadAsStringAsync();
             var headerValues = response.Headers.GetValues("X-Pagination");
             var jsonMetaData = headerValues.FirstOrDefault();

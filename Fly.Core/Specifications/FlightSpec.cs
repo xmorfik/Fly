@@ -7,7 +7,7 @@ public class FlightSpec : Specification<Flight>, ISingleResultSpecification
 {
     public FlightSpec(int id)
     {
-        Query.Include(x => x.Aircraft);
+        Query.Include(x => x.Aircraft).ThenInclude(x => x.Seats);
 
         Query.Include(x => x.DepartureAirport).ThenInclude(x => x.City);
 
@@ -24,8 +24,9 @@ public class FlightSpec : Specification<Flight>, ISingleResultSpecification
 
         Query.Include(x => x.ArrivalAirport);
 
-        Query.Where(x => x.AircraftId == aircarfatId).OrderByDescending(x => x.DepartureDateTime);
+        Query.Where(x => x.AircraftId == aircarfatId);
 
-        Query.Where(x => x.DepartureDateTime <= date);
+        Query.Where(x => x.Aircraft.AirportId == x.DepartureAirportId);
+
     }
 }

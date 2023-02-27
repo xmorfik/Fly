@@ -3,6 +3,7 @@ using Fly.Data;
 using Fly.WebAPI.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Serilog;
+using System.Reflection;
 
 namespace Fly.IdentityServer;
 
@@ -32,6 +33,9 @@ internal static class HostingExtensions
             .AddDeveloperSigningCredential();
 
         var configuration = builder.Configuration;
+
+        builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
         //builder.Services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
         //{
         //    microsoftOptions.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;

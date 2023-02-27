@@ -1,4 +1,5 @@
-﻿@model Fly.Core.Entities.Seat
+﻿@using Fly.Shared.DataTransferObjects;
+@model SeatsDto
 
 <div class="card  mx-auto" style="width:1000px">
     <img class="card-img-top" src="~/seat.jpg">
@@ -7,19 +8,19 @@
             <br />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Row" class="control-label"></label>
-                <input asp-for="Row" class="form-control" />
-                <span asp-validation-for="Row" class="text-danger"></span>
+                <label asp-for="EconomClass" class="control-label"></label>
+                <input asp-for="EconomClass" class="form-control" />
+                <span asp-validation-for="EconomClass" class="text-danger"></span>
             </div><br />
             <div class="form-group">
-                <label asp-for="Column" class="control-label"></label>
-                <input asp-for="Column" class="form-control" />
-                <span asp-validation-for="Column" class="text-danger"></span>
+                <label asp-for="FirstClass" class="control-label"></label>
+                <input asp-for="FirstClass" class="form-control" />
+                <span asp-validation-for="FirstClass" class="text-danger"></span>
             </div><br />
             <div class="form-group">
-                <label asp-for="SeatClass" class="control-label"></label>
-                <input asp-for="SeatClass" class="form-control" />
-                <span asp-validation-for="SeatClass" class="text-danger"></span>
+                <label asp-for="BusinessClass" class="control-label"></label>
+                <input asp-for="BusinessClass" class="form-control" />
+                <span asp-validation-for="BusinessClass" class="text-danger"></span>
             </div><br />
             <div class="form-group">
                 <label asp-for="AircraftId" class="control-label"></label>
@@ -37,6 +38,7 @@
     </div>
 </div>
 
+@Html.AntiForgeryToken();
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

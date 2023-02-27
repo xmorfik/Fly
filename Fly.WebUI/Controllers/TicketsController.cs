@@ -2,6 +2,7 @@
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
+using Fly.Shared.DataTransferObjects;
 using Fly.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,12 @@ namespace Fly.WebUI.Controllers;
 public class TicketsController : Controller
 {
     private readonly IService<Ticket, TicketParameter> _service;
-
-    public TicketsController(IService<Ticket, TicketParameter> service)
+    private readonly ITicketsGeneratorService<TicketsDto> _ticketsGenerator;
+    public TicketsController(IService<Ticket, TicketParameter> service,
+        ITicketsGeneratorService<TicketsDto> ticketsGenerator)
     {
         _service = service;
+        _ticketsGenerator = ticketsGenerator;
     }
 
     [HttpGet]
@@ -65,9 +68,10 @@ public class TicketsController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> Create(Ticket item)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(TicketsDto item)
     {
-        await _service.CreateAsync(item);
+        await _ticketsGenerator.Generate(item);
         return RedirectToAction("index");
     }
 
@@ -79,6 +83,7 @@ public class TicketsController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Ticket item)
     {
         await _service.UpdateAsync(item);

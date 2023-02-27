@@ -1,6 +1,6 @@
 ﻿namespace Fly.Core.Enums;
 
-public enum TiketState
+public enum TicketState
 {
     Active,
     Sold,

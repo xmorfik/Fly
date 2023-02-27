@@ -26,5 +26,7 @@ public static class ConfigureIdentityExtension
         });
 
         JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+
     }
 }

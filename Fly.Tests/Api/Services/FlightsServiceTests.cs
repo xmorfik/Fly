@@ -4,16 +4,18 @@ using Fly.Core.Entities;
 using Fly.Core.Interfaces;
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
+using Fly.Core.Services;
 using Fly.Services;
 using Fly.Tests.Helpers;
 using Microsoft.Extensions.Logging;
 using Moq;
 
-namespace Fly.Tests.Api.Controllers;
+namespace Fly.Tests.Api.Services;
 
 public class FlightsServiceTests
 {
     public readonly Mock<IRepository<Flight>> _repository = new();
+    public readonly Mock<IRepository<Aircraft>> _aircraftRepository = new();
     public readonly Mock<ILogger<FlightService>> _logger = new();
     public readonly Mock<IScheduleService<Flight>> _scheduleService = new();
     public readonly List<Flight> _flights;
@@ -27,7 +29,7 @@ public class FlightsServiceTests
     [Fact]
     public async Task GetListAsync_NoParameters_ReturnsAll()
     {
-        var service = new FlightService(_repository.Object, _logger.Object, _scheduleService.Object);
+        var service = new FlightService(_repository.Object, _logger.Object, _scheduleService.Object, _aircraftRepository.Object);
         var result = await service.GetListAsync(new FlightParameter(), new Page());
         var data = result;
         data.Count().Should().Be(_flights.Count);

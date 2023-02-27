@@ -6,6 +6,7 @@ using Fly.WebAPI.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace Fly.WebAPI.Controllers;
 
@@ -15,15 +16,32 @@ namespace Fly.WebAPI.Controllers;
 public class AircraftsController : ControllerBase
 {
     private readonly IService<Aircraft, AircraftParameter> _service;
+    private readonly ILogger<AircraftsController> _logger;
 
-    public AircraftsController(IService<Aircraft, AircraftParameter> service)
+    public AircraftsController(IService<Aircraft, AircraftParameter> service,
+        ILogger<AircraftsController> logger)
     {
         _service = service;
+        _logger = logger;
     }
 
     [HttpGet]
     public async Task<ICollection<Aircraft>> Get([FromQuery] AircraftParameter parameter, [FromQuery] Page page)
     {
+        try
+        {
+            var claims = ClaimsPrincipal.Current.Identities.First().Claims.ToList();
+            var airlineId = claims?.FirstOrDefault(x => x.Type.Equals("Airline", StringComparison.OrdinalIgnoreCase))?.Value;
+            if (airlineId != null)
+            {
+                parameter.AirlineId = int.Parse(airlineId);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+        }
+
         var result = await _service.GetListAsync(parameter, page);
         Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(result.MetaData));
         return result;
@@ -32,13 +50,27 @@ public class AircraftsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<Response<Aircraft>> Get(int id)
     {
-        return await _service.GetAsync(id);
+        var result = await _service.GetAsync(id);
+        return result;
     }
 
     [HttpPost]
     [ValidateModel]
     public async Task Post([FromBody] Aircraft value)
     {
+        try
+        {
+            var claims = ClaimsPrincipal.Current.Identities.First().Claims.ToList();
+            var airlineId = claims?.FirstOrDefault(x => x.Type.Equals("Airline", StringComparison.OrdinalIgnoreCase))?.Value;
+            if (airlineId != null)
+            {
+                value.AirlineId = int.Parse(airlineId);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+        }
         await _service.CreateAsync(value);
     }
 

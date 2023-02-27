@@ -67,6 +67,7 @@ public class AirlinesController : Controller
 
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Airline item)
     {
         await _service.CreateAsync(item);
@@ -81,6 +82,7 @@ public class AirlinesController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Airline item)
     {
         await _service.UpdateAsync(item);

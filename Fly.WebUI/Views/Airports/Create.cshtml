@@ -47,6 +47,7 @@
     </div>
 </div>
 
+@Html.AntiForgeryToken();
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

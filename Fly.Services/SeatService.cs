@@ -5,7 +5,6 @@ using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.Core.Specifications;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace Fly.Services;
 
@@ -24,12 +23,7 @@ public class SeatService : IService<Seat, SeatParameter>
     {
         try
         {
-            var result = await _repository.AddAsync(item);
-            if (result == null)
-            {
-                _logger.LogError("Can't create :" + JsonConvert.SerializeObject(item));
-            }
-            _logger.LogInformation(JsonConvert.SerializeObject(result) + " created");
+            await _repository.AddAsync(item);
         }
         catch (Exception ex)
         {
@@ -58,7 +52,6 @@ public class SeatService : IService<Seat, SeatParameter>
             var result = await _repository.FirstOrDefaultAsync(new SeatSpec(id));
             if (result == null)
             {
-                _logger.LogError($"Can't find {id}");
                 return new Response<Seat>(new Seat()) { Succeeded = false };
             }
             return new Response<Seat>(result);
@@ -75,12 +68,6 @@ public class SeatService : IService<Seat, SeatParameter>
         try
         {
             var items = await _repository.ListAsync(new SeatListSpec(parameter));
-            if (items == null)
-            {
-                _logger
-                    .LogInformation
-                    ("Can't find " + JsonConvert.SerializeObject(parameter) + " , " + JsonConvert.SerializeObject(page));
-            }
             return PagedResponse<Seat>.ToPagedList(items, page);
         }
         catch (Exception ex)

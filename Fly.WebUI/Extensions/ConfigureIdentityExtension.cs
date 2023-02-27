@@ -31,9 +31,11 @@ public static class ConfigureIdentityExtension
             options.Scope.Add("offline_access");
             options.Scope.Add("api1");
             options.Scope.Add("Roles");
+            options.Scope.Add("Airline");
 
             options.GetClaimsFromUserInfoEndpoint = true;
             options.ClaimActions.MapUniqueJsonKey("Roles", "Role");
+            options.ClaimActions.MapUniqueJsonKey("Airline", "Airline");
 
             options.TokenValidationParameters = new TokenValidationParameters
             {

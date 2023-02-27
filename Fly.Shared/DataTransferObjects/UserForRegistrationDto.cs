@@ -4,12 +4,16 @@ namespace Fly.Shared.DataTransferObjects;
 
 public record UserForRegistrationDto
 {
+    [Required]
     public string? FirstName { get; init; }
+    [Required]
     public string? LastName { get; init; }
-    [Required(ErrorMessage = "Username is required")]
+    [Required]
     public string? UserName { get; init; }
-    [Required(ErrorMessage = "Password is required")]
+    [Required]
     public string? Password { get; init; }
+    [Required]
     public string? Email { get; init; }
+    [Required]
     public string? PhoneNumber { get; init; }
 }

@@ -1,4 +1,4 @@
-﻿@model Fly.Core.Entities.Aircraft
+﻿@model CreateAircraftDto
 
 <div class="card  mx-auto" style="width:1000px">
     <img class="card-img-top" src="~/aircraft.jpg">
@@ -30,24 +30,21 @@
                     <span asp-validation-for="FlightHours" class="text-danger"></span>
                 </div>
             <br />
+                @if(User.IsInRole("Administrator"))
+            {
                 <div class="form-group">
-                    <label asp-for="AircraftState" class="control-label"></label>
-                    <input asp-for="AircraftState" class="form-control" />
-                    <span asp-validation-for="AircraftState" class="text-danger"></span>
+                        <label asp-for="AirlineId" class="control-label"></label>
+                        <input asp-for="AirlineId" class="form-control" />
+                        <span asp-validation-for="AirlineId" class="text-danger"></span>
                 </div>
             <br />
-                <div class="form-group">
-                    <label asp-for="AirlineId" class="control-label"></label>
-                    <input asp-for="AirlineId" class="form-control" />
-                    <span asp-validation-for="AirlineId" class="text-danger"></span>
-                </div>
-            <br />
+            }
                 <div class="form-group">
                     <label asp-for="AirportId" class="control-label"></label>
                     <input asp-for="AirportId" class="form-control" />
                     <span asp-validation-for="AirportId" class="text-danger"></span>
-                </div>
-            <br />
+            </div><br />
+            
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
@@ -58,6 +55,8 @@
             </div>
     </div>
 </div>
+
+@Html.AntiForgeryToken();
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

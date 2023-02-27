@@ -6,7 +6,7 @@ public class Ticket : BaseEntity
 {
     public decimal Price { get; set; }
 
-    public TiketState TicketState { get; set; }
+    public TicketState TicketState { get; set; }
 
     public DateTime SoldDate { get; set; }
 

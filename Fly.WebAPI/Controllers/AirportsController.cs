@@ -11,7 +11,6 @@ namespace Fly.WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize(Policy = "AdministratorOnly")]
 public class AirportsController : ControllerBase
 {
     private readonly IService<Airport, AirportParameter> _service;
@@ -22,7 +21,7 @@ public class AirportsController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Policy = "AdministratorOnly")]
+    [AllowAnonymous]
     public async Task<ICollection<Airport>> Get([FromQuery] AirportParameter parameter, [FromQuery] Page page)
     {
         var result = await _service.GetListAsync(parameter, page);
@@ -31,7 +30,7 @@ public class AirportsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [Authorize(Policy = "AdministratorOnly")]
+    [AllowAnonymous]
     public async Task<Response<Airport>> Get(int id)
     {
         return await _service.GetAsync(id);

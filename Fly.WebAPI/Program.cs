@@ -54,6 +54,12 @@ app.UseCors("CorsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.Use(async (context, next) =>
+{
+    Thread.CurrentPrincipal = context.User;
+    await next(context);
+});
+
 app.UseSwagger();
 app.UseSwaggerUI(s =>
 {

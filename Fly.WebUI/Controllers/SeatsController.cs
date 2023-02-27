@@ -2,6 +2,7 @@
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
+using Fly.Shared.DataTransferObjects;
 using Fly.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,12 @@ namespace Fly.WebUI.Controllers;
 public class SeatsController : Controller
 {
     private readonly IService<Seat, SeatParameter> _service;
-
-    public SeatsController(IService<Seat, SeatParameter> service)
+    private readonly ISeatsGeneratorService<SeatsDto> _seatsGenerator;
+    public SeatsController(IService<Seat, SeatParameter> service,
+        ISeatsGeneratorService<SeatsDto> seatsGenerator)
     {
         _service = service;
+        _seatsGenerator = seatsGenerator;
     }
 
     [HttpGet]
@@ -65,9 +68,10 @@ public class SeatsController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> Create(Seat item)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(SeatsDto item)
     {
-        await _service.CreateAsync(item);
+        await _seatsGenerator.Generate(item);
         return RedirectToAction("index");
     }
 
@@ -79,6 +83,7 @@ public class SeatsController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Seat item)
     {
         await _service.UpdateAsync(item);
