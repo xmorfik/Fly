@@ -48,6 +48,9 @@
                                 <th>
                                     Arrival
                                 </th>
+                                <th>
+                                    Tikets
+                                </th>
 
                                 <th></th>
                             </tr>
@@ -72,6 +75,9 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.ArrivalDateTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Tickets.Count)
                                     </td>
                                     <td>
                                         @if (User.IsInRole("Administrator"))

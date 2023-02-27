@@ -18,7 +18,7 @@ public class LocationsController : ControllerBase
         IHubContext<LocationHub> hub,
         IAircraftLocationService<LocationDto> aircraftLocationService)
     {
-        RecurringJob.AddOrUpdate(() => Get(), Cron.Minutely());
+        RecurringJob.AddOrUpdate(() => Get(), "*/10 * * * * *");
         _aircraftLocationService = aircraftLocationService;
         _hub = hub;
     }
