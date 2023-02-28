@@ -31,7 +31,7 @@ public class ManagersController : ControllerBase
 
     [HttpGet("{id}")]
     [Authorize(Policy = "AdministratorOnly")]
-    public async Task<Response<Manager>> Get(int id)
+    public async Task<ResponseBase<Manager>> Get(int id)
     {
         return await _service.GetAsync(id);
     }

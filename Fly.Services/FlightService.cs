@@ -56,16 +56,16 @@ public class FlightService : IService<Flight, FlightParameter>
         }
     }
 
-    public async Task<Response<Flight>> GetAsync(int id)
+    public async Task<ResponseBase<Flight>> GetAsync(int id)
     {
         try
         {
             var result = await _repository.FirstOrDefaultAsync(new FlightSpec(id));
             if (result == null)
             {
-                return new Response<Flight>(new Flight()) { Succeeded = false };
+                return new ResponseBase<Flight>(new Flight()) { Succeeded = false };
             }
-            return new Response<Flight>(result);
+            return new ResponseBase<Flight>(result);
         }
         catch (Exception ex)
         {

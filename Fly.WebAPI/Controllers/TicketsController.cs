@@ -31,7 +31,7 @@ public class TicketsController : ControllerBase
 
     [HttpGet("{id}")]
     [AllowAnonymous]
-    public async Task<Response<Ticket>> Get(int id)
+    public async Task<ResponseBase<Ticket>> Get(int id)
     {
         return await _service.GetAsync(id);
     }

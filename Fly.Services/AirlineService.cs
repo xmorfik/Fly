@@ -45,16 +45,16 @@ public class AirlineService : IService<Airline, AirlineParameter>
         }
     }
 
-    public async Task<Response<Airline>> GetAsync(int id)
+    public async Task<ResponseBase<Airline>> GetAsync(int id)
     {
         try
         {
             var result = await _repository.FirstOrDefaultAsync(new AirlineSpec(id));
             if (result == null)
             {
-                return new Response<Airline>(new Airline()) { Succeeded = false };
+                return new ResponseBase<Airline>(new Airline()) { Succeeded = false };
             }
-            return new Response<Airline>(result);
+            return new ResponseBase<Airline>(result);
         }
         catch (Exception ex)
         {

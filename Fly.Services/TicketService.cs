@@ -45,16 +45,16 @@ public class TicketService : IService<Ticket, TicketParameter>
         }
     }
 
-    public async Task<Response<Ticket>> GetAsync(int id)
+    public async Task<ResponseBase<Ticket>> GetAsync(int id)
     {
         try
         {
             var result = await _repository.FirstOrDefaultAsync(new TicketSpec(id));
             if (result == null)
             {
-                return new Response<Ticket>(new Ticket()) { Succeeded = false };
+                return new ResponseBase<Ticket>(new Ticket()) { Succeeded = false };
             }
-            return new Response<Ticket>(result);
+            return new ResponseBase<Ticket>(result);
         }
         catch (Exception ex)
         {

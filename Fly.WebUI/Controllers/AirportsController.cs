@@ -17,18 +17,29 @@ public class AirportsController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(bool isSelect, string redirectUri)
     {
         var airportViewModel = new AirportsViewModel();
         var response = await _service.GetListAsync(new AirportParameter(), new Page());
+
         airportViewModel.PagedResponse = response;
         airportViewModel.MetaData = response.MetaData;
+        airportViewModel.RedirectUri = redirectUri;
+        airportViewModel.IsSelect = isSelect;
+
         return View(airportViewModel);
     }
 
     [HttpGet]
     public async Task<IActionResult> Create()
     {
+        int cityId;
+
+        if (int.TryParse(Request.Cookies["SelectedCityId"], out cityId))
+        {
+            ViewData["SelectedCityId"] = cityId;
+        }
+
         return View();
     }
 
@@ -68,6 +79,8 @@ public class AirportsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Airport item)
     {
+        Response.Cookies.Delete("SelectedCityId");
+
         await _service.CreateAsync(item);
         return RedirectToAction("index");
     }
@@ -85,5 +98,12 @@ public class AirportsController : Controller
     {
         await _service.UpdateAsync(item);
         return View(item);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Select(int id, string redirectUri)
+    {
+        Response.Cookies.Append("SelectedAirportId", id.ToString());
+        return Redirect(redirectUri);
     }
 }

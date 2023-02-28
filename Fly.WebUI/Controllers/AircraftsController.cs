@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Fly.Core.Entities;
+using Fly.Core.Enums;
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
@@ -20,18 +21,40 @@ public class AircraftsController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(bool isSelect, string redirectUri)
     {
         var aircraftViewModel = new AircraftsViewModel();
-        var response = await _service.GetListAsync(new AircraftParameter(), new Page());
+        var aircraftParameter = new AircraftParameter();
+        if (isSelect)
+        {
+            aircraftParameter.AircraftState = AircraftState.InAirport;
+        }
+        var response = await _service.GetListAsync(aircraftParameter, new Page());
+
         aircraftViewModel.PagedResponse = response;
         aircraftViewModel.MetaData = response.MetaData;
+        aircraftViewModel.IsSelect = isSelect;
+        aircraftViewModel.RedirectUri = redirectUri;
+
         return View(aircraftViewModel);
     }
 
     [HttpGet]
     public async Task<IActionResult> Create()
     {
+        int airportId;
+        int airlineId;
+
+        if (int.TryParse(Request.Cookies["SelectedAirportId"], out airportId))
+        {
+            ViewData["SelectedAirportId"] = airportId;
+        }
+
+        if (int.TryParse(Request.Cookies["SelectedAirlineId"], out airlineId))
+        {
+            ViewData["SelectedAirlineId"] = airlineId;
+        }
+
         return View();
     }
 
@@ -61,8 +84,10 @@ public class AircraftsController : Controller
     public async Task<IActionResult> Index(AircraftsViewModel aircraftViewModel)
     {
         var response = await _service.GetListAsync(aircraftViewModel.AircraftParameter, aircraftViewModel.MetaData.ToPage());
+
         aircraftViewModel.PagedResponse = response;
         aircraftViewModel.MetaData = response.MetaData;
+
         return View(aircraftViewModel);
     }
 
@@ -71,6 +96,9 @@ public class AircraftsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateAircraftDto item)
     {
+        Response.Cookies.Delete("SelectedAirlineId");
+        Response.Cookies.Delete("SelectedAirportId");
+
         var result = _mapper.Map<Aircraft>(item);
         await _service.CreateAsync(result);
         return RedirectToAction("index");
@@ -89,5 +117,12 @@ public class AircraftsController : Controller
     {
         await _service.UpdateAsync(item);
         return View(item);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Select(int id, string redirectUri)
+    {
+        Response.Cookies.Append("SelectedAircraftId", id.ToString());
+        return Redirect(redirectUri);
     }
 }

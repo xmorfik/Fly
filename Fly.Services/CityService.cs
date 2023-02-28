@@ -45,16 +45,16 @@ public class CityService : IService<City, CityParameter>
         }
     }
 
-    public async Task<Response<City>> GetAsync(int id)
+    public async Task<ResponseBase<City>> GetAsync(int id)
     {
         try
         {
             var result = await _repository.FirstOrDefaultAsync(new CitySpec(id));
             if (result == null)
             {
-                return new Response<City>(new City()) { Succeeded = false };
+                return new ResponseBase<City>(new City()) { Succeeded = false };
             }
-            return new Response<City>(result);
+            return new ResponseBase<City>(result);
         }
         catch (Exception ex)
         {

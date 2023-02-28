@@ -64,7 +64,7 @@ public class CityRequestService : IService<City, CityParameter>
         }
     }
 
-    public async Task<Response<City>> GetAsync(int id)
+    public async Task<ResponseBase<City>> GetAsync(int id)
     {
         try
         {
@@ -73,14 +73,14 @@ public class CityRequestService : IService<City, CityParameter>
             if (!response.IsSuccessStatusCode)
             {
                 _logger.LogError(response.ReasonPhrase);
-                return new Response<City>(new City()) { Succeeded = false };
+                return new ResponseBase<City>(new City()) { Succeeded = false };
             }
 
             var responseString = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<Response<City>>(responseString);
+            var result = JsonConvert.DeserializeObject<ResponseBase<City>>(responseString);
             if (result == null)
             {
-                return new Response<City>(new City()) { Succeeded = false };
+                return new ResponseBase<City>(new City()) { Succeeded = false };
             }
 
             return result;

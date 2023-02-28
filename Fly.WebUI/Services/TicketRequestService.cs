@@ -64,7 +64,7 @@ public class TicketRequestService : IService<Ticket, TicketParameter>
         }
     }
 
-    public async Task<Response<Ticket>> GetAsync(int id)
+    public async Task<ResponseBase<Ticket>> GetAsync(int id)
     {
         try
         {
@@ -73,14 +73,14 @@ public class TicketRequestService : IService<Ticket, TicketParameter>
             if (!response.IsSuccessStatusCode)
             {
                 _logger.LogError(response.ReasonPhrase);
-                return new Response<Ticket>(new Ticket()) { Succeeded = false };
+                return new ResponseBase<Ticket>(new Ticket()) { Succeeded = false };
             }
 
             var responseString = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<Response<Ticket>>(responseString);
+            var result = JsonConvert.DeserializeObject<ResponseBase<Ticket>>(responseString);
             if (result == null)
             {
-                return new Response<Ticket>(new Ticket()) { Succeeded = false };
+                return new ResponseBase<Ticket>(new Ticket()) { Succeeded = false };
             }
 
             return result;

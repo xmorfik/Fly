@@ -31,7 +31,7 @@ public class SeatsController : ControllerBase
 
     [HttpGet("{id}")]
     [AllowAnonymous]
-    public async Task<Response<Seat>> Get(int id)
+    public async Task<ResponseBase<Seat>> Get(int id)
     {
         return await _service.GetAsync(id);
     }

@@ -45,16 +45,16 @@ public class SeatService : IService<Seat, SeatParameter>
         }
     }
 
-    public async Task<Response<Seat>> GetAsync(int id)
+    public async Task<ResponseBase<Seat>> GetAsync(int id)
     {
         try
         {
             var result = await _repository.FirstOrDefaultAsync(new SeatSpec(id));
             if (result == null)
             {
-                return new Response<Seat>(new Seat()) { Succeeded = false };
+                return new ResponseBase<Seat>(new Seat()) { Succeeded = false };
             }
-            return new Response<Seat>(result);
+            return new ResponseBase<Seat>(result);
         }
         catch (Exception ex)
         {

@@ -19,12 +19,16 @@ public class AirlinesController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(bool isSelect, string redirectUri)
     {
         var airlineViewModel = new AirlinesViewModel();
         var response = await _service.GetListAsync(new AirlineParameter(), new Page());
+
         airlineViewModel.PagedResponse = response;
         airlineViewModel.MetaData = response.MetaData;
+        airlineViewModel.RedirectUri = redirectUri;
+        airlineViewModel.IsSelect = isSelect;
+
         return View(airlineViewModel);
     }
 
@@ -87,5 +91,12 @@ public class AirlinesController : Controller
     {
         await _service.UpdateAsync(item);
         return View(item);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Select(int id, string redirectUri)
+    {
+        Response.Cookies.Append("SelectedAirlineId", id.ToString());
+        return Redirect(redirectUri);
     }
 }

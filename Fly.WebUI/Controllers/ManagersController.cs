@@ -17,12 +17,13 @@ public class ManagersController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(bool isSelect, string redirectUri)
     {
         var managerViewModel = new ManagersViewModel();
         var response = await _service.GetListAsync(new ManagerParameter(), new Page());
         managerViewModel.PagedResponse = response;
         managerViewModel.MetaData = response.MetaData;
+
         return View(managerViewModel);
     }
 
@@ -76,5 +77,12 @@ public class ManagersController : Controller
     {
         await _service.UpdateAsync(item);
         return View(item);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Select(int id, string redirectUri)
+    {
+        Response.Cookies.Append("SelectedManagerId", id.ToString());
+        return Redirect(redirectUri);
     }
 }

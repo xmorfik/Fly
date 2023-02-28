@@ -45,16 +45,16 @@ public class ManagerService : IService<Manager, ManagerParameter>
         }
     }
 
-    public async Task<Response<Manager>> GetAsync(int id)
+    public async Task<ResponseBase<Manager>> GetAsync(int id)
     {
         try
         {
             var result = await _repository.FirstOrDefaultAsync(new ManagerSpec(id));
             if (result == null)
             {
-                return new Response<Manager>(new Manager()) { Succeeded = false };
+                return new ResponseBase<Manager>(new Manager()) { Succeeded = false };
             }
-            return new Response<Manager>(result);
+            return new ResponseBase<Manager>(result);
         }
         catch (Exception ex)
         {

@@ -45,16 +45,16 @@ public class AirportService : IService<Airport, AirportParameter>
         }
     }
 
-    public async Task<Response<Airport>> GetAsync(int id)
+    public async Task<ResponseBase<Airport>> GetAsync(int id)
     {
         try
         {
             var result = await _repository.FirstOrDefaultAsync(new AirportSpec(id));
             if (result == null)
             {
-                return new Response<Airport>(new Airport()) { Succeeded = false };
+                return new ResponseBase<Airport>(new Airport()) { Succeeded = false };
             }
-            return new Response<Airport>(result);
+            return new ResponseBase<Airport>(result);
         }
         catch (Exception ex)
         {

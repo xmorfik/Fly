@@ -20,18 +20,27 @@ public class TicketsController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(bool isSelect, string redirectUri)
     {
         var ticketViewModel = new TicketsViewModel();
         var response = await _service.GetListAsync(new TicketParameter(), new Page());
         ticketViewModel.PagedResponse = response;
         ticketViewModel.MetaData = response.MetaData;
+        ticketViewModel.IsSelect = isSelect;
+        ticketViewModel.RedirectUri = redirectUri;
         return View(ticketViewModel);
     }
 
     [HttpGet]
     public async Task<IActionResult> Create()
     {
+        int flightId;
+
+        if (int.TryParse(Request.Cookies["SelectedFlightId"], out flightId))
+        {
+            ViewData["SelectedFlightId"] = flightId;
+        }
+
         return View();
     }
 
@@ -71,6 +80,7 @@ public class TicketsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(TicketsDto item)
     {
+        Response.Cookies.Delete("SelectedFlightId");
         await _ticketsGenerator.Generate(item);
         return RedirectToAction("index");
     }
@@ -88,5 +98,12 @@ public class TicketsController : Controller
     {
         await _service.UpdateAsync(item);
         return View(item);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Select(int id, string redirectUri)
+    {
+        Response.Cookies.Append("SelectedTicketId", id.ToString());
+        return Redirect(redirectUri);
     }
 }

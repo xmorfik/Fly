@@ -31,7 +31,7 @@ public class CitiesController : ControllerBase
 
     [HttpGet("{id}")]
     [AllowAnonymous]
-    public async Task<Response<City>> Get(int id)
+    public async Task<ResponseBase<City>> Get(int id)
     {
         return await _service.GetAsync(id);
     }

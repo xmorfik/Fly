@@ -16,11 +16,16 @@ public class ScheduleService : IScheduleService<Flight>
         _trakingService = trakingService;
     }
 
-    public void Schedule(Flight flight)
+    public async Task Schedule(Flight flight)
     {
         var departureSpan = (flight.DepartureDateTime - DateTime.Now);
         var arrivalSpan = (flight.ArrivalDateTime - DateTime.Now);
         var id = flight.Id ?? 0;
+        if (arrivalSpan <= TimeSpan.Zero)
+        {
+            BackgroundJob.Schedule(() => Stop(id), TimeSpan.FromSeconds(2));
+            return;
+        }
         BackgroundJob.Schedule(() => Start(id), departureSpan);
         BackgroundJob.Schedule(() => Stop(id), arrivalSpan);
     }

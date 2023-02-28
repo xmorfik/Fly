@@ -64,7 +64,7 @@ public class SeatRequestService : IService<Seat, SeatParameter>
         }
     }
 
-    public async Task<Response<Seat>> GetAsync(int id)
+    public async Task<ResponseBase<Seat>> GetAsync(int id)
     {
         try
         {
@@ -73,15 +73,15 @@ public class SeatRequestService : IService<Seat, SeatParameter>
             if (!response.IsSuccessStatusCode)
             {
                 _logger.LogError(response.ReasonPhrase);
-                return new Response<Seat>(new Seat()) { Succeeded = false };
+                return new ResponseBase<Seat>(new Seat()) { Succeeded = false };
             }
 
             var responseString = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<Response<Seat>>(responseString);
+            var result = JsonConvert.DeserializeObject<ResponseBase<Seat>>(responseString);
 
             if (result == null)
             {
-                return new Response<Seat>(new Seat()) { Succeeded = false };
+                return new ResponseBase<Seat>(new Seat()) { Succeeded = false };
             }
 
             return result;

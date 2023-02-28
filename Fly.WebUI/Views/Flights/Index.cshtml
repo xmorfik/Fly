@@ -20,6 +20,8 @@
                     <label class="control-label">@Localizer["ArrivalCity"]</label>
                     <input asp-for="FlightParameter.ArrivalCity" class="form-control" />
                 </div>
+                @Html.HiddenFor(x=>x.RedirectUri)
+                @Html.HiddenFor(x=>x.IsSelect)
                 <div class="col">
                     <br/>
                     <input type="submit" value=@Localizer["Search"] class="btn btn-primary" />
@@ -62,39 +64,43 @@
                             @foreach (var item in Model.PagedResponse)
                         {
                             <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DepartureAirport.Name)
-                                        @Html.DisplayFor(modelItem => item.DepartureAirport.City.IsoCountry)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ArrivalAirport.Name)
-                                        @Html.DisplayFor(modelItem => item.DepartureAirport.City.IsoCountry)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Aircraft.ModelType)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DepartureDateTime)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ArrivalDateTime)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.FlightState)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Tickets.Count)
-                                    </td>
-                                    <td>
-                                        @if (User.IsInRole("Administrator"))
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DepartureAirport.Name)
+                                    @Html.DisplayFor(modelItem => item.DepartureAirport.City.IsoCountry)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ArrivalAirport.Name)
+                                    @Html.DisplayFor(modelItem => item.DepartureAirport.City.IsoCountry)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Aircraft.ModelType)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DepartureDateTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ArrivalDateTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FlightState)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Tickets.Count)
+                                </td>
+                                <td>
+                                    @if (Model.IsSelect)
+                                    {
+                                        @Html.ActionLink("Select","Select", new { id = item.Id, redirectUri = Model.RedirectUri})
+                                    }
+                                    @if (User.IsInRole("Administrator"))
                                     {
                                         @Html.ActionLink("Edit", "Edit", new { id = item.Id })
                                         <br />
                                         @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                                     }
-                                        @Html.ActionLink("Details", "Details", new { id=item.Id })
-                                    </td>
-                                </tr>
+                                    @Html.ActionLink("Details", "Details", new { id=item.Id })
+                                </td>
+                            </tr>
                         }
                         </tbody>
                     </table>

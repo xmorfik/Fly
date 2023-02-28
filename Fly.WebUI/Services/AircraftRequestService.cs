@@ -64,7 +64,7 @@ public class AircraftRequestService : IService<Aircraft, AircraftParameter>
         }
     }
 
-    public async Task<Response<Aircraft>> GetAsync(int id)
+    public async Task<ResponseBase<Aircraft>> GetAsync(int id)
     {
         try
         {
@@ -73,14 +73,14 @@ public class AircraftRequestService : IService<Aircraft, AircraftParameter>
             if (!response.IsSuccessStatusCode)
             {
                 _logger.LogError(response.ReasonPhrase);
-                return new Response<Aircraft>(new Aircraft()) { Succeeded = false };
+                return new ResponseBase<Aircraft>(new Aircraft()) { Succeeded = false };
             }
-            var responseString = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<Response<Aircraft>>(responseString);
 
+            var responseString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<ResponseBase<Aircraft>>(responseString);
             if (result == null)
             {
-                return new Response<Aircraft>(new Aircraft()) { Succeeded = false };
+                return new ResponseBase<Aircraft>(new Aircraft()) { Succeeded = false };
             }
 
             return result;

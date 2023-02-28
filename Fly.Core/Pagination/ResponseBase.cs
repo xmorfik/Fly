@@ -1,12 +1,12 @@
 ﻿namespace Fly.Core.Pagination;
 
-public class Response<T>
+public class ResponseBase<T>
 {
     public T Data { get; set; }
     public bool Succeeded { get; set; }
     public string Message { get; set; }
 
-    public Response(T data)
+    public ResponseBase(T data)
     {
         Succeeded = true;
         Message = string.Empty;

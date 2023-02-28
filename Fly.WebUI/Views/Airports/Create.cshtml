@@ -33,8 +33,9 @@
             </div><br />
             <div class="form-group">
                 <label asp-for="CityId" class="control-label"></label>
-                <input asp-for="CityId" class="form-control" />
+                <input asp-for="CityId" value= "@ViewData["SelectedCityId"]" readonly class="form-control" />
                 <span asp-validation-for="CityId" class="text-danger"></span>
+                @Html.ActionLink("Select","Index","Cities", new { isSelect = true, redirectUri = "/airports/create" })
             </div><br />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

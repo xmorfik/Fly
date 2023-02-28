@@ -48,7 +48,7 @@ public class AircraftsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<Response<Aircraft>> Get(int id)
+    public async Task<ResponseBase<Aircraft>> Get(int id)
     {
         var result = await _service.GetAsync(id);
         return result;

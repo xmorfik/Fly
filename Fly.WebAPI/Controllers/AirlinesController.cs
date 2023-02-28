@@ -31,7 +31,7 @@ public class AirlinesController : ControllerBase
 
     [HttpGet("{id}")]
     [AllowAnonymous]
-    public async Task<Response<Airline>> Get(int id)
+    public async Task<ResponseBase<Airline>> Get(int id)
     {
         return await _service.GetAsync(id);
     }

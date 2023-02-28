@@ -24,6 +24,8 @@
                     <label class="control-label">Iso Region</label>
                     <input asp-for="AirportParameter.IsoRegion" class="form-control" />
                 </div>
+                @Html.HiddenFor(x=>x.RedirectUri)
+                @Html.HiddenFor(x=>x.IsSelect)
                 <div class="col">
                     <br />
                     <input type="submit" onclick="setStartPage()" value=@Localizer["Search"] class="btn btn-primary" />
@@ -93,12 +95,17 @@
                                         @Html.DisplayFor(modelItem => item.City.IsoRegion)
                                     </td>
                                     <td>
+                                        @if (Model.IsSelect)
+                                        {
+                                            @Html.ActionLink("Select","Select", new { id = item.Id, redirectUri = Model.RedirectUri})
+                                        }
+
                                         @if (User.IsInRole("Administrator"))
-                                    {
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                                        <br />
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                                    }
+                                        {
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                                            <br />
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                        }
                                         @Html.ActionLink("Details", "Details", new { id=item.Id })
                                     </td>
                                 </tr>

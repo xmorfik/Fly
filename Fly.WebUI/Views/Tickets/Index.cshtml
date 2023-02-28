@@ -36,6 +36,8 @@
                     <label class="col">SeatClass</label>
                     <input asp-for="TicketParameter.SeatClass" class="form-control" />
                 </div>
+                @Html.HiddenFor(x=>x.RedirectUri)
+                @Html.HiddenFor(x=>x.IsSelect)
                 <div class="col">
                     <br/>
                     <input type="submit" onclick="setStartPage()" value=@Localizer["Search"] class="btn btn-primary" />
@@ -108,11 +110,11 @@
                                     </td>
                                     <td>
                                         @if (User.IsInRole("Administrator"))
-                                    {
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                                        <br />
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                                    }
+                                        {
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                                            <br />
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                        }
                                         @Html.ActionLink("Details", "Details", new { id=item.Id })
                                     </td>
                                 </tr>

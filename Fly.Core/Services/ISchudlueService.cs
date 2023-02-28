@@ -2,7 +2,7 @@
 
 public interface IScheduleService<T>
 {
-    public void Schedule(T t);
+    public Task Schedule(T t);
 
     public Task Start(int id);
 

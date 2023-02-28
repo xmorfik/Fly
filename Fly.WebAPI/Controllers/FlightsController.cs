@@ -31,7 +31,7 @@ public class FlightsController : ControllerBase
 
     [HttpGet("{id}")]
     [AllowAnonymous]
-    public async Task<Response<Flight>> Get(int id)
+    public async Task<ResponseBase<Flight>> Get(int id)
     {
         return await _service.GetAsync(id);
     }

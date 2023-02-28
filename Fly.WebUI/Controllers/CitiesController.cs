@@ -17,12 +17,16 @@ public class CitiesController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(bool isSelect, string redirectUri)
     {
         var cityViewModel = new CitiesViewModel();
         var response = await _service.GetListAsync(new CityParameter(), new Page());
+
         cityViewModel.PagedResponse = response;
         cityViewModel.MetaData = response.MetaData;
+        cityViewModel.IsSelect = isSelect;
+        cityViewModel.RedirectUri = redirectUri;
+
         return View(cityViewModel);
     }
 
@@ -83,5 +87,12 @@ public class CitiesController : Controller
     {
         await _service.UpdateAsync(item);
         return View(item);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Select(int id, string redirectUri)
+    {
+        Response.Cookies.Append("SelectedCityId", id.ToString());
+        return Redirect(redirectUri);
     }
 }

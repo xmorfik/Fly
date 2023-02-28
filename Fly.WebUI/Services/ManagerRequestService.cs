@@ -64,7 +64,7 @@ public class ManagerRequestService : IService<Manager, ManagerParameter>
         }
     }
 
-    public async Task<Response<Manager>> GetAsync(int id)
+    public async Task<ResponseBase<Manager>> GetAsync(int id)
     {
         try
         {
@@ -73,15 +73,15 @@ public class ManagerRequestService : IService<Manager, ManagerParameter>
             if (!response.IsSuccessStatusCode)
             {
                 _logger.LogError(response.ReasonPhrase);
-                return new Response<Manager>(new Manager()) { Succeeded = false };
+                return new ResponseBase<Manager>(new Manager()) { Succeeded = false };
             }
 
             var responseString = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<Response<Manager>>(responseString);
+            var result = JsonConvert.DeserializeObject<ResponseBase<Manager>>(responseString);
 
             if (result == null)
             {
-                return new Response<Manager>(new Manager()) { Succeeded = false };
+                return new ResponseBase<Manager>(new Manager()) { Succeeded = false };
             }
 
             return result;

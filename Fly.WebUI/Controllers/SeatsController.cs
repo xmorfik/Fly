@@ -20,7 +20,7 @@ public class SeatsController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(bool isSelect, string redirectUri)
     {
         var seatViewModel = new SeatsViewModel();
         var response = await _service.GetListAsync(new SeatParameter(), new Page());
@@ -32,6 +32,13 @@ public class SeatsController : Controller
     [HttpGet]
     public async Task<IActionResult> Create()
     {
+        int aircraftId;
+
+        if (int.TryParse(Request.Cookies["SelectedAircraftId"], out aircraftId))
+        {
+            ViewData["SelectedAircraftId"] = aircraftId;
+        }
+
         return View();
     }
 
@@ -71,6 +78,8 @@ public class SeatsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(SeatsDto item)
     {
+        Response.Cookies.Delete("SelectedAircraftId");
+
         await _seatsGenerator.Generate(item);
         return RedirectToAction("index");
     }
@@ -88,5 +97,12 @@ public class SeatsController : Controller
     {
         await _service.UpdateAsync(item);
         return View(item);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Select(int id, string redirectUri)
+    {
+        Response.Cookies.Append("SelectedSeatId", id.ToString());
+        return Redirect(redirectUri);
     }
 }

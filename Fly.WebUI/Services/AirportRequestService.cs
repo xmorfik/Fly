@@ -64,7 +64,7 @@ public class AirportRequestService : IService<Airport, AirportParameter>
         }
     }
 
-    public async Task<Response<Airport>> GetAsync(int id)
+    public async Task<ResponseBase<Airport>> GetAsync(int id)
     {
         try
         {
@@ -73,14 +73,14 @@ public class AirportRequestService : IService<Airport, AirportParameter>
             if (!response.IsSuccessStatusCode)
             {
                 _logger.LogError(response.ReasonPhrase);
-                return new Response<Airport>(new Airport()) { Succeeded = false };
+                return new ResponseBase<Airport>(new Airport()) { Succeeded = false };
             }
 
             var responseString = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<Response<Airport>>(responseString);
+            var result = JsonConvert.DeserializeObject<ResponseBase<Airport>>(responseString);
             if (result == null)
             {
-                return new Response<Airport>(new Airport()) { Succeeded = false };
+                return new ResponseBase<Airport>(new Airport()) { Succeeded = false };
             }
 
             return result;

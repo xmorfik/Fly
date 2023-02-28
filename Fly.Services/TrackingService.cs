@@ -66,6 +66,10 @@ public class TrackingService : ITrackingService
                 new FlightParameter { FlightState = FlightState.InProgress}));
         foreach (var flight in flights)
         {
+            if(flight.ArrivalDateTime <= DateTime.Now)
+            {
+                await Stop(flight.Id ?? 0);
+            }
             var location = _flightsRouteBuilder.GetLocation(flight);
             await _aircraftLocationService.UpdateAsync(location);
         }
