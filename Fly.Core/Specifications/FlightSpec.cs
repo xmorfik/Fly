@@ -13,20 +13,8 @@ public class FlightSpec : Specification<Flight>, ISingleResultSpecification
 
         Query.Include(x => x.ArrivalAirport).ThenInclude(x => x.City);
 
+        Query.Include(x => x.Tickets);
+
         Query.Where(x => x.Id == id);
-    }
-
-    public FlightSpec(DateTime date, int aircarfatId)
-    {
-        Query.Include(x => x.Aircraft);
-
-        Query.Include(x => x.DepartureAirport);
-
-        Query.Include(x => x.ArrivalAirport);
-
-        Query.Where(x => x.AircraftId == aircarfatId);
-
-        Query.Where(x => x.Aircraft.AirportId == x.DepartureAirportId);
-
     }
 }
