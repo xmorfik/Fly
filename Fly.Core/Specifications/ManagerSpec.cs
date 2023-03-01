@@ -10,5 +10,7 @@ public class ManagerSpec : Specification<Manager>, ISingleResultSpecification
         Query.Where(x => x.Id == id);
 
         Query.Include(x => x.User);
+
+        Query.Include(x => x.Airline);
     }
 }

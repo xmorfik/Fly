@@ -8,7 +8,7 @@ public class Ticket : BaseEntity
 
     public TicketState TicketState { get; set; }
 
-    public DateTime SoldDate { get; set; }
+    public DateTime? SoldDate { get; set; }
 
     public int? FlightId { get; set; }
     public Flight? Flight { get; set; }

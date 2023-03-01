@@ -18,8 +18,8 @@ public class ScheduleService : IScheduleService<Flight>
 
     public async Task Schedule(Flight flight)
     {
-        var departureSpan = (flight.DepartureDateTime - DateTime.Now);
-        var arrivalSpan = (flight.ArrivalDateTime - DateTime.Now);
+        var departureSpan = ((flight.DepartureDateTime ?? DateTime.MinValue) - DateTime.Now);
+        var arrivalSpan = ((flight.ArrivalDateTime ?? DateTime.MinValue) - DateTime.Now);
         var id = flight.Id ?? 0;
         if (arrivalSpan <= TimeSpan.Zero)
         {

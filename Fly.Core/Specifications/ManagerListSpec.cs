@@ -13,5 +13,7 @@ public class ManagerListSpec : Specification<Manager>
         Query.Where(x => parameter.UserName == null || x.User.UserName.Contains(parameter.UserName));
 
         Query.Include(x => x.User);
+
+        Query.Include(x => x.Airline);
     }
 }
