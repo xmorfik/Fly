@@ -37,7 +37,7 @@ namespace Fly.WebAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "AdministratorOnly")]
+        [Authorize(Policy = "PassengerOnly")]
         [ValidateModel]
         public async Task Post([FromBody] Passenger value)
         {
@@ -45,7 +45,7 @@ namespace Fly.WebAPI.Controllers
         }
 
         [HttpPut]
-        [Authorize(Policy = "AdministratorOnly")]
+        [Authorize(Policy = "PassengerOnly")]
         [ValidateModel]
         public async Task Put([FromBody] Passenger value)
         {

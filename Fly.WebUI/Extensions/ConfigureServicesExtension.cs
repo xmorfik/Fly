@@ -19,6 +19,7 @@ public static class ConfigureServices
         services.AddScoped<IService<Airline, AirlineParameter>, AirlineRequestService>();
         services.AddScoped<IService<City, CityParameter>, CityRequestService>();
         services.AddScoped<IService<Manager, ManagerParameter>, ManagerRequestService>();
+        services.AddScoped<IService<Passenger, PassengerParameter>, PassengerRequestService>();
         services.AddTransient<IParametersParser, ParametersParser>();
         services.AddScoped<IApiHttpClientService, ApiHttpClientService>();
         services.AddScoped<ISeatsGeneratorService<SeatsDto>, SeatsGeneratorService>();
