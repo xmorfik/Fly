@@ -13,7 +13,7 @@ public class FlightSpec : Specification<Flight>, ISingleResultSpecification
 
         Query.Include(x => x.ArrivalAirport).ThenInclude(x => x.City);
 
-        Query.Include(x => x.Tickets);
+        Query.Include(x => x.Tickets).ThenInclude(x=>x.Seat);
 
         Query.Where(x => x.Id == id);
     }
