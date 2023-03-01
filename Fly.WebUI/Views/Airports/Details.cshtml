@@ -1,6 +1,6 @@
 ﻿@model Fly.Core.Entities.Airport
 
-<div class="card text-center mx-auto" style="width:1000px">
+<div class="card mx-auto" style="width:1000px">
     <img class="card-img-top" src="~/airport.jpg">
     <div class="card-body">
     <dl class="row">
@@ -52,13 +52,6 @@
     </dl>
         <div class="card">
             <div id="map" style="width: 100%; height: 300px;"></div>
-        </div>
-        <div>
-            @if(User.IsInRole("Administrator"))
-            {
-                @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
-            }
-            <a asp-action="Index">Back to List</a>
         </div>
     </div>
 </div>

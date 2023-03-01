@@ -1,6 +1,6 @@
 ﻿@model Fly.Core.Entities.Flight
 
-<div class="card text-center mx-auto" style="width:1000px">
+<div class="card mx-auto" style="width:1000px">
     <img class="card-img-top" src="~/flight.jpg">
     <div class="card-body">
         <dl class="row">
@@ -63,18 +63,11 @@
         <div class="card">
             <div id="map" style="width: 100%; height: 500px;"></div>
         </div>
-        <div>
-            @if (User.IsInRole("Administrator"))
-            {
-                <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-            }
-            <a asp-action="Index">Back to List</a>
-        </div>
     </div>
 </div>
 
 <script>
-    const map = L.map('map').setView([@Model.DepartureAirport.Longitude, @Model.DepartureAirport.Latitude], 6);
+    const map = L.map('map').setView([@Model.DepartureAirport.Latitude, @Model.DepartureAirport.Longitude], 6);
 
     const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,

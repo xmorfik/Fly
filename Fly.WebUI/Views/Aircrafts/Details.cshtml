@@ -1,8 +1,8 @@
 ﻿@model Fly.Core.Entities.Aircraft
 
-<div>
-    <h4>Aircraft</h4>
-    <hr />
+<div class="card  mx-auto" style="width:600px">
+    <img class="card-img-top" src="~/aircraft.jpg">
+    <div class="card-body">
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ModelType)
@@ -54,7 +54,4 @@
         </dd>
     </dl>
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    <a asp-action="Index">Back to List</a>
 </div>
