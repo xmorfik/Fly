@@ -33,9 +33,9 @@
                 <br />
                 <div class="card-body">
                     @if (User.IsInRole("Administrator"))
-                {
-                    @Html.ActionLink("Create", "Create")
-                }
+                    {
+                        @Html.ActionLink("Create", "Create")
+                    }
                     <table class="table rounded rounded-6 overflow-hidden table-sm table-dark table-hover">
                         <thead>
                             <tr>
@@ -99,12 +99,14 @@
                                         {
                                             @Html.ActionLink("Select","Select", new { id = item.Id, redirectUri = Model.RedirectUri})
                                         }
-
-                                        @if (User.IsInRole("Administrator"))
+                                        else
                                         {
-                                            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                                            <br />
-                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                            @if (User.IsInRole("Administrator"))
+                                            {
+                                                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                                                <br />
+                                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                            }
                                         }
                                         @Html.ActionLink("Details", "Details", new { id=item.Id })
                                     </td>
