@@ -1,9 +1,7 @@
 ﻿@model Fly.Core.Entities.Aircraft
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Aircraft</h4>
-    <hr />
+<div class="card  mx-auto" style="width:600px">
+    <div class="card-body">
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ModelType)
@@ -56,7 +54,7 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Delete" class="btn btn-danger" /> 
     </form>
+</div>
 </div>
