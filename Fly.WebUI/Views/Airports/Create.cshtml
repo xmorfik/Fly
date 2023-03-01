@@ -7,6 +7,12 @@
             <br />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="CityId" class="control-label"></label>
+                <input asp-for="CityId" value="@ViewData["SelectedCityId"]" readonly class="form-control" />
+                <span asp-validation-for="CityId" class="text-danger"></span>
+                @Html.ActionLink("Select","Index","Cities", new { isSelect = true, redirectUri = "/airports/create" })
+            </div><br />
+            <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
@@ -31,12 +37,7 @@
                 <input asp-for="Altitude" class="form-control" />
                 <span asp-validation-for="Altitude" class="text-danger"></span>
             </div><br />
-            <div class="form-group">
-                <label asp-for="CityId" class="control-label"></label>
-                <input asp-for="CityId" value= "@ViewData["SelectedCityId"]" readonly class="form-control" />
-                <span asp-validation-for="CityId" class="text-danger"></span>
-                @Html.ActionLink("Select","Index","Cities", new { isSelect = true, redirectUri = "/airports/create" })
-            </div><br />
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

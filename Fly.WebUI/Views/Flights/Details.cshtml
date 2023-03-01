@@ -63,6 +63,46 @@
         <div class="card">
             <div id="map" style="width: 100%; height: 500px;"></div>
         </div>
+        <br />
+        <table class="table rounded rounded-6 overflow-hidden table-sm table-dark table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        Ticket State
+                    </th>
+                    <th>
+                        Class
+                    </th>
+                    <th>
+                        Position
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Tickets)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TicketState)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Seat.SeatClass)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Seat.Row) : 
+                            @Html.DisplayFor(modelItem => item.Seat.Column)
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
 

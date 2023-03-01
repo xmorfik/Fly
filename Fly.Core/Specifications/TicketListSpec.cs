@@ -17,5 +17,9 @@ public class TicketListSpec : Specification<Ticket>
         Query.Where(x => parameter.DepartureCity == null || x.Flight.DepartureAirport.City.Name.Contains(parameter.DepartureCity));
 
         Query.Where(x => parameter.ArrivalCity == null || x.Flight.ArrivalAirport.City.Name.Contains(parameter.ArrivalCity));
+
+        Query.Include(x => x.Seat);
+
+        Query.Include(x => x.Passenger);
     }
 }

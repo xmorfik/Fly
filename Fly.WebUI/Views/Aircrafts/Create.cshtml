@@ -6,6 +6,23 @@
         <form asp-action="Create">
         <br />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (User.IsInRole("Administrator"))
+            {
+                <div class="form-group">
+                    <label asp-for="AirlineId" class="control-label"></label>
+                    <input asp-for="AirlineId" value="@ViewData["SelectedAirlineId"]" class="form-control" />
+                    <span asp-validation-for="AirlineId" class="text-danger"></span>
+                    @Html.ActionLink("Select","Index","Airlines", new { isSelect = true, redirectUri = "/aircrafts/create" })
+                </div>
+                <br />
+            }
+            <div class="form-group">
+                <label asp-for="AirportId" class="control-label"></label>
+                <input asp-for="AirportId" value="@ViewData["SelectedAirportId"]" readonly class="form-control" />
+                <span asp-validation-for="AirportId" class="text-danger"></span>
+                @Html.ActionLink("Select","Index","Airports", new { isSelect = true, redirectUri = "/aircrafts/create" })
+            </div>
+            <br />
             <div class="form-group">
                 <label asp-for="ModelType" class="control-label"></label>
                 <input asp-for="ModelType" class="form-control" />
@@ -30,23 +47,7 @@
                     <span asp-validation-for="FlightHours" class="text-danger"></span>
                 </div>
             <br />
-            @if(User.IsInRole("Administrator"))
-            {
-                <div class="form-group">
-                    <label asp-for="AirlineId" class="control-label"></label>
-                    <input asp-for="AirlineId" value="@ViewData["SelectedAirlineId"]" class="form-control" />
-                    <span asp-validation-for="AirlineId" class="text-danger"></span>
-                    @Html.ActionLink("Select","Index","Airlines", new { isSelect = true, redirectUri = "/aircrafts/create" })
-                </div>
-            <br />
-            }
-            <div class="form-group">
-                <label asp-for="AirportId" class="control-label"></label>
-                <input asp-for="AirportId" value="@ViewData["SelectedAirportId"]" readonly class="form-control" />
-                <span asp-validation-for="AirportId" class="text-danger"></span>
-                @Html.ActionLink("Select","Index","Airports", new { isSelect = true, redirectUri = "/aircrafts/create" })
-            </div>
-            <br />
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
