@@ -1,10 +1,9 @@
 ﻿@using Fly.Shared.DataTransferObjects;
 @model TicketsDto
 
-<h4>Ticket</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="card  mx-auto" style="width:1000px">
+    <img class="card-img-top" src="~/seat.jpg">
+    <div class="card-body">
         <form asp-action="Create">
             <br />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -33,9 +32,6 @@
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form><br />
-        <div>
-            <a asp-action="Index">Back to List</a>
-        </div>
     </div>
 </div>
 
