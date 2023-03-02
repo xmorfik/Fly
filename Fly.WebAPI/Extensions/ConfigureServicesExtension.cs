@@ -23,6 +23,9 @@ public static class ConfigureServicesExtension
         services.AddScoped<IScheduleService<Flight>, ScheduleService>();
         services.AddScoped<ITrackingService, TrackingService>();
         services.AddScoped<IRouteBuilder<Flight, LocationDto>, FlightsRouteBuilder>();
+        services.AddScoped<ITicketsStateService, TicketsStateService>();
+        services.AddScoped<IAircraftStateService, AircraftStateService>();
+        services.AddScoped<IFlightStateService, FlightStateService>();
 
         return services;
     }
