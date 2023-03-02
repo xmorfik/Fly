@@ -5,6 +5,7 @@ using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.Core.Specifications;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Fly.Services;
 
@@ -23,7 +24,15 @@ public class AirlineService : IService<Airline, AirlineParameter>
     {
         try
         {
-            await _repository.AddAsync(item);
+            var result = await _repository.AddAsync(item);
+            if (result != null)
+            {
+                _logger.LogInformation($"{JsonConvert.SerializeObject(result)} created");
+            }
+            else
+            {
+                _logger.LogError($"Can't create {JsonConvert.SerializeObject(item)}");
+            }
         }
         catch (Exception ex)
         {
