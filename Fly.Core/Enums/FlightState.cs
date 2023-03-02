@@ -2,7 +2,7 @@
 
 public enum FlightState
 {
-	Scheduled,
-	Completed,
-	InProgress
+    Scheduled,
+    Completed,
+    InProgress
 }

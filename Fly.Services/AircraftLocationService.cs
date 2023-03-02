@@ -66,7 +66,7 @@ public class AircraftLocationService : IAircraftLocationService<LocationDto>
         try
         {
             var flight = await _repositoryFlights.FirstOrDefaultAsync(new FlightSpec(id));
-            var locations = await _repository.ListAsync(new AircraftLocationSpec(flight.Id ?? 0,flight.AircraftId ?? 0));
+            var locations = await _repository.ListAsync(new AircraftLocationSpec(flight.Id ?? 0, flight.AircraftId ?? 0));
             var locationDtos = new List<LocationDto>();
             foreach (var location in locations)
             {

@@ -12,6 +12,7 @@ public static class ConfigureDbExtension
         options =>
         {
             options.UseSqlServer($"Server={cfg.Server},{cfg.Port};Database={cfg.Database};User Id={cfg.User};Password={cfg.Password};MultipleActiveResultSets=true;TrustServerCertificate=true");
+            options.EnableSensitiveDataLogging();
         });
 
         return services;

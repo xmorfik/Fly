@@ -51,7 +51,7 @@ public class AirlineRequestService : IService<Airline, AirlineParameter>
         try
         {
             var client = await _httpClientService.GetClientAsync();
-            var response =  await client.DeleteAsync($"Airlines/{id}");
+            var response = await client.DeleteAsync($"Airlines/{id}");
             if (!response.IsSuccessStatusCode)
             {
                 _logger.LogError(response.ReasonPhrase);

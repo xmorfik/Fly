@@ -9,8 +9,8 @@ public class AircraftLocationSpec : Specification<AircraftLocation>
     {
         Query.Where(x => x.AircraftId == aircraftId);
 
-		Query.Where(x => x.FlightId == aircraftId);
+        Query.Where(x => x.FlightId == aircraftId);
 
-		Query.OrderByDescending(x => x.DateTime);
+        Query.OrderByDescending(x => x.DateTime);
     }
 }

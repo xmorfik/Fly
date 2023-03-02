@@ -13,6 +13,6 @@ public class FlightConfiguration : IEntityTypeConfiguration<Flight>
         builder.HasOne(x => x.ArrivalAirport).WithMany(x => x.FlightsIn);
         builder.HasOne(x => x.Aircraft).WithMany(x => x.Flights);
         builder.HasMany(x => x.Tickets).WithOne(x => x.Flight);
-		builder.HasMany(x => x.AircraftLocations).WithOne(x => x.Flight);
-	}
+        builder.HasMany(x => x.AircraftLocations).WithOne(x => x.Flight);
+    }
 }

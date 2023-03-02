@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Fly.Services;
 
-public class PassengerService : IService<Passenger,PassengerParameter>
+public class PassengerService : IService<Passenger, PassengerParameter>
 {
     private readonly IRepository<Passenger> _repository;
     private readonly ILogger<PassengerService> _logger;

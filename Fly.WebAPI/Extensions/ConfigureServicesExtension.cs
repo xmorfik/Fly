@@ -18,7 +18,7 @@ public static class ConfigureServicesExtension
         services.AddScoped<IService<City, CityParameter>, CityService>();
         services.AddScoped<IService<Ticket, TicketParameter>, TicketService>();
         services.AddScoped<IService<Manager, ManagerParameter>, ManagerService>();
-        services.AddScoped<IService<Passenger,PassengerParameter>, PassengerService>();
+        services.AddScoped<IService<Passenger, PassengerParameter>, PassengerService>();
         services.AddScoped<IAircraftLocationService<LocationDto>, AircraftLocationService>();
         services.AddScoped<IScheduleService<Flight>, ScheduleService>();
         services.AddScoped<ITrackingService, TrackingService>();

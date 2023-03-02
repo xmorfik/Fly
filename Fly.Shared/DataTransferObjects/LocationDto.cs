@@ -8,9 +8,9 @@ public class LocationDto
     [RedisIdField]
     [Indexed]
     public int? FlightId { get; set; }
-	[Indexed]
-	public int? AircraftId { get; set; }
-	[Indexed]
+    [Indexed]
+    public int? AircraftId { get; set; }
+    [Indexed]
     public double? Longitude { get; set; }
     [Indexed]
     public double? Latitude { get; set; }

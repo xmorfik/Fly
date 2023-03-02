@@ -2,7 +2,6 @@
 using Fly.Core.Enums;
 using Fly.Core.Interfaces;
 using Fly.Core.Services;
-using Fly.Core.Specifications;
 
 namespace Fly.Services;
 

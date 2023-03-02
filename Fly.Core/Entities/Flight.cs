@@ -21,5 +21,5 @@ public class Flight : BaseEntity
 
     public ICollection<Ticket>? Tickets { get; set; }
 
-	public ICollection<AircraftLocation>? AircraftLocations { get; set; }
+    public ICollection<AircraftLocation>? AircraftLocations { get; set; }
 }

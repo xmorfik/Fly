@@ -22,8 +22,8 @@ public class TicketsStateService : ITicketsStateService
     public async Task SetTicketsStateOnStartFlight(int id)
     {
         var flight = await _flightsRepository.FirstOrDefaultAsync(new FlightSpec(id));
-        
-        foreach(var ticket in flight.Tickets)
+
+        foreach (var ticket in flight.Tickets)
         {
             var currentTicketState = ticket.TicketState;
             var result = currentTicketState switch

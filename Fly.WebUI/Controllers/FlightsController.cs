@@ -25,10 +25,21 @@ public class FlightsController : Controller
     public async Task<IActionResult> Index(bool isSelect, string redirectUri)
     {
         var flightViewModel = new FlightsViewModel();
-        var parameters = new FlightParameter();
+        var parameters = new FlightParameter()
+        {
+            FlightState = FlightState.Scheduled
+        };
+
         if (isSelect)
         {
             parameters.FlightState = FlightState.Scheduled;
+        }
+        else
+        {
+            if (User.IsInRole("Administrator") || User.IsInRole("Manager"))
+            {
+                parameters.FlightState = null;
+            }
         }
 
         var response = await _service.GetListAsync(parameters, new Page());

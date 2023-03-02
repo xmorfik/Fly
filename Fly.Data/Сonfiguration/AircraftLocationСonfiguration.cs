@@ -10,6 +10,6 @@ public class AircraftLocationCongiguration : IEntityTypeConfiguration<AircraftLo
     {
         builder.HasKey(x => x.Id);
         builder.HasOne(x => x.Aircraft).WithMany(x => x.AircraftLocations);
-		builder.HasOne(x => x.Flight).WithMany(x => x.AircraftLocations);
-	}
+        builder.HasOne(x => x.Flight).WithMany(x => x.AircraftLocations);
+    }
 }

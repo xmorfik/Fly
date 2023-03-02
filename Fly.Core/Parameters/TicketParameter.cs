@@ -11,4 +11,5 @@ public class TicketParameter
     public string? DepartureCity { get; set; }
     public string? ArrivalCity { get; set; }
     public SeatClass? SeatClass { get; set; }
+    public int PassengerId { get; set; }
 }
