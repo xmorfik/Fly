@@ -14,7 +14,6 @@ public class PassengerController : Controller
 {
     public readonly IService<Passenger, PassengerParameter> _service;
     public readonly IService<Ticket, TicketParameter> _tickets;
-    public readonly Passenger _passenger;
 
     public PassengerController(
         IService<Passenger, PassengerParameter> service,
@@ -33,7 +32,18 @@ public class PassengerController : Controller
     public async Task<IActionResult> Profile()
     {
         var userId = User.FindFirstValue("sub");
+        if(userId == null)
+        {
+            return NotFound();
+        }
+
         var user = await _service.GetListAsync(new PassengerParameter { UserId = userId }, new Page());
+        if(user.FirstOrDefault() == null)
+        {
+            var passenger = new Passenger { UserId = userId };
+            return View(passenger);
+        }
+
         return View(user.FirstOrDefault());
     }
 

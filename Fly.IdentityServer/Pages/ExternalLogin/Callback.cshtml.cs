@@ -155,6 +155,8 @@ public class Callback : PageModel
             }
         }
 
+        filtered.Add(new Claim("Role", "Passenger"));
+
         var identityResult = await _userManager.CreateAsync(user);
         if (!identityResult.Succeeded) throw new Exception(identityResult.Errors.First().Description);
 
