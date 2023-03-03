@@ -1,12 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace Fly.WebUI.Controllers;
 
 public class AccountController : Controller
 {
-    public AccountController()
+    private readonly AuthorityUri authority;
+
+    public AccountController(IOptions<AuthorityUri> options) 
     {
+        authority = options.Value;
     }
 
     public IActionResult Index()
@@ -32,6 +36,6 @@ public class AccountController : Controller
 
     public IActionResult Register()
     {
-        return Redirect("https://localhost:5004/account/register");
+        return Redirect(authority.Uri +"account/register");
     }
 }

@@ -6,8 +6,9 @@ namespace Fly.WebUI.Extensions;
 
 public static class ConfigureIdentityExtension
 {
-    public static void ConfigureIdentity(this IServiceCollection services)
+    public static void ConfigureIdentity(this IServiceCollection services, IConfiguration configuration)
     {
+        var cfg = configuration.GetSection(AuthorityUri.Configuration).Get<AuthorityUri>();
 
         services.AddAuthentication(options =>
         {
@@ -17,7 +18,7 @@ public static class ConfigureIdentityExtension
         .AddCookie("Cookie")
         .AddOpenIdConnect("oidc", options =>
         {
-            options.Authority = "https://localhost:5004";
+            options.Authority = cfg.Uri;
 
             options.ClientId = "web1";
             options.ClientSecret = "secret";
