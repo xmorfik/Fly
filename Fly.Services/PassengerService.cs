@@ -74,8 +74,10 @@ public class PassengerService : IService<Passenger, PassengerParameter>
     {
         try
         {
-            var items = await _repository.ListAsync(new PassengerListSpec(parameter));
-            return PagedResponse<Passenger>.ToPagedList(items, page);
+            var items = await _repository.ListAsync(new PassengerListSpec(parameter, page));
+            var count = await _repository.CountAsync(new PassengerListSpec(parameter, null));
+            var result = new PagedResponse<Passenger>(items, count, page);
+            return result;
         }
         catch (Exception ex)
         {

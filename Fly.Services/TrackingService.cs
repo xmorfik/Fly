@@ -55,7 +55,7 @@ public class TrackingService : ITrackingService
     {
         var flights = await _repository.ListAsync(
             new FlightListSpec(
-                new FlightParameter { FlightState = FlightState.InProgress }));
+                new FlightParameter { FlightState = FlightState.InProgress }, null));
         foreach (var flight in flights)
         {
             if (flight.ArrivalDateTime <= DateTime.Now)

@@ -76,8 +76,10 @@ public class AirportService : IService<Airport, AirportParameter>
     {
         try
         {
-            var items = await _repository.ListAsync(new AirportListSpec(parameter));
-            return PagedResponse<Airport>.ToPagedList(items, page);
+            var items = await _repository.ListAsync(new AirportListSpec(parameter, page));
+            var count = await _repository.CountAsync(new AirportListSpec(parameter, null));
+            var result = new PagedResponse<Airport>(items, count, page);
+            return result;
         }
         catch (Exception ex)
         {

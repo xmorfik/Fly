@@ -74,8 +74,10 @@ public class ManagerService : IService<Manager, ManagerParameter>
     {
         try
         {
-            var items = await _repository.ListAsync(new ManagerListSpec(parameter));
-            return PagedResponse<Manager>.ToPagedList(items, page);
+            var items = await _repository.ListAsync(new ManagerListSpec(parameter, page));
+            var count = await _repository.CountAsync(new ManagerListSpec(parameter, null));
+            var result = new PagedResponse<Manager>(items, count, page);
+            return result;
         }
         catch (Exception ex)
         {

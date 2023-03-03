@@ -74,8 +74,10 @@ public class TicketService : IService<Ticket, TicketParameter>
     {
         try
         {
-            var items = await _repository.ListAsync(new TicketListSpec(parameter));
-            return PagedResponse<Ticket>.ToPagedList(items, page);
+            var items = await _repository.ListAsync(new TicketListSpec(parameter, page));
+            var count = await _repository.CountAsync(new TicketListSpec(parameter, null));
+            var result = new PagedResponse<Ticket>(items, count, page);
+            return result;
         }
         catch (Exception ex)
         {

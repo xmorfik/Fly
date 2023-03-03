@@ -74,8 +74,10 @@ public class SeatService : IService<Seat, SeatParameter>
     {
         try
         {
-            var items = await _repository.ListAsync(new SeatListSpec(parameter));
-            return PagedResponse<Seat>.ToPagedList(items, page);
+            var items = await _repository.ListAsync(new SeatListSpec(parameter, page));
+            var count = await _repository.CountAsync(new SeatListSpec(parameter, null));
+            var result = new PagedResponse<Seat>(items, count, page);
+            return result;
         }
         catch (Exception ex)
         {
