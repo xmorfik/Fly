@@ -1,6 +1,6 @@
 ﻿namespace Fly.WebUI.Models;
 
-public class CreateAircraftDto
+public class AircarftForCreationDto
 {
     public string? ModelType { get; set; }
 
