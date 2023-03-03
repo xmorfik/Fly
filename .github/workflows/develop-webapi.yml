@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: develop
+name: WebApi
 
 on:
   push:
@@ -21,8 +21,8 @@ jobs:
       with:
         dotnet-version: 7.0.x
     - name: Restore dependencies
-      run: dotnet restore ./Fly.sln
+      run: dotnet restore ./Fly.WebApi/Fly.WebApi.csproj
     - name: Build
-      run: dotnet build ./Fly.sln --no-restore 
+      run: dotnet build ./Fly.WebApi/Fly.WebApi.csproj --no-restore 
     - name: Test
-      run: dotnet test ./Fly.sln --no-build --verbosity normal
+      run: dotnet test ./Fly.Tests/Fly.Tests.csproj --no-build --verbosity normal
