@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Duende.IdentityServer;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -31,7 +32,7 @@ public class AccountController : Controller
         await HttpContext.SignOutAsync("Cookie");
         await HttpContext.SignOutAsync("oidc");
 
-        return Redirect("/"); ;
+        return Redirect("/"); 
     }
 
     public IActionResult Register()

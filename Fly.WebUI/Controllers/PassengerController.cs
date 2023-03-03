@@ -60,7 +60,7 @@ public class PassengerController : Controller
         var ticketViewModel = new TicketsViewModel();
         var userId = User.FindFirstValue("sub");
         var user = await _service.GetListAsync(new PassengerParameter { UserId = userId }, new Page());
-        var response = await _tickets.GetListAsync(new TicketParameter { PassengerId = user.FirstOrDefault().Id ?? 0 }, new Page());
+        var response = await _tickets.GetListAsync(new TicketParameter { PassengerId = user?.FirstOrDefault().Id ?? 0 }, new Page());
         ticketViewModel.PagedResponse = response;
         ticketViewModel.MetaData = response.MetaData;
         return View(ticketViewModel);

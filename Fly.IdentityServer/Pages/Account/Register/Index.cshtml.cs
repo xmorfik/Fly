@@ -37,7 +37,6 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnGet()
     {
-        await _signInManager.SignOutAsync();
         return Page();
     }
 
@@ -54,7 +53,6 @@ public class IndexModel : PageModel
 
         if (result.Succeeded)
         {
-            await _signInManager.SignInAsync(user, false);
             await _userManager.AddClaimAsync(user, new Claim("Role", "Passenger"));
             var passenger = _mapper.Map<Passenger>(UserForRegistrationDto);
             passenger.UserId = user.Id;

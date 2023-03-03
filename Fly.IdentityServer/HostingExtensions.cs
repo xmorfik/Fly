@@ -1,6 +1,9 @@
+using Duende.IdentityServer;
 using Fly.Core.Entities;
 using Fly.Data;
+using Fly.WebAPI;
 using Fly.WebAPI.Extensions;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Serilog;
 using System.Reflection;
@@ -19,6 +22,9 @@ internal static class HostingExtensions
         .AddEntityFrameworkStores<FlyDbContext>()
         .AddDefaultTokenProviders();
 
+        var cfg = builder.Configuration.GetSection(ClientUriConfiguration.Configuration).Get<ClientUriConfiguration>();
+        Config.ClientUriConfiguration = cfg;
+
         builder.Services.AddIdentityServer(options =>
             {
                 options.Events.RaiseErrorEvents = true;
@@ -36,12 +42,12 @@ internal static class HostingExtensions
 
         builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-        //builder.Services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
-        //{
-        //    microsoftOptions.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-        //    microsoftOptions.ClientId = configuration["Authentication:Microsoft:ClientId"];
-        //    microsoftOptions.ClientSecret = configuration["Authentication:Microsoft:ClientSecret"];
-        //});
+        builder.Services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
+        {
+            microsoftOptions.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+            microsoftOptions.ClientId = configuration["Authentication:Microsoft:ClientId"];
+            microsoftOptions.ClientSecret = configuration["Authentication:Microsoft:ClientSecret"];
+        });
 
         return builder.Build();
     }

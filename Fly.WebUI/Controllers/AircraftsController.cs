@@ -94,7 +94,7 @@ public class AircraftsController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(CreateAircraftDto item)
+    public async Task<IActionResult> Create(AircarftForCreationDto item)
     {
         Response.Cookies.Delete("SelectedAirlineId");
         Response.Cookies.Delete("SelectedAirportId");
