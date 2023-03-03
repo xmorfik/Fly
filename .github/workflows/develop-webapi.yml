@@ -21,8 +21,8 @@ jobs:
       with:
         dotnet-version: 7.0.x
     - name: Restore dependencies
-      run: dotnet restore ${{ github.workspace }}/Fly.sln
+      run: dotnet restore ./Fly.WebAPI/Fly.WebAPI.csproj
     - name: Build
-      run: dotnet build ${{ github.workspace }}/Fly.WebApi/Fly.WebApi.csproj --no-restore 
+      run: dotnet build ./Fly.WebAPI/Fly.WebAPI.csproj --no-restore 
     - name: Test
-      run: dotnet test ${{ github.workspace }}/Fly.Tests/Fly.Tests.csproj --no-build --verbosity normal
+      run: dotnet test ./Fly.Tests/Fly.Tests.csproj --no-build --verbosity normal
