@@ -21,8 +21,8 @@ jobs:
       with:
         dotnet-version: 7.0.x
     - name: Restore dependencies
-      run: dotnet restore ./Fly.WebApi/Fly.WebApi.csproj
+      run: dotnet restore Fly.WebApi/Fly.WebApi.csproj
     - name: Build
-      run: dotnet build ./Fly.WebApi/Fly.WebApi.csproj --no-restore 
+      run: dotnet build Fly.WebApi/Fly.WebApi.csproj --no-restore 
     - name: Test
-      run: dotnet test ./Fly.Tests/Fly.Tests.csproj --no-build --verbosity normal
+      run: dotnet test Fly.Tests/Fly.Tests.csproj --no-build --verbosity normal
