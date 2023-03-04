@@ -1,7 +1,10 @@
 ﻿@page
 @model Fly.IdentityServer.Pages.Account.Register.ManagerModel
 
-<hr />
+<p>
+    @Model.ErrorMessage
+</p>
+
 <div class="row">
     <div class="col-md-4">
         <form method="post" asp-antiforgery="true">

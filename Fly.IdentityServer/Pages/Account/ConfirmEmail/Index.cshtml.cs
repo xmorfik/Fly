@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Text;
 
 namespace Fly.IdentityServer.Pages.Account.ConfirmEmail
 {
@@ -23,10 +26,25 @@ namespace Fly.IdentityServer.Pages.Account.ConfirmEmail
             _uriConfiguration = clientUri.Value;
         }
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGet(string token, string email)
         {
-            
-            return Page();
+            var bytes = WebEncoders.Base64UrlDecode(token);
+            var validToken = Encoding.UTF8.GetString(bytes);
+
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return Redirect("/home/error");
+
+            }
+
+            var result = await _userManager.ConfirmEmailAsync(user, validToken);
+            if (result.Succeeded)
+            {
+                return RedirectToPage("success");
+            }
+
+            return Redirect("/home/error");
         }
     }
 }

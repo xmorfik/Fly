@@ -42,12 +42,12 @@ internal static class HostingExtensions
 
         builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-        builder.Services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
-        {
-            microsoftOptions.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-            microsoftOptions.ClientId = configuration["Authentication:Microsoft:ClientId"];
-            microsoftOptions.ClientSecret = configuration["Authentication:Microsoft:ClientSecret"];
-        });
+        //builder.Services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
+        //{
+        //    microsoftOptions.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+        //    microsoftOptions.ClientId = configuration["Authentication:Microsoft:ClientId"];
+        //    microsoftOptions.ClientSecret = configuration["Authentication:Microsoft:ClientSecret"];
+        //});
 
         return builder.Build();
     }
