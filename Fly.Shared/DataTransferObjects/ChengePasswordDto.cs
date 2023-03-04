@@ -2,7 +2,7 @@
 
 namespace Fly.Shared.DataTransferObjects;
 
-public class ResetPasswordDto
+public class ChangePasswordDto
 {
     [Required]
     public string? UserName { get; init; }
