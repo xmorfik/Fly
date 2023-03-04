@@ -1,11 +1,9 @@
 using Fly.Core.Entities;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Options;
-using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Options;
 using System.Text;
 
 namespace Fly.IdentityServer.Pages.Account.ConfirmEmail
@@ -28,6 +26,11 @@ namespace Fly.IdentityServer.Pages.Account.ConfirmEmail
 
         public async Task<IActionResult> OnGet(string token, string email)
         {
+            if (token == null)
+            {
+                return Redirect("/home/error");
+            }
+
             var bytes = WebEncoders.Base64UrlDecode(token);
             var validToken = Encoding.UTF8.GetString(bytes);
 
@@ -35,7 +38,6 @@ namespace Fly.IdentityServer.Pages.Account.ConfirmEmail
             if (user == null)
             {
                 return Redirect("/home/error");
-
             }
 
             var result = await _userManager.ConfirmEmailAsync(user, validToken);

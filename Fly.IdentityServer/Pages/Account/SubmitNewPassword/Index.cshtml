@@ -1,0 +1,35 @@
+﻿@page
+@model Fly.IdentityServer.Pages.Account.SubmitNewPassword.IndexModel
+@{
+}
+
+<p>
+    @Model.ErrorMessage
+</p>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-antiforgery="true">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @Html.HiddenFor(x=>x.NewPasswordDto.UserName)
+            @Html.HiddenFor(x=>x.NewPasswordDto.Token)
+            <div class="form-group">
+                <label asp-for="NewPasswordDto.Password" class="control-label"></label>
+                <input asp-for="NewPasswordDto.Password" type="password" class="form-control" />
+                <span asp-validation-for="NewPasswordDto.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewPasswordDto.ConfirmPassword" class="control-label"></label>
+                <input asp-for="NewPasswordDto.ConfirmPassword" type="password" class="form-control" />
+                <span asp-validation-for="NewPasswordDto.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

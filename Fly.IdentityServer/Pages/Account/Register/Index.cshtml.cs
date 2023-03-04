@@ -1,17 +1,15 @@
 using AutoMapper;
-using Azure.Communication.Email;
 using Azure.Communication.Email.Models;
 using Fly.Core.Entities;
+using Fly.Core.Services;
 using Fly.Data;
 using Fly.Shared.DataTransferObjects;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using Serilog;
-using System.Net;
 using System.Security.Claims;
 using System.Text;
 
@@ -24,25 +22,26 @@ public class IndexModel : PageModel
     public string ErrorMessage { get; set; }
 
     private readonly UserManager<User> _userManager;
-    private readonly SignInManager<User> _signInManager;
     private readonly FlyDbContext _db;
-    private readonly IMapper _mapper;
     private readonly ClientUriConfiguration _clientConfiguration;
+    private readonly IMapper _mapper;
     private readonly IConfiguration _configuration;
+    private readonly IEmailSender<EmailMessage> _emailSender;
 
-    public IndexModel(UserManager<User> userManager,
-        SignInManager<User> signInManager,
+    public IndexModel(
+        UserManager<User> userManager,
         FlyDbContext db,
         IMapper mapper,
         IOptions<ClientUriConfiguration> clientUri,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        IEmailSender<EmailMessage> emailSender)
     {
-        _signInManager = signInManager;
         _userManager = userManager;
         _mapper = mapper;
         _db = db;
         _clientConfiguration = clientUri.Value;
         _configuration = configuration;
+        _emailSender = emailSender;
     }
 
     public async Task<IActionResult> OnGet()
@@ -83,13 +82,13 @@ public class IndexModel : PageModel
             var validToken = WebEncoders.Base64UrlEncode(bytes);
             var confirmationLink = "https://" + Request.Host.ToString() + $"/account/confirmemail?token={validToken}&email={user.Email}";
 
-            var emailClient = new EmailClient(_configuration["AzureEmailCommunicationService:ConnectionString"]);
             var emailContent = new EmailContent("Confrim Email");
             emailContent.PlainText = confirmationLink;
             var emails = new List<EmailAddress> { new EmailAddress(user.Email) };
             var emeilRecipients = new EmailRecipients(emails);
-            var emailMessage = new EmailMessage("DoNotReply@7badc868-6ea4-4c4a-9840-2ee9bf0540c7.azurecomm.net", emailContent, emeilRecipients);
-            var emailResult = await emailClient.SendAsync(emailMessage, CancellationToken.None);
+            var emailMessage = new EmailMessage(_configuration["SenderDomain"], emailContent, emeilRecipients);
+
+            _emailSender.Send(emailMessage);
 
             return Redirect(_clientConfiguration.Uri);
         }

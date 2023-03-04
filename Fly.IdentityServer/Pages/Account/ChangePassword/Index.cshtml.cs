@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
-using Serilog;
-using System.Security.Claims;
 
 namespace Fly.IdentityServer.Pages.Account.ChangePassword
 {
@@ -42,7 +40,7 @@ namespace Fly.IdentityServer.Pages.Account.ChangePassword
             }
 
             var user = await _userManager.FindByNameAsync(ChangePasswordDto.UserName);
-            if(user == null)
+            if (user == null)
             {
                 ErrorMessage = "User does not exist";
                 return Page();

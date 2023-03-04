@@ -1,9 +1,9 @@
-using Duende.IdentityServer;
+using Azure.Communication.Email.Models;
 using Fly.Core.Entities;
+using Fly.Core.Services;
 using Fly.Data;
-using Fly.WebAPI;
+using Fly.Services;
 using Fly.WebAPI.Extensions;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Serilog;
 using System.Reflection;
@@ -18,9 +18,14 @@ internal static class HostingExtensions
 
         builder.Services.AddSqlServer(builder.Configuration);
 
-        builder.Services.AddIdentity<User, IdentityRole>()
+        builder.Services.AddIdentity<User, IdentityRole>(options =>
+        {
+            options.User.RequireUniqueEmail = true;
+        })
         .AddEntityFrameworkStores<FlyDbContext>()
         .AddDefaultTokenProviders();
+
+        builder.Services.AddScoped<IEmailSender<EmailMessage>, EmailSender>();
 
         var cfg = builder.Configuration.GetSection(ClientUriConfiguration.Configuration).Get<ClientUriConfiguration>();
         Config.ClientUriConfiguration = cfg;
@@ -31,6 +36,7 @@ internal static class HostingExtensions
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseSuccessEvents = true;
+
             })
             .AddAspNetIdentity<User>()
             .AddInMemoryIdentityResources(Config.IdentityResources)

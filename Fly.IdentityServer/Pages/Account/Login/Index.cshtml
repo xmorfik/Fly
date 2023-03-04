@@ -33,8 +33,8 @@
                             </div>
                             
                             @if (Model.View.AllowRememberLogin)
-                    {
-                        <div class="form-group">
+                            {
+                                <div class="form-group">
                                     <div class="form-check">
                                         <input class="form-check-input" asp-for="Input.RememberLogin">
                                         <label class="form-check-label" asp-for="Input.RememberLogin">
@@ -42,10 +42,10 @@
                                         </label>
                                     </div>
                                 </div>
-                    }
-                            
+                            }
                             <button class="btn btn-primary" name="Input.Button" value="login">Login</button>
                             <button class="btn btn-secondary" name="Input.Button" value="cancel">Cancel</button>
+                            <a href="/account/resetpassword">Forgot your password?</a>
                         </form>
                     </div>
                 </div>

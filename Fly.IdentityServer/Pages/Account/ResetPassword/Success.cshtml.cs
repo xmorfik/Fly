@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Fly.IdentityServer.Pages.Account.ConfirmEmail
+namespace Fly.IdentityServer.Pages.Account.ResetPassword
 {
     public class SuccessModel : PageModel
     {
