@@ -3,4 +3,6 @@
 public class AirlineParameter
 {
     public string? Name { get; set; }
+
+    public string? OrderBy { get; set; } = "Name";
 }
