@@ -6,7 +6,7 @@ public class ManagerParameter
 
     public string? UserName { get; set; }
 
-    public string? OrderBy { get; set; } = "UserName";
+    public string? OrderBy { get; set; } = "Id";
 
     public bool Descresing { get; set; } = false;
 }

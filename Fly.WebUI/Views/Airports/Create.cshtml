@@ -1,4 +1,5 @@
-﻿@model Fly.Core.Entities.Airport
+﻿@using Fly.Core.Entities;
+@model Fly.Core.Entities.Airport
 
 <div class="card  mx-auto" style="width:1000px">
     <img class="card-img-top" src="~/airport.jpg">
@@ -12,6 +13,17 @@
                 <span asp-validation-for="CityId" class="text-danger"></span>
                 @Html.ActionLink("Select","Index","Cities", new { isSelect = true, redirectUri = "/airports/create" })
             </div><br />
+            @if (ViewData["SelectedCity"] != null)
+            {
+                <br />
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@(((City)ViewData["SelectedCity"]).Name)</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@(((City)ViewData["SelectedCity"]).IsoCountry)</h6>
+                        <a href="/cities/details/@(((City)ViewData["SelectedCity"]).Id)" class="card-link">Details</a>
+                    </div>
+                </div>
+            }
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -44,7 +56,7 @@
         </form>
         <br />
         <div>
-            <a asp-action="Index">Back to List</a>
+            <a asp-action="Index">Back</a>
         </div>
     </div>
 </div>

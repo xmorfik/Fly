@@ -12,7 +12,7 @@ public class AircraftParameter
 
     public int? AirlineId { get; set; }
 
-    public string? OrderBy { get; set; } = "ModelType";
+    public string? OrderBy { get; set; } = "Id";
 
-    public bool Descresing { get; set; } = false;
+    public bool Descresing { get; set; } = true;
 }
