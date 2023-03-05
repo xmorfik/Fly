@@ -25,7 +25,30 @@ public class AircraftListSpec : Specification<Aircraft>
 
         if (page != null)
         {
-            Query.Skip((page.PageNumber - 1) * page.PageSize).Take(page.PageSize).OrderByDescending(x => x.Id);
+            if (parameter.OrderBy != null)
+            {
+                try
+                {
+                    var property = typeof(Aircraft).GetTypeInfo().GetProperty(parameter.OrderBy);
+                    var orderExpressionParam = Expression.Parameter(typeof(Aircraft));
+                    var propertyAccess = Expression.MakeMemberAccess(orderExpressionParam, property);
+                    var conversion = Expression.Convert(propertyAccess, typeof(object));
+                    var orderLambda = Expression.Lambda<Func<Aircraft, object?>>(conversion, orderExpressionParam);
+                    if (parameter.Descresing)
+                    {
+                        Query.OrderByDescending(orderLambda);
+                    }
+                    else
+                    {
+                        Query.OrderBy(orderLambda);
+                    }
+                }
+                catch
+                {
+                    Query.OrderByDescending(x => x.Id);
+                }
+            }
+            Query.Skip((page.PageNumber - 1) * page.PageSize).Take(page.PageSize);
         }
     }
 }

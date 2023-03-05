@@ -28,6 +28,7 @@ public class TicketsController : Controller
         ticketViewModel.MetaData = response.MetaData;
         ticketViewModel.IsSelect = isSelect;
         ticketViewModel.RedirectUri = redirectUri;
+
         return View(ticketViewModel);
     }
 

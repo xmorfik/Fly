@@ -2,4 +2,7 @@
 
 public class SeatParameter
 {
+    public string? OrderBy { get; set; } = "AircraftId";
+
+    public bool Descresing { get; set; } = false;
 }
