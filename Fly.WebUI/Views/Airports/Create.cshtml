@@ -12,10 +12,9 @@
                 <input asp-for="CityId" value="@ViewData["SelectedCityId"]" readonly class="form-control" />
                 <span asp-validation-for="CityId" class="text-danger"></span>
                 @Html.ActionLink("Select","Index","Cities", new { isSelect = true, redirectUri = "/airports/create" })
-            </div><br />
+            </div>
             @if (ViewData["SelectedCity"] != null)
             {
-                <br />
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">@(((City)ViewData["SelectedCity"]).Name)</h5>
@@ -24,6 +23,7 @@
                     </div>
                 </div>
             }
+            <br />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />

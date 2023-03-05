@@ -107,7 +107,7 @@
 </div>
 
 <script>
-    const map = L.map('map').setView([@Model.DepartureAirport.Latitude, @Model.DepartureAirport.Longitude], 6);
+    const map = L.map('map').setView([@Model.ArrivalAirport.Latitude, @Model.ArrivalAirport.Longitude], 6);
 
     const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,

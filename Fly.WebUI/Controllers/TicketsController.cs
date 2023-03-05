@@ -11,11 +11,15 @@ namespace Fly.WebUI.Controllers;
 public class TicketsController : Controller
 {
     private readonly IService<Ticket, TicketParameter> _service;
+    private readonly IService<Flight, FlightParameter> _flight;
     private readonly ITicketsGeneratorService<TicketsDto> _ticketsGenerator;
-    public TicketsController(IService<Ticket, TicketParameter> service,
+    public TicketsController(
+        IService<Ticket, TicketParameter> service,
+        IService<Flight, FlightParameter> flight,
         ITicketsGeneratorService<TicketsDto> ticketsGenerator)
     {
         _service = service;
+        _flight = flight;
         _ticketsGenerator = ticketsGenerator;
     }
 
@@ -40,6 +44,8 @@ public class TicketsController : Controller
         if (int.TryParse(Request.Cookies["SelectedFlightId"], out flightId))
         {
             ViewData["SelectedFlightId"] = flightId;
+            var result = await _flight.GetAsync(flightId);
+            ViewData["SelectedFlight"] = result.Data;
         }
 
         return View();

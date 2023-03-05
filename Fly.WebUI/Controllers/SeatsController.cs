@@ -11,11 +11,15 @@ namespace Fly.WebUI.Controllers;
 public class SeatsController : Controller
 {
     private readonly IService<Seat, SeatParameter> _service;
+    private readonly IService<Aircraft, AircraftParameter> _aircrafts;
     private readonly ISeatsGeneratorService<SeatsDto> _seatsGenerator;
-    public SeatsController(IService<Seat, SeatParameter> service,
+    public SeatsController(
+        IService<Seat, SeatParameter> service,
+        IService<Aircraft, AircraftParameter> aircrafts,
         ISeatsGeneratorService<SeatsDto> seatsGenerator)
     {
         _service = service;
+        _aircrafts = aircrafts;
         _seatsGenerator = seatsGenerator;
     }
 
@@ -37,6 +41,8 @@ public class SeatsController : Controller
         if (int.TryParse(Request.Cookies["SelectedAircraftId"], out aircraftId))
         {
             ViewData["SelectedAircraftId"] = aircraftId;
+            var result = await _aircrafts.GetAsync(aircraftId);
+            ViewData["SelectedAircraft"] = result.Data;
         }
 
         return View();

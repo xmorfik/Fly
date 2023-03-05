@@ -14,7 +14,7 @@ public class FlightParameter
 
     public string? ArrivalCity { get; set; }
 
-    public string? OrderBy { get; set; } = "FlightState";
+    public string? OrderBy { get; set; } = "Id";
 
     public bool Descresing { get; set; } = true;
 }
