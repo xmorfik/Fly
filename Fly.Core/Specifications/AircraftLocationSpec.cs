@@ -3,7 +3,7 @@ using Fly.Core.Entities;
 
 namespace Fly.Core.Specifications;
 
-public class AircraftLocationSpec : Specification<AircraftLocation>
+public class AircraftLocationSpec : Specification<AircraftLocation>, ISingleResultSpecification
 {
     public AircraftLocationSpec(int flightId, int aircraftId)
     {
@@ -12,5 +12,6 @@ public class AircraftLocationSpec : Specification<AircraftLocation>
         Query.Where(x => x.FlightId == aircraftId);
 
         Query.OrderByDescending(x => x.DateTime);
+
     }
 }

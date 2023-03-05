@@ -3,7 +3,7 @@ using Fly.Core.Entities;
 
 namespace Fly.Core.Specifications;
 
-public class TicketSpec : Specification<Ticket>
+public class TicketSpec : Specification<Ticket>, ISingleResultSpecification
 {
     public TicketSpec(int id)
     {

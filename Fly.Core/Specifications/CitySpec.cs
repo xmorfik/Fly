@@ -3,7 +3,7 @@ using Fly.Core.Entities;
 
 namespace Fly.Core.Specifications;
 
-public class CitySpec : Specification<City>
+public class CitySpec : Specification<City>, ISingleResultSpecification
 {
     public CitySpec(int id)
     {

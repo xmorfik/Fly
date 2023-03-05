@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace Fly.Core.Specifications
 {
-    public class PassengerListSpec : Specification<Passenger>
+    public class PassengerListSpec : Specification<Passenger>  
     {
         public PassengerListSpec(PassengerParameter parameter, Page? page)
         {
