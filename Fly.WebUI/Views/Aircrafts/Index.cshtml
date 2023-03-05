@@ -78,9 +78,7 @@
                                 <th>
                                     Airport Name
                                 </th>
-                                <th>
-                                    Seats
-                                </th>
+                               
                                 <th></th>
                             </tr>
                         </thead>
@@ -110,9 +108,7 @@
                                         @Html.DisplayFor(modelItem => item.Airport.Name)
                                         @Html.DisplayFor(modelItem => item.Airport.City.IsoCountry)
                                     </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Seats.Count)
-                                    </td>
+                                   
                                     <td>
                                         @if(Model.IsSelect)
                                         {
