@@ -15,6 +15,7 @@ public class AircraftListSpec : Specification<Aircraft>
 
         Query.Include(x => x.Airport).ThenInclude(x => x.City);
 
+        //todo: convert to if/else
         Query.Where(x => parameter.AircraftState == null || x.AircraftState == parameter.AircraftState);
 
         Query.Where(x => parameter.Airline == null || x.Airline.Name.Contains(parameter.Airline));
@@ -23,6 +24,7 @@ public class AircraftListSpec : Specification<Aircraft>
 
         Query.Where(x => parameter.AirlineId == null || x.Airline.Id == parameter.AirlineId);
 
+        //todo: move order by to global
         if (page != null)
         {
             if (parameter.OrderBy != null)

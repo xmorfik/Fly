@@ -34,7 +34,6 @@ public class LocationsController : ControllerBase
     [HttpPost]
     public async Task Post(int id)
     {
-        var locations = await _aircraftLocationService.GetLocations(id);
         await _hub.Clients.All.SendAsync("LocationsHistory", new LocationDto());
     }
 }
