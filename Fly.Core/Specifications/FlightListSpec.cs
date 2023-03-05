@@ -17,6 +17,8 @@ public class FlightListSpec : Specification<Flight>
 
         Query.Include(x => x.ArrivalAirport).ThenInclude(x => x.City);
 
+        Query.Include(x => x.Tickets);
+
         Query.Where(x => parameter.FlightState == null || x.FlightState == parameter.FlightState);
 
         Query.Where(x => parameter.DepartureDateTime == null || x.DepartureDateTime <= parameter.DepartureDateTime);

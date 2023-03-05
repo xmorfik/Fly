@@ -35,7 +35,7 @@ public class CityListSpec : Specification<City>
             {
                 Query.OrderByDescending(x => x.Id);
             }
-            Query.Skip((page.PageNumber - 1) * page.PageSize).Take(page.PageSize).OrderByDescending(x => x.Id);
+            Query.Skip((page.PageNumber - 1) * page.PageSize).Take(page.PageSize);
         }
     }
 }
