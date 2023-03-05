@@ -3,55 +3,77 @@
 <div class="card  mx-auto" style="width:600px">
     <img class="card-img-top" src="~/aircraft.jpg">
     <div class="card-body">
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ModelType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ModelType)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SerialNumber)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SerialNumber)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ManufactureDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ManufactureDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FlightHours)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FlightHours)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AircraftState)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AircraftState)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AirlineId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AirlineId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AirportId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AirportId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-    </dl>
+        <dl class="row">
+            <dt class = "col-sm-10">
+                @Html.DisplayNameFor(model => model.ModelType)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.ModelType)
+            </dd>
+            <dt class = "col-sm-10">
+                @Html.DisplayNameFor(model => model.SerialNumber)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.SerialNumber)
+            </dd>
+            <dt class = "col-sm-10">
+                @Html.DisplayNameFor(model => model.ManufactureDate)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.ManufactureDate)
+            </dd>
+            <dt class = "col-sm-10">
+                @Html.DisplayNameFor(model => model.FlightHours)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.FlightHours)
+            </dd>
+            <dt class = "col-sm-10">
+                @Html.DisplayNameFor(model => model.AircraftState)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.AircraftState)
+            </dd>
+            <dt class = "col-sm-10">
+                @Html.DisplayNameFor(model => model.Airline)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Airline.Name)
+            </dd>
+            <dt class = "col-sm-10">
+                @Html.DisplayNameFor(model => model.Airport)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Airport.Name)
+            </dd>
+            <dt class = "col-sm-10">
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+        </dl>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div id="map" style="width: 100%; height: 300px;"></div>
+        </div>
+    </div>
+
+    <a href="/airports/details/@(Model.Airport.Id)" class="text-center">Details</a>
 </div>
-</div>
+
+
+<script>
+    const map = L.map('map').setView([@Model.Airport.Latitude, @Model.Airport.Longitude], 10);
+
+    const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    L.marker([@Model.Airport.Latitude, @Model.Airport.Longitude]).addTo(map)
+        .bindPopup('@(@Model.Airport.Name)')
+        .openPopup();
+</script>
