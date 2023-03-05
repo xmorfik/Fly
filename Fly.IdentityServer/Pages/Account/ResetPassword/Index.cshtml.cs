@@ -22,11 +22,12 @@ namespace Fly.IdentityServer.Pages.Account.ResetPassword
 
         public IndexModel(
             IEmailSender<EmailMessage> emailSender,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            UserManager<User> userManager)
         {
             _configuration = configuration;
             _emailSender = emailSender;
-
+            _userManager = userManager;
         }
 
         public void OnGet()
