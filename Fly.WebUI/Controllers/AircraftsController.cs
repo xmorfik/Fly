@@ -12,11 +12,16 @@ namespace Fly.WebUI.Controllers;
 public class AircraftsController : Controller
 {
     private readonly IService<Aircraft, AircraftParameter> _service;
+    private readonly IService<Airport, AirportParameter> _airports;
+
     private readonly IMapper _mapper;
-    public AircraftsController(IService<Aircraft, AircraftParameter> service,
+    public AircraftsController(
+        IService<Aircraft, AircraftParameter> service,
+        IService<Airport, AirportParameter> airports,
         IMapper mapper)
     {
         _service = service;
+        _airports = airports;
         _mapper = mapper;
     }
 
@@ -48,6 +53,8 @@ public class AircraftsController : Controller
         if (int.TryParse(Request.Cookies["SelectedAirportId"], out airportId))
         {
             ViewData["SelectedAirportId"] = airportId;
+            var result = await _airports.GetAsync(airportId);
+            ViewData["SelectedAirport"] = result.Data;
         }
 
         if (int.TryParse(Request.Cookies["SelectedAirlineId"], out airlineId))
