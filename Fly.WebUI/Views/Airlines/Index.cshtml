@@ -11,13 +11,34 @@
                 <div class="col">
                     <label  class="control-label">Name</label>
                     <input asp-for="AirlineParameter.Name" class="form-control" />
-                </div>
+                </div
+
                 @Html.HiddenFor(x=>x.RedirectUri)
                 @Html.HiddenFor(x=>x.IsSelect)
+
+                <div class="col">
+                    <label> OrderBy </label>
+                    @Html.DropDownListFor(x => x.AirlineParameter.OrderBy, 
+                        new List<SelectListItem>
+                            {
+                                new SelectListItem{ Value = "Name", Text= "Name"},
+                                new SelectListItem{ Value = "RegistrationAddress", Text= "RegistrationAddress"},
+                                new SelectListItem{ Value = "Phone", Text= "Phone"}
+                    }, new { @class = "form-select"} )
+                </div>
+
+                <div class="col"> 
+                    <br />
+                    <label> Descresing </label>
+                    @Html.CheckBoxFor(x=>x.AirlineParameter.Descresing)
+                </div>
+               
+                <br />
                 <div class="col">
                     <br />
                     <input type="submit" onclick="setStartPage()" value=@Localizer["Search"] class="btn btn-primary" />
                 </div>
+
                 <br />
                 <div class="card-body">
                     @if (User.IsInRole("Administrator"))

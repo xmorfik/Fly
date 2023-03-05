@@ -56,7 +56,14 @@ public class AirlineListSpec : Specification<Airline>
                     var orderExpressionParam = Expression.Parameter(typeof(Airline));
                     var propertyAccess = Expression.MakeMemberAccess(orderExpressionParam, property);
                     var orderLambda = Expression.Lambda<Func<Airline, object?>>(propertyAccess, orderExpressionParam);
-                    Query.OrderBy(orderLambda);
+                    if (parameter.Descresing)
+                    {
+                        Query.OrderByDescending(orderLambda);
+                    }
+                    else
+                    {
+                        Query.OrderBy(orderLambda);
+                    }
                 }
                 catch
                 {
