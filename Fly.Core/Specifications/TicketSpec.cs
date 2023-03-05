@@ -13,8 +13,10 @@ public class TicketSpec : Specification<Ticket>
 
         Query.Include(x => x.Passenger);
 
-        Query.Include(x => x.Flight).ThenInclude(x => x.ArrivalAirport);
+        Query.Include(x => x.Flight);
 
-        Query.Include(x => x.Flight).ThenInclude(x => x.DepartureAirport);
+        Query.Include(x => x.Flight.ArrivalAirport);
+
+        Query.Include(x => x.Flight.DepartureAirport);
     }
 }

@@ -27,6 +27,8 @@ public class FlightListSpec : Specification<Flight>
 
         Query.Where(x => parameter.ArrivalCity == null || x.ArrivalAirport.City.Name.Contains(parameter.ArrivalCity));
 
+        Query.AsNoTracking();
+
         if (page != null)
         {
             try

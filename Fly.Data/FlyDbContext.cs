@@ -34,8 +34,10 @@ public class FlyDbContext : IdentityDbContext
 
     public FlyDbContext(DbContextOptions<FlyDbContext> options) : base(options)
     {
-        ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+        ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTrackingWithIdentityResolution;
         ChangeTracker.LazyLoadingEnabled = false;
+        ChangeTracker.AutoDetectChangesEnabled = false;
+
     }
 
     protected override void OnModelCreating(ModelBuilder builder)

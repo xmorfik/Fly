@@ -16,5 +16,5 @@ public class FlightParameter
 
     public string? OrderBy { get; set; } = "FlightState";
 
-    public bool Descresing { get; set; } = false;
+    public bool Descresing { get; set; } = true;
 }
