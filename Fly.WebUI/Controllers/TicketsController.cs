@@ -11,15 +11,19 @@ namespace Fly.WebUI.Controllers;
 public class TicketsController : Controller
 {
     private readonly IService<Ticket, TicketParameter> _service;
-    private readonly IService<Flight, FlightParameter> _flight;
+    private readonly IService<Flight, FlightParameter> _flights;
+    private readonly ILogger<TicketsController> _logger;
     private readonly ITicketsGeneratorService<TicketsDto> _ticketsGenerator;
+
     public TicketsController(
         IService<Ticket, TicketParameter> service,
-        IService<Flight, FlightParameter> flight,
+        IService<Flight, FlightParameter> flights,
+        ILogger<TicketsController> logger,
         ITicketsGeneratorService<TicketsDto> ticketsGenerator)
     {
         _service = service;
-        _flight = flight;
+        _flights = flights;
+        _logger = logger;
         _ticketsGenerator = ticketsGenerator;
     }
 
@@ -37,15 +41,41 @@ public class TicketsController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Create()
+    public async Task<IActionResult> Create(int? id)
     {
         int flightId;
 
-        if (int.TryParse(Request.Cookies["SelectedFlightId"], out flightId))
+        if (id != null)
         {
-            ViewData["SelectedFlightId"] = flightId;
-            var result = await _flight.GetAsync(flightId);
-            ViewData["SelectedFlight"] = result.Data;
+            flightId = id ?? 0;
+        }
+        else if (int.TryParse(Request.Cookies["SelectedAircraftId"], out flightId))
+        {
+        }
+        else
+        {
+            return View();
+        }
+
+        try
+        {
+            var result = await _flights.GetAsync(flightId);
+            if (!result.Succeeded)
+            {
+                ViewData["SelectedFlightId"] = null;
+                ViewData["SelectedFlight"] = null;
+            }
+            else
+            {
+                ViewData["SelectedFlightId"] = flightId;
+                ViewData["SelectedFlight"] = result.Data;
+            }
+        }
+        catch (Exception ex)
+        {
+            ViewData["SelectedFlightId"] = null;
+            ViewData["SelectedFlight"] = null;
+            _logger.LogError(ex.Message);
         }
 
         return View();

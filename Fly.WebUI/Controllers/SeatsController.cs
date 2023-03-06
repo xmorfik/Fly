@@ -13,14 +13,18 @@ public class SeatsController : Controller
     private readonly IService<Seat, SeatParameter> _service;
     private readonly IService<Aircraft, AircraftParameter> _aircrafts;
     private readonly ISeatsGeneratorService<SeatsDto> _seatsGenerator;
+    private readonly ILogger<SeatsController> _logger;
+
     public SeatsController(
         IService<Seat, SeatParameter> service,
         IService<Aircraft, AircraftParameter> aircrafts,
-        ISeatsGeneratorService<SeatsDto> seatsGenerator)
+        ISeatsGeneratorService<SeatsDto> seatsGenerator,
+        ILogger<SeatsController> logger)
     {
         _service = service;
         _aircrafts = aircrafts;
         _seatsGenerator = seatsGenerator;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -34,17 +38,43 @@ public class SeatsController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Create()
+    public async Task<IActionResult> Create(int? id)
     {
         int aircraftId;
 
-        if (int.TryParse(Request.Cookies["SelectedAircraftId"], out aircraftId))
+        if (id != null)
         {
-            ViewData["SelectedAircraftId"] = aircraftId;
-            var result = await _aircrafts.GetAsync(aircraftId);
-            ViewData["SelectedAircraft"] = result.Data;
+            aircraftId = id ?? 0;
+        }
+        else if(int.TryParse(Request.Cookies["SelectedAircraftId"], out aircraftId))
+        {
+        }
+        else
+        {
+            return View();
         }
 
+        try
+        {
+            var result = await _aircrafts.GetAsync(aircraftId);
+            if (!result.Succeeded)
+            {
+                ViewData["SelectedAircraftId"] = null;
+                ViewData["SelectedAircraft"] = null;
+            }
+            else
+            {
+                ViewData["SelectedAircraftId"] = aircraftId;
+                ViewData["SelectedAircraft"] = result.Data;
+            }
+        }
+        catch(Exception ex)
+        {
+            ViewData["SelectedAircraftId"] = null;
+            ViewData["SelectedAircraft"] = null;
+            _logger.LogError(ex.Message);
+        }
+            
         return View();
     }
 
@@ -87,7 +117,7 @@ public class SeatsController : Controller
         Response.Cookies.Delete("SelectedAircraftId");
 
         await _seatsGenerator.Generate(item);
-        return RedirectToAction("index");
+        return RedirectToAction("Index","Aircrafts");
     }
 
     [HttpPost]

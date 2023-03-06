@@ -122,6 +122,10 @@
                                                 <br />
                                                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                                             }
+                                            @if(User.IsInRole("Manager"))
+                                            {
+                                                @Html.ActionLink("Create seats", "Create", "Seats", new{ id = item.Id })
+                                            }
                                         }
                                         @Html.ActionLink("Details", "Details", new { id=item.Id })
                                     </td>

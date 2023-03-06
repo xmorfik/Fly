@@ -61,19 +61,19 @@
         </div>
     </div>
 
-    <a href="/airports/details/@(Model.Airport.Id)" class="text-center">Details</a>
+    <a href="/airports/details/@(Model.Airport?.Id)" class="text-center">Details</a>
 </div>
 
 
 <script>
-    const map = L.map('map').setView([@Model.Airport.Latitude, @Model.Airport.Longitude], 10);
+    const map = L.map('map').setView([@Model.Airport?.Latitude, @Model.Airport?.Longitude], 10);
 
     const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
-    L.marker([@Model.Airport.Latitude, @Model.Airport.Longitude]).addTo(map)
-        .bindPopup('@(@Model.Airport.Name)')
+    L.marker([@Model.Airport?.Latitude, @Model.Airport?.Longitude]).addTo(map)
+        .bindPopup('@(@Model.Airport?.Name)')
         .openPopup();
 </script>

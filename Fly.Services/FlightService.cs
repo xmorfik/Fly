@@ -5,6 +5,7 @@ using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.Core.Specifications;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Fly.Services;
 
@@ -14,26 +15,36 @@ public class FlightService : IService<Flight, FlightParameter>
     private readonly IRepository<Aircraft> _aircarftRepository;
     private readonly ILogger<FlightService> _logger;
     private readonly IScheduleService<Flight> _scheduleService;
+    private readonly IFlightOnCreationService _flightOnCreationService;
 
     public FlightService(
         IRepository<Flight> repository,
         ILogger<FlightService> logger,
         IScheduleService<Flight> scheduleService,
-        IRepository<Aircraft> aircarftRepository)
+        IRepository<Aircraft> aircarftRepository,
+        IFlightOnCreationService flightOnCreationService)
     {
         _repository = repository;
         _logger = logger;
         _scheduleService = scheduleService;
         _aircarftRepository = aircarftRepository;
+        _flightOnCreationService = flightOnCreationService;
     }
 
     public async Task CreateAsync(Flight item)
     {
         try
         {
-            var aircarft = await _aircarftRepository.FirstOrDefaultAsync(new AircraftSpec(item.AircraftId ?? 0));
-            item.DepartureAirportId = aircarft.AirportId;
-            var result = await _repository.AddAsync(item);
+            var canCreate = await _flightOnCreationService.СheckFlight(item);
+            if(!canCreate)
+            {
+                _logger.LogError("Can't create" + JsonConvert.SerializeObject(item));
+                return;
+            }
+
+            var flight = await _flightOnCreationService.SetDepartureAirport(item);
+            var result = await _repository.AddAsync(flight);
+
             _scheduleService.Schedule(result);
         }
         catch (Exception ex)

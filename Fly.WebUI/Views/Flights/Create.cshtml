@@ -20,9 +20,9 @@
                         <h5 class="card-title">@(((Aircraft)ViewData["SelectedAircraft"]).ModelType)</h5>
                         <h6 class="card-subtitle mb-2 text-muted">@(((Aircraft)ViewData["SelectedAircraft"]).SerialNumber)</h6>
                         <p class="card-text">
-                            Departure airport : @(((Aircraft)ViewData["SelectedAircraft"]).Airport.Name)
+                            Current airport : @(((Aircraft)ViewData["SelectedAircraft"]).Airport.Name)
                         </p>
-                        <a href="/airports/details/@(((Aircraft)ViewData["SelectedAircraft"]).AirportId)" class="card-link">Departure airport details </a>
+                        <a href="/airports/details/@(((Aircraft)ViewData["SelectedAircraft"]).AirportId)" class="card-link">Departure airport details</a>
                         <a href="/aircrafts/details/@(((Aircraft)ViewData["SelectedAircraft"]).Id)" class="card-link">Aircraft details</a>
                     </div>
                 </div>
