@@ -18,9 +18,9 @@ public class EmailSender : IEmailSender<EmailMessage>
         _logger = logger;
     }
 
-    public void Send(EmailMessage emailMessage)
+    public Task Send(EmailMessage emailMessage)
     {
         var emailClient = new EmailClient(_configuration["AzureEmailCommunicationService:ConnectionString"]);
-        emailClient.SendAsync(emailMessage, CancellationToken.None);
+        return emailClient.SendAsync(emailMessage, CancellationToken.None);
     }
 }

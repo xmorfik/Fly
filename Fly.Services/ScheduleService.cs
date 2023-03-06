@@ -32,7 +32,7 @@ public class ScheduleService : IScheduleService<Flight>
 
     public async Task Start(int id)
     {
-        await _trakingService.Track(id);
+        await _trakingService.Start(id);
         _logger.LogInformation($"Flight {id} started {DateTime.Now}");
     }
 
