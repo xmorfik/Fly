@@ -11,7 +11,7 @@
             <br />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="AircraftId" class="control-label"></label>
+                <label asp-for="AircraftId" class="control-label">@Localizer[""]</label>
                 <input asp-for="AircraftId" value="@ViewData["SelectedAircraftId"]" readonly class="form-control" />
                 <span asp-validation-for="AircraftId" class="text-danger"></span>
                 @Html.ActionLink("Select","Index","Aircrafts", new { isSelect = true, redirectUri = "/seats/create" })
@@ -31,22 +31,22 @@
             }
             <br />
             <div class="form-group">
-                <label asp-for="EconomClass" class="control-label"></label>
+                <label asp-for="EconomClass" class="control-label">@Localizer[""]</label>
                 <input asp-for="EconomClass" class="form-control" />
                 <span asp-validation-for="EconomClass" class="text-danger"></span>
             </div><br />
             <div class="form-group">
-                <label asp-for="FirstClass" class="control-label"></label>
+                <label asp-for="FirstClass" class="control-label">@Localizer[""]</label>
                 <input asp-for="FirstClass" class="form-control" />
                 <span asp-validation-for="FirstClass" class="text-danger"></span>
             </div><br />
             <div class="form-group">
-                <label asp-for="BusinessClass" class="control-label"></label>
+                <label asp-for="BusinessClass" class="control-label">@Localizer[""]</label>
                 <input asp-for="BusinessClass" class="form-control" />
                 <span asp-validation-for="BusinessClass" class="text-danger"></span>
             </div><br />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="@Localizer["Create"]" class="btn btn-primary" />
             </div>
         </form><br />
     </div>
