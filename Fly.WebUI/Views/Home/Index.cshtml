@@ -58,18 +58,6 @@
 		});
     });
 
-	//hubConnection.on("SendLocationsHistoryAsync", function (locations) {
-	//	if(route.length>0){
-	//		map.removeLayer(polyline);
-	//		route = [];
-	//	}
-	//	locations.forEach(function (item, i, locations) {
-	//		console.log(i + " : " + item.latitude + " / " + item.longitude);
-	//		route.push([item.latitude, item.longitude]);
-	//	});
-	//	polyline = L.polyline(route, { color: 'orange' }).addTo(map);
-    //});
-
 	hubConnection.on("Flight", function (flight) {
 		console.log(flight);
 		if(line.length>0){
