@@ -1,4 +1,5 @@
-﻿@model Fly.Core.Entities.Flight
+﻿@using Fly.Core.Enums;
+@model Fly.Core.Entities.Flight
 
 <div class="card mx-auto" style="width:1000px">
     <img class="card-img-top" src="~/flight.jpg">
@@ -79,6 +80,9 @@
                     <th>
                         Position
                     </th>
+                    <th>
+
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -98,7 +102,12 @@
                             @Html.DisplayFor(modelItem => item.Seat.Row)  
                             @Html.DisplayFor(modelItem => item.Seat.Column)
                         </td>
-
+                        <td>
+                            @if(User.IsInRole("Passenger") && item.TicketState == TicketState.Active)
+                            {
+                                @Html.ActionLink("Buy", "Payoff", "Passenger", new { id = item.Id})
+                            }
+                        </td>
                     </tr>
                 }
             </tbody>

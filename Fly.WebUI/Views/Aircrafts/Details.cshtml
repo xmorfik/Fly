@@ -46,6 +46,12 @@
             <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.Airport.Name)
             </dd>
+            <dt class="col-sm-10">
+                @Html.DisplayNameFor(model => model.Seats)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Seats.Count)
+            </dd>
             <dt class = "col-sm-10">
                 @Html.DisplayNameFor(model => model.Id)
             </dt>

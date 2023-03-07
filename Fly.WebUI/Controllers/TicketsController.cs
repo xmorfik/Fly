@@ -49,7 +49,7 @@ public class TicketsController : Controller
         {
             flightId = id ?? 0;
         }
-        else if (int.TryParse(Request.Cookies["SelectedAircraftId"], out flightId))
+        else if (int.TryParse(Request.Cookies["SelectedFlightId"], out flightId))
         {
         }
         else

@@ -13,7 +13,8 @@ namespace Fly.Core.Specifications;
 public class AirlineListSpec : Specification<Airline>
 {
     public AirlineListSpec(AirlineParameter parameter, Page? page)
-    {        
+    {  
+        //to do: rename
         var paramEx = Expression.Parameter(typeof(PropertyInfo));
         var memberEx = Expression.PropertyOrField(paramEx, "PropertyType");
         var constantEx = Expression.Constant(Type.GetType("System.String"));
