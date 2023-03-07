@@ -7,7 +7,7 @@ public class FlightSpec : Specification<Flight>, ISingleResultSpecification
 {
     public FlightSpec(int id)
     {
-        Query.Include(x => x.Aircraft).ThenInclude(x => x.Seats);
+        Query.Include(x => x.Aircraft);
 
         Query.Include(x => x.DepartureAirport).ThenInclude(x => x.City);
 
@@ -16,5 +16,7 @@ public class FlightSpec : Specification<Flight>, ISingleResultSpecification
         Query.Include(x => x.Tickets).ThenInclude(x => x.Seat);
 
         Query.Where(x => x.Id == id);
+
+        Query.AsNoTracking();
     }
 }

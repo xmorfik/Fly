@@ -6,11 +6,11 @@ namespace Fly.WebUI.Controllers;
 
 public class AccountController : Controller
 {
-    private readonly AuthorityUri authority;
+    private readonly AuthorityUri _authority;
 
-    public AccountController(IOptions<AuthorityUri> options) 
+    public AccountController(IOptions<AuthorityUri> options)
     {
-        authority = options.Value;
+        _authority = options.Value;
     }
 
     public IActionResult Index()
@@ -31,11 +31,11 @@ public class AccountController : Controller
         await HttpContext.SignOutAsync("Cookie");
         await HttpContext.SignOutAsync("oidc");
 
-        return Redirect("/"); ;
+        return Redirect("/");
     }
 
     public IActionResult Register()
     {
-        return Redirect(authority.Uri +"account/register");
+        return Redirect(_authority.Uri + "account/register");
     }
 }

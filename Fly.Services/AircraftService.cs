@@ -12,12 +12,17 @@ namespace Fly.Services;
 public class AircraftService : IService<Aircraft, AircraftParameter>
 {
     private readonly IRepository<Aircraft> _repository;
+    private readonly IRepository<Flight> _flights;
     private readonly ILogger<AircraftService> _logger;
 
-    public AircraftService(IRepository<Aircraft> repository, ILogger<AircraftService> logger)
+    public AircraftService(
+        IRepository<Aircraft> repository,
+        IRepository<Flight> flights,
+        ILogger<AircraftService> logger)
     {
         _repository = repository;
         _logger = logger;
+        _flights = flights;
     }
 
     public async Task CreateAsync(Aircraft item)

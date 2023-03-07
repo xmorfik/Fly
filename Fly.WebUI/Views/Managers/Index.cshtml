@@ -18,6 +18,25 @@
                 </div>
                 @Html.HiddenFor(x=>x.RedirectUri)
                 @Html.HiddenFor(x=>x.IsSelect)
+
+                <div class="row">
+                    <div class="col">
+                        <label> OrderBy </label>
+                        @Html.DropDownListFor(x => x.ManagerParameter.OrderBy,
+                        new List<SelectListItem>
+                        {
+                            new SelectListItem{ Value = "Id", Text= "Id"},
+                            new SelectListItem{ Value = "AirlineId", Text= "AirlineId"}
+                        }, new { @class = "form-select"} )
+                    </div>
+
+                    <div class="col">
+                        <br />
+                        <label> Descresing </label>
+                        @Html.CheckBoxFor(x=>x.ManagerParameter.Descresing)
+                    </div>
+                </div>
+
                 <div class="col">
                     <br />
                     <input type="submit" onclick="setStartPage()" value=@Localizer["Search"] class="btn btn-primary" />

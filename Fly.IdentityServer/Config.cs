@@ -5,6 +5,7 @@ namespace Fly.IdentityServer;
 
 public static class Config
 {
+    public static ClientUriConfiguration ClientUriConfiguration { get; set; }
     public static IEnumerable<IdentityResource> IdentityResources =>
         new IdentityResource[]
         {
@@ -30,9 +31,9 @@ public static class Config
 
                     AllowedGrantTypes = GrantTypes.Code,
 
-                    RedirectUris = { "https://localhost:5002/signin-oidc" },
-                    FrontChannelLogoutUri = "https://localhost:5002",
-                    PostLogoutRedirectUris = { "https://localhost:5002/signout-callback-oidc" },
+                    RedirectUris = { ClientUriConfiguration.Uri + "/signin-oidc" },
+                    FrontChannelLogoutUri = ClientUriConfiguration.Uri,
+                    PostLogoutRedirectUris = { ClientUriConfiguration.Uri + "/signout-callback-oidc" },
 
                     AllowOfflineAccess = true,
 

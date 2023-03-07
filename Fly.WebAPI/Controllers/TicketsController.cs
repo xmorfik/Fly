@@ -45,7 +45,7 @@ public class TicketsController : ControllerBase
     }
 
     [HttpPut]
-    [Authorize(Policy = "ManagerAndAdminOnly")]
+    [Authorize]
     [ValidateModel]
     public async Task Put([FromBody] Ticket value)
     {

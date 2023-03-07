@@ -9,7 +9,7 @@ public class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {
-        CreateMap<Aircraft, CreateAircraftDto>().ReverseMap();
-        CreateMap<SeatsDto, CreateAircraftDto>().ReverseMap();
+        CreateMap<Aircraft, AircarftForCreationDto>().ReverseMap();
+        CreateMap<SeatsDto, AircarftForCreationDto>().ReverseMap();
     }
 }

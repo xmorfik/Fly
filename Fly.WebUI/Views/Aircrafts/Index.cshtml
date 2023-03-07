@@ -25,6 +25,25 @@
                 </div>
                 @Html.HiddenFor(x=>x.RedirectUri)
                 @Html.HiddenFor(x=>x.IsSelect)
+                <div class=" row">
+                    <div class="col">
+                        <label> OrderBy </label>
+                        @Html.DropDownListFor(x => x.AircraftParameter.OrderBy,
+                        new List<SelectListItem>
+                        {
+                            new SelectListItem{ Value = "Id", Text= "Id"},
+                            new SelectListItem{ Value = "ModelType", Text= "ModelType"},
+                            new SelectListItem{ Value = "SerialNumber", Text= "SerialNumber"},
+                            new SelectListItem{ Value = "FlightHours", Text= "FlightHours"},
+                            new SelectListItem{ Value = "AircraftState", Text= "AircraftState"},
+                        }, new { @class = "form-select"} )
+                    </div>
+                    <div class="col">
+                        <br />
+                        <label> Descresing </label>
+                        @Html.CheckBoxFor(x=>x.AircraftParameter.Descresing)
+                    </div>
+                </div>
                 <div class="col">
                     <br />
                     <input type="submit" onclick="setStartPage()" value=@Localizer["Search"] class="btn btn-primary" />
@@ -59,16 +78,14 @@
                                 <th>
                                     Airport Name
                                 </th>
-                                <th>
-                                    Seats
-                                </th>
+                               
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model.PagedResponse)
-                        {
-                            <tr>
+                            {
+                                <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.ModelType)
                                     </td>
@@ -91,9 +108,7 @@
                                         @Html.DisplayFor(modelItem => item.Airport.Name)
                                         @Html.DisplayFor(modelItem => item.Airport.City.IsoCountry)
                                     </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Seats.Count)
-                                    </td>
+                                   
                                     <td>
                                         @if(Model.IsSelect)
                                         {
@@ -107,15 +122,18 @@
                                                 <br />
                                                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                                             }
+                                            @if(User.IsInRole("Manager"))
+                                            {
+                                                @Html.ActionLink("Create seats", "Create", "Seats", new{ id = item.Id })
+                                            }
                                         }
                                         @Html.ActionLink("Details", "Details", new { id=item.Id })
                                     </td>
                                 </tr>
-                        }
+                            }
                         </tbody>
                     </table>
                 </div>
-                
                 <div class="col">
                     <input asp-for="MetaData.PageSize" min="1" value="@Model.MetaData.PageSize" class="form-control" />
                 </div>

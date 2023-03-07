@@ -34,7 +34,7 @@ public class TrackingService : ITrackingService
         _flightStateService = flightStateService;
     }
 
-    public async Task Track(int id)
+    public async Task Start(int id)
     {
         var flight = await _repository.FirstOrDefaultAsync(new FlightSpec(id));
         await _flightStateService.Start(id);

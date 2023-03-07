@@ -22,6 +22,27 @@
                 </div>
                 @Html.HiddenFor(x=>x.RedirectUri)
                 @Html.HiddenFor(x=>x.IsSelect)
+
+                <div class = "row">
+                    <div class="col">
+                        <label> OrderBy </label>
+                        @Html.DropDownListFor(x => x.FlightParameter.OrderBy,
+                        new List<SelectListItem>
+                        {
+                        new SelectListItem{ Value = "Id", Text= "Id"},
+                        new SelectListItem{ Value = "FlightState", Text= "FlightState"},
+                        new SelectListItem{ Value = "DepartureDateTime", Text= "DepartureDateTime"},
+                        new SelectListItem{ Value = "ArrivalDateTime", Text= "ArrivalDateTime"}
+                        }, new { @class = "form-select"} )
+                    </div>
+
+                    <div class="col">
+                        <br />
+                        <label> Descresing </label>
+                        @Html.CheckBoxFor(x=>x.FlightParameter.Descresing)
+                    </div>
+                </div>
+                
                 <div class="col">
                     <br/>
                     <input type="submit" value=@Localizer["Search"] class="btn btn-primary" />
@@ -70,7 +91,7 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.ArrivalAirport.Name)
-                                    @Html.DisplayFor(modelItem => item.DepartureAirport.City.IsoCountry)
+                                    @Html.DisplayFor(modelItem => item.ArrivalAirport.City.IsoCountry)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Aircraft.ModelType)

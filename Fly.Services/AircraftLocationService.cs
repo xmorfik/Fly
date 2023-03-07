@@ -61,26 +61,6 @@ public class AircraftLocationService : IAircraftLocationService<LocationDto>
         }
     }
 
-    public async Task<IEnumerable<LocationDto>> GetLocations(int id)
-    {
-        try
-        {
-            var flight = await _repositoryFlights.FirstOrDefaultAsync(new FlightSpec(id));
-            var locations = await _repository.ListAsync(new AircraftLocationSpec(flight.Id ?? 0, flight.AircraftId ?? 0));
-            var locationDtos = new List<LocationDto>();
-            foreach (var location in locations)
-            {
-                locationDtos.Add(_mapper.Map<LocationDto>(location));
-            }
-            return locationDtos;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex.Message);
-            throw;
-        }
-    }
-
     public async Task<IEnumerable<LocationDto>> GetСurrentLocations()
     {
         try

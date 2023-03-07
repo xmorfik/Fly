@@ -3,7 +3,7 @@ using Fly.Core.Entities;
 
 namespace Fly.Core.Specifications;
 
-public class TicketSpec : Specification<Ticket>
+public class TicketSpec : Specification<Ticket>, ISingleResultSpecification
 {
     public TicketSpec(int id)
     {
@@ -13,8 +13,10 @@ public class TicketSpec : Specification<Ticket>
 
         Query.Include(x => x.Passenger);
 
-        Query.Include(x => x.Flight).ThenInclude(x => x.ArrivalAirport);
+        Query.Include(x => x.Flight);
 
-        Query.Include(x => x.Flight).ThenInclude(x => x.DepartureAirport);
+        Query.Include(x => x.Flight.ArrivalAirport);
+
+        Query.Include(x => x.Flight.DepartureAirport);
     }
 }

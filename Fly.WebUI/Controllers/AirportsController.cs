@@ -10,10 +10,14 @@ namespace Fly.WebUI.Controllers;
 public class AirportsController : Controller
 {
     private readonly IService<Airport, AirportParameter> _service;
+    private readonly IService<City, CityParameter> _cities;
 
-    public AirportsController(IService<Airport, AirportParameter> service)
+    public AirportsController(
+        IService<Airport, AirportParameter> service,
+        IService<City, CityParameter> cities)
     {
         _service = service;
+        _cities = cities;
     }
 
     [HttpGet]
@@ -38,6 +42,8 @@ public class AirportsController : Controller
         if (int.TryParse(Request.Cookies["SelectedCityId"], out cityId))
         {
             ViewData["SelectedCityId"] = cityId;
+            var result = await _cities.GetAsync(cityId);
+            ViewData["SelectedCity"] = result.Data;
         }
 
         return View();

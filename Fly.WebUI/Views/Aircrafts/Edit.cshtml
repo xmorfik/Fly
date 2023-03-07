@@ -26,20 +26,13 @@
                 <input asp-for="FlightHours" class="form-control" />
                 <span asp-validation-for="FlightHours" class="text-danger"></span>
             </div><br />
-            <div class="form-group">
-                <label asp-for="AirlineId" class="control-label"></label>
-                <input asp-for="AirlineId" class="form-control" />
-                <span asp-validation-for="AirlineId" class="text-danger"></span>
-            </div><br />
-            <div class="form-group">
-                <label asp-for="AirportId" class="control-label"></label>
-                <input asp-for="AirportId" class="form-control" />
-                <span asp-validation-for="AirportId" class="text-danger"></span>
-            </div><br />
+            @Html.HiddenFor(x=>x.AirlineId)
+            @Html.HiddenFor(x=>x.AirportId)
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
+        @Html.ActionLink("Back","Index")
     </div>
 </div>
 

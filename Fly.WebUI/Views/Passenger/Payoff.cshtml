@@ -1,0 +1,36 @@
+﻿@model PayoffViewModel
+
+<div id="liqpay_checkout"></div>
+  <script>
+	window.LiqPayCheckoutCallback = function() {
+		LiqPayCheckout.init({
+			data: "@ViewData["Data"]",
+			signature: "@ViewData["Signature"]",
+			embedTo: "#liqpay_checkout",
+			language: "uk",
+			mode: "embed" // embed || popup
+		}).on("liqpay.callback", function(data){
+			console.log(data.status);
+			console.log(data);
+		}).on("liqpay.ready", function(data){
+			// ready
+		}).on("liqpay.close", function(data){
+			// close
+		});
+	};
+  </script>
+
+  <script src="//static.liqpay.ua/libjs/checkout.js" async></script>
+
+<form method="post">
+	@Html.HiddenFor(x=>x.Amount)
+	@Html.HiddenFor(x=>x.Description)
+	@Html.HiddenFor(x=>x.PassengerId)
+	@Html.HiddenFor(x=>x.TicketId)
+	@Html.HiddenFor(x=>x.IsSuccessed)
+	<div class="form-group">
+		<input type="submit" value="PayOff" class="btn btn-primary" />
+	</div>
+</form>
+
+@Html.AntiForgeryToken()

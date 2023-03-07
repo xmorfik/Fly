@@ -1,7 +1,10 @@
-﻿using Fly.Core.Entities;
+﻿using Ardalis.Specification;
+using Fly.Core.Entities;
 using Fly.Core.Enums;
 using Fly.Core.Interfaces;
 using Fly.Core.Services;
+using Fly.Core.Specifications;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Fly.Services;
 
@@ -22,18 +25,18 @@ public class FlightStateService : IFlightStateService
 
     public async Task End(int id)
     {
-        var flightToUpdate = await _repository.GetByIdAsync(id);
-        flightToUpdate.FlightState = FlightState.Completed;
-        await _aircraftStateService.Landing(flightToUpdate.AircraftId ?? 0, flightToUpdate.ArrivalAirportId ?? 0);
-        await _repository.UpdateAsync(flightToUpdate);
+        var flight = await _repository.GetByIdAsync(id);
+        flight.FlightState = FlightState.Completed;
+        await _aircraftStateService.Landing(flight.AircraftId ?? 0, flight.ArrivalAirportId ?? 0);
+        await _repository.UpdateAsync(flight);
     }
 
     public async Task Start(int id)
     {
-        var flightToUpdate = await _repository.GetByIdAsync(id);
-        flightToUpdate.FlightState = FlightState.InProgress;
         await _ticketsStateService.SetTicketsStateOnStartFlight(id);
-        await _aircraftStateService.Takeoff(flightToUpdate.AircraftId ?? 0);
-        await _repository.UpdateAsync(flightToUpdate);
+        var flight = await _repository.GetByIdAsync(id);
+        await _aircraftStateService.Takeoff(flight.AircraftId ?? 0);
+        flight.FlightState = FlightState.InProgress;
+        await _repository.UpdateAsync(flight);
     }
 }

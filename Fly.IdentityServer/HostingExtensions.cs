@@ -1,5 +1,8 @@
+using Azure.Communication.Email.Models;
 using Fly.Core.Entities;
+using Fly.Core.Services;
 using Fly.Data;
+using Fly.Services;
 using Fly.WebAPI.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Serilog;
@@ -15,9 +18,17 @@ internal static class HostingExtensions
 
         builder.Services.AddSqlServer(builder.Configuration);
 
-        builder.Services.AddIdentity<User, IdentityRole>()
+        builder.Services.AddIdentity<User, IdentityRole>(options =>
+        {
+            options.User.RequireUniqueEmail = true;
+        })
         .AddEntityFrameworkStores<FlyDbContext>()
         .AddDefaultTokenProviders();
+
+        builder.Services.AddScoped<IEmailSender<EmailMessage>, EmailSender>();
+
+        var cfg = builder.Configuration.GetSection(ClientUriConfiguration.Configuration).Get<ClientUriConfiguration>();
+        Config.ClientUriConfiguration = cfg;
 
         builder.Services.AddIdentityServer(options =>
             {
@@ -25,6 +36,7 @@ internal static class HostingExtensions
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseSuccessEvents = true;
+
             })
             .AddAspNetIdentity<User>()
             .AddInMemoryIdentityResources(Config.IdentityResources)

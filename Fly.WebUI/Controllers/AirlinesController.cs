@@ -63,7 +63,7 @@ public class AirlinesController : Controller
     [HttpPost]
     public async Task<IActionResult> Index(AirlinesViewModel airlineViewModel)
     {
-        var response = await _service.GetListAsync(airlineViewModel.AirlineParameter, airlineViewModel.PagedResponse.MetaData.ToPage());
+        var response = await _service.GetListAsync(airlineViewModel.AirlineParameter, airlineViewModel.MetaData.ToPage());
         airlineViewModel.PagedResponse = response;
         airlineViewModel.MetaData = response.MetaData;
         return View(airlineViewModel);

@@ -17,6 +17,7 @@ public class ManagerModel : PageModel
 {
     [BindProperty]
     public ManagerForRegistrationDto ManagerForRegistrationDto { get; set; }
+    public string ErrorMessage { get; set; }
 
     private readonly UserManager<User> _userManager;
     private readonly FlyDbContext _db;
@@ -70,6 +71,9 @@ public class ManagerModel : PageModel
 
             return Redirect(_clientConfiguration.Uri);
         }
+
+        ErrorMessage = result.Errors.FirstOrDefault().Description;
+
         return Page();
     }
 }

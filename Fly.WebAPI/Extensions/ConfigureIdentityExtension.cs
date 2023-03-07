@@ -23,6 +23,8 @@ public static class ConfigureIdentityExtension
                               policy.RequireClaim("Role", "Manager"));
             options.AddPolicy("ManagerAndAdminOnly", policy =>
                               policy.RequireClaim("Role", "Manager", "Administrator"));
+            options.AddPolicy("All", policy =>
+                              policy.RequireClaim("Role", "Manager", "Administrator", "Passenger"));
         });
 
         JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();

@@ -26,6 +26,7 @@ public static class ConfigureServicesExtension
         services.AddScoped<ITicketsStateService, TicketsStateService>();
         services.AddScoped<IAircraftStateService, AircraftStateService>();
         services.AddScoped<IFlightStateService, FlightStateService>();
+        services.AddScoped<IFlightOnCreationService, FlightOnCreationService>();
 
         return services;
     }

@@ -1,4 +1,5 @@
-﻿@using Fly.Shared.DataTransferObjects;
+﻿@using Fly.Core.Entities;
+@using Fly.Shared.DataTransferObjects;
 @model TicketsDto
 
 <div class="card  mx-auto" style="width:1000px">
@@ -12,7 +13,18 @@
                 <input asp-for="FlightId" readonly value="@ViewData["SelectedFlightId"]" class="form-control" />
                 <span asp-validation-for="FlightId" class="text-danger"></span>
                 @Html.ActionLink("Select","Index","Flights", new { isSelect = true, redirectUri = "/tickets/create" })
-            </div><br />
+            </div>
+            @if (ViewData["SelectedFlight"] != null)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Departure : @(((Flight)ViewData["SelectedFlight"]).DepartureDateTime)</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@(((Flight)ViewData["SelectedFlight"]).FlightState)</h6>
+                        <a href="/flights/details/@(((Flight)ViewData["SelectedFlight"]).Id)" class="card-link">Flight</a>
+                    </div>
+                </div>
+            }
+            <br />
             <div class="form-group">
                 <label asp-for="EconomClassPrice" class="control-label"></label>
                 <input asp-for="EconomClassPrice" class="form-control" />

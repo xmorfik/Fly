@@ -24,8 +24,31 @@
                     <label class="control-label">Iso Region</label>
                     <input asp-for="AirportParameter.IsoRegion" class="form-control" />
                 </div>
+
                 @Html.HiddenFor(x=>x.RedirectUri)
                 @Html.HiddenFor(x=>x.IsSelect)
+
+                <div class=" row">
+                    <div class="col">
+                        <label> OrderBy </label>
+                        @Html.DropDownListFor(x => x.AirportParameter.OrderBy,
+                        new List<SelectListItem>
+                        {
+                        new SelectListItem{ Value = "Id", Text= "Id"},
+                        new SelectListItem{ Value = "Name", Text= "Name"},
+                        new SelectListItem{ Value = "Longitude", Text= "Longitude"},
+                        new SelectListItem{ Value = "Latitude", Text= "Latitude"},
+                        new SelectListItem{ Value = "Altitude", Text= "Altitude"},
+                        }, new { @class = "form-select"} )
+                    </div>
+
+                    <div class="col">
+                        <br />
+                        <label> Descresing </label>
+                        @Html.CheckBoxFor(x=>x.AirportParameter.Descresing)
+                    </div>
+                </div>
+
                 <div class="col">
                     <br />
                     <input type="submit" onclick="setStartPage()" value=@Localizer["Search"] class="btn btn-primary" />

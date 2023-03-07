@@ -1,0 +1,34 @@
+﻿@page
+@model Fly.IdentityServer.Pages.Account.ChangePassword.IndexModel
+
+<div class="row">
+    <div class="col-md-4">
+        <label>@Model.ErrorMessage</label>
+        <form asp-action="View">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ChangePasswordDto.UserName" class="control-label"></label>
+                <input asp-for="ChangePasswordDto.UserName" class="form-control" />
+                <span asp-validation-for="ChangePasswordDto.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ChangePasswordDto.Password" class="control-label"></label>
+                <input asp-for="ChangePasswordDto.Password" type="password" class="form-control" />
+                <span asp-validation-for="ChangePasswordDto.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ChangePasswordDto.NewPassword" class="control-label"></label>
+                <input asp-for="ChangePasswordDto.NewPassword" type="password" class="form-control" />
+                <span asp-validation-for="ChangePasswordDto.NewPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
+
