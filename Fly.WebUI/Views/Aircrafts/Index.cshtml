@@ -9,18 +9,18 @@
         <form asp-action="Index">
             <div class="row">
                 <div class="col">
-                    <label class="control-label">Model Type</label>
+                    <label class="control-label">@Localizer["ModelType"]</label>
                     <input asp-for="AircraftParameter.ModelType" class="form-control" />
                 </div>
                 @if(!Model.IsSelect)
                 {
                     <div class="col">
-                        <label class="control-label">Aircraft State</label>
+                        <label class="control-label">@Localizer["Aircraft State"]</label>
                         <input asp-for="AircraftParameter.AircraftState" class="form-control" />
                     </div>
                 }
                 <div class="col">
-                    <label class="control-label">Airline</label>
+                    <label class="control-label">@Localizer["Airline"]</label>
                     <input asp-for="AircraftParameter.Airline" class="form-control" />
                 </div>
                 @Html.HiddenFor(x=>x.RedirectUri)
@@ -58,25 +58,25 @@
                         <thead>
                             <tr>
                                 <th>
-                                    Model Type
+                                    @Localizer["ModelType"]
                                 </th>
                                 <th>
-                                    Serial Number
+                                    @Localizer["SerialNumber"]
                                 </th>
                                 <th>
-                                    Manufacture Date
+                                    @Localizer["ManufactureDate"]
                                 </th>
                                 <th>
-                                    Flight Hours
+                                    @Localizer["FlightHours"]
                                 </th>
                                 <th>
-                                    Aircraft State
+                                    @Localizer["AircraftState"]
                                 </th>
                                 <th>
-                                    Airline Name
+                                    @Localizer["AirlineName"]
                                 </th>
                                 <th>
-                                    Airport Name
+                                    @Localizer["AirportName"]
                                 </th>
                                
                                 <th></th>

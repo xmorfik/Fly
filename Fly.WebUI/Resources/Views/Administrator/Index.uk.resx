@@ -121,7 +121,7 @@
     <value>Літаки</value>
   </data>
   <data name="Airlines" xml:space="preserve">
-    <value>Авіалінії</value>
+    <value>Авіакомпанія</value>
   </data>
   <data name="Airports" xml:space="preserve">
     <value>Аеропорти</value>

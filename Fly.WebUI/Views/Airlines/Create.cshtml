@@ -9,25 +9,25 @@
             <br />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label">@Localizer[""]</label>
+                <label asp-for="Name" class="control-label">@Localizer["Name"]</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
-                <label asp-for="Phone" class="control-label">@Localizer[""]</label>
+                <label asp-for="Phone" class="control-label">@Localizer["Phone"]</label>
                 <input asp-for="Phone" class="form-control" />
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
-                <label asp-for="RegistrationAddress" class="control-label">@Localizer[""]</label>
+                <label asp-for="RegistrationAddress" class="control-label">@Localizer["Adress"]</label>
                 <input asp-for="RegistrationAddress" class="form-control" />
                 <span asp-validation-for="RegistrationAddress" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
-                <input type="submit" value="@Localizer[""]" class="btn btn-primary" />
+                <input type="submit" value="@Localizer["Create"]" class="btn btn-primary" />
             </div>
         </form>
         <br />
