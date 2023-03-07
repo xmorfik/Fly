@@ -1,5 +1,7 @@
 ﻿@using Fly.Core.Entities;
 @model AircarftForCreationDto
+@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer Localizer
 
 <div class="card  mx-auto" style="width:1000px">
     <img class="card-img-top" src="~/aircraft.jpg">
@@ -18,7 +20,7 @@
                 <br />
             }
             <div class="form-group">
-                <label asp-for="AirportId" class="control-label"></label>
+                <label asp-for="AirportId" class="control-label">AirportId my</label>
                 <input asp-for="AirportId" value="@ViewData["SelectedAirportId"]" readonly class="form-control" />
                 <span asp-validation-for="AirportId" class="text-danger"></span>
                 @Html.ActionLink("Select","Index","Airports", new { isSelect = true, redirectUri = "/aircrafts/create" })
