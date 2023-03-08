@@ -1,36 +1,36 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization;
-@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 @if(User.Identity.IsAuthenticated)
 {
     @if (User.IsInRole("Passenger"))
 {
     <li class="nav-item">
-            <a class="nav-link text-light" asp-area="" asp-controller="Passenger" asp-action="Index">@Localizer["Profile"]</a>
+            <a class="nav-link text-light" asp-area="" asp-controller="Passenger" asp-action="Index">@SharedLocalizer["Profile"]</a>
         </li>
 }
 else if (User.IsInRole("Manager"))
 {
     <li class="nav-item">
-            <a class="nav-link text-light" asp-area="" asp-controller="Manager" asp-action="Index">@Localizer["Manage"]</a>
+            <a class="nav-link text-light" asp-area="" asp-controller="Manager" asp-action="Index">@SharedLocalizer["Manage"]</a>
         </li>
 }
 else if (User.IsInRole("Administrator"))
 {
     <li class="nav-item">
-            <a class="nav-link text-light" asp-area="" asp-controller="Administrator" asp-action="Index">@Localizer["Admin"]</a>
+            <a class="nav-link text-light" asp-area="" asp-controller="Administrator" asp-action="Index">@SharedLocalizer["Admin"]</a>
         </li>
 }
     <li class="nav-item">
-        <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Logout">@Localizer["Logout"]</a>
+        <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Logout">@SharedLocalizer["Logout"]</a>
     </li>
 }
 else
 {
     <li class="nav-item">
-        <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Register">@Localizer["Sign In"]</a>
+        <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Register">@SharedLocalizer["Sign In"]</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Login">@Localizer["Login"]</a>
+        <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Login">@SharedLocalizer["Login"]</a>
     </li>
 }

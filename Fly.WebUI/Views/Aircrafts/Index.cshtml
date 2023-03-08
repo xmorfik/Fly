@@ -113,22 +113,22 @@
                                     <td>
                                         @if(Model.IsSelect)
                                         {
-                                            @Html.ActionLink($"{SharedLocalizer["Select"].Value}","Select", new { id = item.Id, redirectUri = Model.RedirectUri})
+                                            @Html.ActionLink(SharedLocalizer["Select"].Value,"Select", new { id = item.Id, redirectUri = Model.RedirectUri})
                                         }
                                         else
                                         {
                                             @if (User.IsInRole("Administrator"))
                                             {
-                                                @Html.ActionLink($"{SharedLocalizer["Edit"].Value}", "Edit", new { id = item.Id })
+                                                @Html.ActionLink(SharedLocalizer["Edit"].Value, "Edit", new { id = item.Id })
                                                 <br />
-                                                @Html.ActionLink($"{SharedLocalizer["Delete"].Value}", "Delete", new { id = item.Id })
+                                                @Html.ActionLink(SharedLocalizer["Delete"].Value, "Delete", new { id = item.Id })
                                             }
                                             @if(User.IsInRole("Manager"))
                                             {
-                                                @Html.ActionLink("Create seats", "Create", "Seats", new{ id = item.Id })
+                                                @Html.ActionLink(SharedLocalizer["Create seats"].Value, "Create", "Seats", new{ id = item.Id })
                                             }
                                         }
-                                        @Html.ActionLink($"{SharedLocalizer["Details"].Value}", "Details", new { id=item.Id })
+                                        @Html.ActionLink(SharedLocalizer["Details"].Value, "Details", new { id=item.Id })
                                     </td>
                                 </tr>
                             }
