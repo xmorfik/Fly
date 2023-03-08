@@ -1,43 +1,44 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization;
 @inject IViewLocalizer Localizer
 @model Fly.Core.Entities.Airport
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 <div class="card mx-auto" style="width:1000px">
     <img class="card-img-top" src="~/airport.jpg">
     <div class="card-body">
     <dl class="row">
         <dt class = "col-sm-2">
-            Name
+            @SharedLocalizer["Name"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class = "col-sm-2">
-            Airport
+            @SharedLocalizer["Airport"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Longitude)
+            @SharedLocalizer["Longitude"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Longitude)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Latitude)
+            @SharedLocalizer["Latitude"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Latitude)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Altitude)
+            @SharedLocalizer["Altitude"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Altitude)
         </dd>
         <dt class = "col-sm-2">
-            City
+            @SharedLocalizer["City"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.City.Name)
@@ -46,7 +47,7 @@
             @Html.DisplayFor(model => model.City.IsoCountry)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
+            Id
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Id)

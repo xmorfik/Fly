@@ -150,6 +150,9 @@
   <data name="Cities" xml:space="preserve">
     <value>Міста</value>
   </data>
+  <data name="City" xml:space="preserve">
+    <value>Mісто</value>
+  </data>
   <data name="City Name" xml:space="preserve">
     <value>Місто</value>
   </data>
