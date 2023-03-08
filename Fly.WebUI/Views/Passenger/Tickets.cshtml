@@ -22,7 +22,8 @@
                     <label class="col">@SharedLocalizer["State"]</label>
                     @Html.DropDownListFor(
                         x=>x.TicketParameter.TicketState,
-                        Html.GetEnumSelectList<TicketState>(),
+                        Html.GetEnumSelectList<TicketState>()
+                        .Append(new SelectListItem(null,"All")),
                         new { @class = "form-control" })
                 </div>
                 <div class="form-group">
