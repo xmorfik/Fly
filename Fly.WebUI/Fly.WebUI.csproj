@@ -58,4 +58,8 @@
     <ProjectReference Include="..\Fly.Data\Fly.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\Views\" />
+  </ItemGroup>
+
 </Project>

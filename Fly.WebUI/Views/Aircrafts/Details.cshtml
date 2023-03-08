@@ -1,61 +1,62 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization;
 @inject IViewLocalizer Localizer
 @model Fly.Core.Entities.Aircraft
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 <div class="card  mx-auto" style="width:600px">
     <img class="card-img-top" src="~/aircraft.jpg">
     <div class="card-body">
         <dl class="row">
             <dt class = "col-sm-10">
-                @Localizer["ModelType"]
+                @SharedLocalizer["Model Type"]
             </dt>
             <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.ModelType)
             </dd>
             <dt class = "col-sm-10">
-                @Localizer["SerialNumber"]
+                @SharedLocalizer["Serial Number"]
             </dt>
             <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.SerialNumber)
             </dd>
             <dt class = "col-sm-10">
-                @Localizer["ManufactureDate"]
+                @SharedLocalizer["Manufacture Date"]
             </dt>
             <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.ManufactureDate)
             </dd>
             <dt class = "col-sm-10">
-                @Localizer["FlightHours"]
+                @SharedLocalizer["Flight Hours"]
             </dt>
             <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.FlightHours)
             </dd>
             <dt class = "col-sm-10">
-                @Localizer["AircraftState"]
+                @SharedLocalizer["Aircraft State"]
             </dt>
             <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.AircraftState)
             </dd>
             <dt class = "col-sm-10">
-                @Localizer["Airline"]
+                @SharedLocalizer["Airline"]
             </dt>
             <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.Airline.Name)
             </dd>
             <dt class = "col-sm-10">
-                @Localizer["Airport"]
+                @SharedLocalizer["Airport"]
             </dt>
             <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.Airport.Name)
             </dd>
             <dt class="col-sm-10">
-                @Localizer["Seats"]
+                @SharedLocalizer["Seats"]
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Seats.Count)
             </dd>
             <dt class = "col-sm-10">
-                 @Localizer["Id"]
+                @SharedLocalizer["Id"]
             </dt>
             <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.Id)
@@ -69,7 +70,7 @@
         </div>
     </div>
 
-    <a href="/airports/details/@(Model.Airport?.Id)" class="text-center">Details</a>
+    <a href="/airports/details/@(Model.Airport?.Id)" class="text-center">@SharedLocalizer["Details"]</a>
 </div>
 
 

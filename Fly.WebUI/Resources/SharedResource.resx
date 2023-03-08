@@ -117,22 +117,85 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Admin" xml:space="preserve">
-    <value>Адмін</value>
+  <data name="Aircraft State" xml:space="preserve">
+    <value>Статус</value>
   </data>
-  <data name="Login" xml:space="preserve">
-    <value>Вхід</value>
+  <data name="Aircrafts" xml:space="preserve">
+    <value>Літаки</value>
   </data>
-  <data name="Logout" xml:space="preserve">
-    <value>Вихід</value>
+  <data name="Airline" xml:space="preserve">
+    <value>Авіакомпанія</value>
   </data>
-  <data name="Manage" xml:space="preserve">
-    <value>Керувати</value>
+  <data name="Airlines" xml:space="preserve">
+    <value>Авіакомпанія</value>
   </data>
-  <data name="Profile" xml:space="preserve">
-    <value>Профіль</value>
+  <data name="Airport" xml:space="preserve">
+    <value>Аеропорт</value>
   </data>
-  <data name="Sign In" xml:space="preserve">
-    <value>Реєстрація</value>
+  <data name="Airports" xml:space="preserve">
+    <value>Аеропорти</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Назад</value>
+  </data>
+  <data name="By Decreasing" xml:space="preserve">
+    <value>На зменшення</value>
+  </data>
+  <data name="Cities" xml:space="preserve">
+    <value>Міста</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Створити</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Видалити</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Деталі</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Редагувати</value>
+  </data>
+  <data name="Flight" xml:space="preserve">
+    <value>Рейси</value>
+  </data>
+  <data name="Flight Hours" xml:space="preserve">
+    <value>Загальний наліт</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="Managers" xml:space="preserve">
+    <value>Менеджери</value>
+  </data>
+  <data name="Manufacture Date" xml:space="preserve">
+    <value>Дата виготовлення</value>
+  </data>
+  <data name="Model Type" xml:space="preserve">
+    <value>Модель</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Наступна сторінка</value>
+  </data>
+  <data name="Order By" xml:space="preserve">
+    <value>Сортувати за</value>
+  </data>
+  <data name="Prev" xml:space="preserve">
+    <value>Поперення сторінка</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Пошук</value>
+  </data>
+  <data name="Seats" xml:space="preserve">
+    <value>Місця</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Вибрати</value>
+  </data>
+  <data name="Serial Number" xml:space="preserve">
+    <value>Серійний номер</value>
+  </data>
+  <data name="Tickets" xml:space="preserve">
+    <value>Квитки</value>
   </data>
 </root>

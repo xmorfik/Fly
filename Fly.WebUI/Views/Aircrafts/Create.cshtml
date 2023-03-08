@@ -1,6 +1,7 @@
 ﻿@using Fly.Core.Entities;
 @model AircarftForCreationDto
 @using Microsoft.AspNetCore.Mvc.Localization;
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 @inject IViewLocalizer Localizer
 
 <div class="card  mx-auto" style="width:1000px">
@@ -12,18 +13,18 @@
             @if (User.IsInRole("Administrator"))
             {
                 <div class="form-group">
-                    <label asp-for="AirlineId" class="control-label">@Localizer["Airline"]</label>
+                    <label asp-for="AirlineId" class="control-label">@SharedLocalizer["Airline"]</label>
                     <input asp-for="AirlineId" value="@ViewData["SelectedAirlineId"]" class="form-control" />
                     <span asp-validation-for="AirlineId" class="text-danger"></span>
-                    @Html.ActionLink("Select","Index","Airlines", new { isSelect = true, redirectUri = "/aircrafts/create" })
+                    @Html.ActionLink(SharedLocalizer["Select"].Value,"Index","Airlines", new { isSelect = true, redirectUri = "/aircrafts/create" })
                 </div>
                 <br />
             }
             <div class="form-group">
-                <label asp-for="AirportId" class="control-label">@Localizer["Airport"]</label>
+                <label asp-for="AirportId" class="control-label">@SharedLocalizer["Airport"]</label>
                 <input asp-for="AirportId" value="@ViewData["SelectedAirportId"]" readonly class="form-control" />
                 <span asp-validation-for="AirportId" class="text-danger"></span>
-                @Html.ActionLink("Select","Index","Airports", new { isSelect = true, redirectUri = "/aircrafts/create" })
+                @Html.ActionLink(SharedLocalizer["Select"].Value,"Index","Airports", new { isSelect = true, redirectUri = "/aircrafts/create" })
             </div>
             @if (ViewData["SelectedAirport"] != null)
             {
@@ -37,36 +38,36 @@
             }
             <br />
             <div class="form-group">
-                <label asp-for="ModelType" class="control-label">@Localizer["ModelType"]</label>
+                <label asp-for="ModelType" class="control-label">@SharedLocalizer["Model Type"]</label>
                 <input asp-for="ModelType" class="form-control" />
                 <span asp-validation-for="ModelType" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
-                <label asp-for="SerialNumber" class="control-label">@Localizer["SerialNumber"]</label>
+                <label asp-for="SerialNumber" class="control-label">@SharedLocalizer["Serial Number"]</label>
                 <input asp-for="SerialNumber" class="form-control" />
                 <span asp-validation-for="SerialNumber" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
-                <label asp-for="ManufactureDate" class="control-label">@Localizer["ManufactureDate"]</label>
+                <label asp-for="ManufactureDate" class="control-label">@SharedLocalizer["Manufacture Date"]</label>
                 <input asp-for="ManufactureDate" class="form-control" />
                 <span asp-validation-for="ManufactureDate" class="text-danger"></span>
             </div>
             <br />
                 <div class="form-group">
-                <label asp-for="FlightHours" class="control-label">@Localizer["FlightHours"]</label>
+                <label asp-for="FlightHours" class="control-label">@SharedLocalizer["Flight Hours"]</label>
                     <input asp-for="FlightHours" class="form-control" />
                     <span asp-validation-for="FlightHours" class="text-danger"></span>
                 </div>
             <br />
             <div class="form-group">
-                <input type="submit" value="@Localizer["Create"]" class="btn btn-primary" />
+                <input type="submit" value="@SharedLocalizer["Create"]" class="btn btn-primary" />
             </div>
         </form>
         <br />
         <div>
-            <a asp-action="Index">@Localizer["Back"]</a>
+            <a asp-action="Index">@SharedLocalizer["Back"]</a>
         </div>
     </div>
 </div>
