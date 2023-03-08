@@ -1,4 +1,5 @@
 ﻿@using Fly.Core.Entities;
+@using Fly.Core.Enums;
 @using Microsoft.AspNetCore.Mvc.Localization;
 @model TicketsViewModel;
 @inject IViewLocalizer Localizer
@@ -10,31 +11,34 @@
         <form asp-action="Tickets">
             <div class="row">
                 <div class="form-group">
-                    <label class="col">PriceMax</label>
+                    <label class="col">@SharedLocalizer["Price Max"]</label>
                     <input asp-for="TicketParameter.PriceMax" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label class="col">PriceMin</label>
+                    <label class="col">@SharedLocalizer["Price Min"]</label>
                     <input asp-for="TicketParameter.PriceMin" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label class="col">TicketState</label>
-                    <input asp-for="TicketParameter.TicketState" class="form-control" />
+                    <label class="col">@SharedLocalizer["State"]</label>
+                    @Html.DropDownListFor(
+                        x=>x.TicketParameter.TicketState,
+                        Html.GetEnumSelectList<TicketState>(),
+                        new { @class = "form-control" })
                 </div>
                 <div class="form-group">
-                    <label class="col">DepartureDateTime</label>
+                    <label class="col">@SharedLocalizer["Departure Date"]</label>
                     <input asp-for="TicketParameter.DepartureDateTime" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label class="col"></label>
+                    <label class="col">@SharedLocalizer["Departure City"]</label>
                     <input asp-for="TicketParameter.DepartureCity" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label class="col">DepartureCity</label>
+                    <label class="col">@SharedLocalizer["Arrival City"]</label>
                     <input asp-for="TicketParameter.ArrivalCity" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label class="col">SeatClass</label>
+                    <label class="col">@SharedLocalizer["Class"]</label>
                     <input asp-for="TicketParameter.SeatClass" class="form-control" />
                 </div>
                 @Html.HiddenFor(x=>x.RedirectUri)
@@ -54,19 +58,19 @@
                         <thead>
                             <tr>
                                 <th>
-                                    Price
+                                    @SharedLocalizer["Price"]
                                 </th>
                                 <th>
-                                    Sold Date
+                                    @SharedLocalizer["Date of purchase"]
                                 </th>
                                 <th>
-                                    Departure
+                                    @SharedLocalizer["Departure"]
                                 </th>
                                 <th>
-                                    Arrival
+                                    @SharedLocalizer["Arrival"]
                                 </th>
                                 <th>
-                                    Class
+                                    @SharedLocalizer["Class"]
                                 </th>
                                 <th>
 
@@ -93,7 +97,7 @@
                                         @Html.DisplayFor(modelItem => item.Seat.SeatClass)
                                     </td>
                                     <td>
-                                        @Html.ActionLink("Details", "Details", "Tickets", new { id=item.Id })
+                                        @Html.ActionLink(SharedLocalizer["Details"].Value, "Details", "Tickets", new { id=item.Id })
                                     </td>
                                 </tr>
                             }
@@ -109,13 +113,13 @@
                 @if (Model.MetaData.HasPrevious)
                 {
                     <div class="col">
-                        <input type="submit" value="Prev" onclick="decrementValue()" class="btn btn-outline-primary" />
+                        <input type="submit" value="@SharedLocalizer["Prev"]" onclick="decrementValue()" class="btn btn-outline-primary" />
                     </div>
                 }
                 @if (Model.MetaData.HasNext)
                 {
                     <div class="col">
-                        <input type="submit" value="Next" onclick="incrementValue()" class="btn btn-outline-primary" />
+                        <input type="submit" value="@SharedLocalizer["Next"]" onclick="incrementValue()" class="btn btn-outline-primary" />
                     </div>
                 }
             </div>

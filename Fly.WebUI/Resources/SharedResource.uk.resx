@@ -174,11 +174,17 @@
   <data name="City Name" xml:space="preserve">
     <value>Місто</value>
   </data>
+  <data name="Class" xml:space="preserve">
+    <value>Класс</value>
+  </data>
   <data name="Create" xml:space="preserve">
     <value>Створити</value>
   </data>
   <data name="Create seats" xml:space="preserve">
     <value>Створити місця</value>
+  </data>
+  <data name="Date of purchase" xml:space="preserve">
+    <value>Дата покупки</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Видалити</value>
@@ -275,6 +281,15 @@
   </data>
   <data name="Prev" xml:space="preserve">
     <value>Поперення сторінка</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Ціна</value>
+  </data>
+  <data name="Price Max" xml:space="preserve">
+    <value>Максимальна ціна</value>
+  </data>
+  <data name="Price Min" xml:space="preserve">
+    <value>Мінімальна ціна</value>
   </data>
   <data name="Profile" xml:space="preserve">
     <value>Профіль</value>
