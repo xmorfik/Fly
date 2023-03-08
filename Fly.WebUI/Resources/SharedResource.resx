@@ -120,6 +120,9 @@
   <data name="Admin" xml:space="preserve">
     <value>Адмін</value>
   </data>
+  <data name="Aircraft" xml:space="preserve">
+    <value>Літак</value>
+  </data>
   <data name="Aircraft State" xml:space="preserve">
     <value>Статус</value>
   </data>
@@ -140,6 +143,18 @@
   </data>
   <data name="Altitude" xml:space="preserve">
     <value>Висота</value>
+  </data>
+  <data name="Arrival" xml:space="preserve">
+    <value>Прибуття</value>
+  </data>
+  <data name="Arrival Airport" xml:space="preserve">
+    <value>Аеропорт прибуття</value>
+  </data>
+  <data name="Arrival City" xml:space="preserve">
+    <value>Місто прибуття</value>
+  </data>
+  <data name="Arrival Date" xml:space="preserve">
+    <value>Час прибуття</value>
   </data>
   <data name="Back" xml:space="preserve">
     <value>Назад</value>
@@ -165,6 +180,18 @@
   <data name="Delete" xml:space="preserve">
     <value>Видалити</value>
   </data>
+  <data name="Departure" xml:space="preserve">
+    <value>Відбуття</value>
+  </data>
+  <data name="Departure Airport" xml:space="preserve">
+    <value>Аеропорт вильоту</value>
+  </data>
+  <data name="Departure City" xml:space="preserve">
+    <value>Місто вильоту</value>
+  </data>
+  <data name="Departure Date" xml:space="preserve">
+    <value>Час вильоту</value>
+  </data>
   <data name="Details" xml:space="preserve">
     <value>Деталі</value>
   </data>
@@ -176,6 +203,9 @@
   </data>
   <data name="Flight Hours" xml:space="preserve">
     <value>Загальний наліт</value>
+  </data>
+  <data name="Flight State" xml:space="preserve">
+    <value>Статус</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Id</value>
@@ -246,7 +276,13 @@
   <data name="Sign In" xml:space="preserve">
     <value>Реєстрація</value>
   </data>
+  <data name="State" xml:space="preserve">
+    <value>Статус</value>
+  </data>
   <data name="Tickets" xml:space="preserve">
     <value>Квитки</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Час</value>
   </data>
 </root>
