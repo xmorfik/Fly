@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Address" xml:space="preserve">
+    <value>Адреса</value>
+  </data>
   <data name="Admin" xml:space="preserve">
     <value>Адмін</value>
   </data>
@@ -198,14 +201,17 @@
   <data name="Edit" xml:space="preserve">
     <value>Редагувати</value>
   </data>
-  <data name="Flight" xml:space="preserve">
-    <value>Рейси</value>
+  <data name="First Name" xml:space="preserve">
+    <value>Ім`я</value>
   </data>
   <data name="Flight Hours" xml:space="preserve">
     <value>Загальний наліт</value>
   </data>
   <data name="Flight State" xml:space="preserve">
     <value>Статус</value>
+  </data>
+  <data name="Flights" xml:space="preserve">
+    <value>Рейси</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Id</value>
@@ -215,6 +221,9 @@
   </data>
   <data name="Iso Region" xml:space="preserve">
     <value>Регіон</value>
+  </data>
+  <data name="Last Name" xml:space="preserve">
+    <value>Призвіще</value>
   </data>
   <data name="Latitude" xml:space="preserve">
     <value>Широта</value>
@@ -237,17 +246,29 @@
   <data name="Manufacture Date" xml:space="preserve">
     <value>Дата виготовлення</value>
   </data>
+  <data name="Middle Name" xml:space="preserve">
+    <value>По батькові</value>
+  </data>
   <data name="Model Type" xml:space="preserve">
     <value>Модель</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Назва</value>
   </data>
+  <data name="Nationality" xml:space="preserve">
+    <value>Національність</value>
+  </data>
   <data name="Next" xml:space="preserve">
     <value>Наступна сторінка</value>
   </data>
   <data name="Order By" xml:space="preserve">
     <value>Сортувати за</value>
+  </data>
+  <data name="Passport No" xml:space="preserve">
+    <value>Номер паспорту</value>
+  </data>
+  <data name="Payoff" xml:space="preserve">
+    <value>Pозплатитися</value>
   </data>
   <data name="Phone" xml:space="preserve">
     <value>Телефон</value>
@@ -260,6 +281,9 @@
   </data>
   <data name="Registration Address" xml:space="preserve">
     <value>Адреса реєстрації</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Зберегти</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Пошук</value>
@@ -284,5 +308,8 @@
   </data>
   <data name="Time" xml:space="preserve">
     <value>Час</value>
+  </data>
+  <data name="User Name" xml:space="preserve">
+    <value>Користувач</value>
   </data>
 </root>

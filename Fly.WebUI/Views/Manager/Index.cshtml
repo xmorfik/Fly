@@ -1,10 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization;
 @inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 <div class="card bg-dark text-white text-center mx-auto" style="width:1000px">
     <img class="card-img" src="~/aircraft.jpg" alt="Card image">
     <div class="card-img-overlay">
-        <p class="display-1 card-title text-uppercase text-dark ">Aircrafts</p>
+        <p class="display-1 card-title text-uppercase text-dark ">@SharedLocalizer["Aircrafts"]</p>
         <a href="/aircrafts" class="stretched-link"></a>
     </div>
 </div>
@@ -12,7 +13,7 @@
 <div class="card bg-dark text-white text-center mx-auto" style="width:1000px">
     <img class="card-img" src="~/flight.jpg" alt="Card image">
     <div class="card-img-overlay">
-        <p class="display-1 card-title text-uppercase text-light ">Flight</p>
+        <p class="display-1 card-title text-uppercase text-light ">@SharedLocalizer["Flights"]</p>
         <a href="/flights" class="stretched-link"></a>
     </div>
 </div>
@@ -20,7 +21,7 @@
 <div class="card bg-dark text-dark text-center mx-auto" style="width:1000px">
     <img class="card-img" src="~/airport.jpg" alt="Card image">
     <div class="card-img-overlay">
-        <p class="display-1 card-title text-uppercase text-light ">Airports</p>
+        <p class="display-1 card-title text-uppercase text-light ">@SharedLocalizer["Airports"]</p>
         <a href="/airports" class="stretched-link"></a>
     </div>
 </div>
@@ -28,7 +29,7 @@
 <div class="card bg-dark text-white text-center mx-auto" style="width:1000px">
     <img class="card-img" src="~/ticket.jpg" alt="Card image">
     <div class="card-img-overlay">
-        <p class="display-1 card-title text-uppercase text-light ">Tickets</p>
+        <p class="display-1 card-title text-uppercase text-light ">@SharedLocalizer["Tickets"]</p>
         <a href="/tickets" class="stretched-link"></a>
     </div>
 </div>

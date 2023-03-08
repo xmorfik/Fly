@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Mvc.Localization;
 @model TicketsViewModel;
 @inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 <div class="card text-center mx-auto" style="width:1000px">
     <img class="card-img-top" src="~/ticket.jpg">
@@ -41,13 +42,13 @@
                 @Html.HiddenFor(x=>x.TicketParameter.PassengerId)
                 <div class="col">
                     <br />
-                    <input type="submit" onclick="setStartPage()" value=@Localizer["Search"] class="btn btn-primary" />
+                    <input type="submit" onclick="setStartPage()" value=@SharedLocalizer["Search"] class="btn btn-primary" />
                 </div>
                 <br />
                 <div class="card-body">
                     @if (User.IsInRole("Administrator") || User.IsInRole("Manager"))
                     {
-                        @Html.ActionLink("Create", "Create")
+                        @Html.ActionLink(SharedLocalizer["Create"].Value, "Create")
                     }
                     <table class="table rounded rounded-6 overflow-hidden table-sm table-dark table-hover">
                         <thead>
