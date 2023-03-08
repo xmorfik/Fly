@@ -138,6 +138,9 @@
   <data name="Airports" xml:space="preserve">
     <value>Аеропорти</value>
   </data>
+  <data name="Altitude" xml:space="preserve">
+    <value>Висота</value>
+  </data>
   <data name="Back" xml:space="preserve">
     <value>Назад</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="Cities" xml:space="preserve">
     <value>Міста</value>
+  </data>
+  <data name="City Name" xml:space="preserve">
+    <value>Місто</value>
   </data>
   <data name="Create" xml:space="preserve">
     <value>Створити</value>
@@ -171,11 +177,23 @@
   <data name="Id" xml:space="preserve">
     <value>Id</value>
   </data>
+  <data name="Iso Country" xml:space="preserve">
+    <value>Країна</value>
+  </data>
+  <data name="Iso Region" xml:space="preserve">
+    <value>Регіон</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Широта</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Вхід</value>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Вихід</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Довгота</value>
   </data>
   <data name="Manage" xml:space="preserve">
     <value>Керувати</value>
