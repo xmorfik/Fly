@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization;
-@inject IViewLocalizer Localizer
+
 @model Fly.Core.Entities.Airport
 @inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
@@ -43,7 +43,7 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.City.Name)
             <br />
-            Counrty:
+            @SharedLocalizer["Country"] :
             @Html.DisplayFor(model => model.City.IsoCountry)
         </dd>
         <dt class = "col-sm-2">

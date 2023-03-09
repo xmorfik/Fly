@@ -1,63 +1,64 @@
 ﻿@using Fly.Core.Enums;
 @model Fly.Core.Entities.Flight
 @using Microsoft.AspNetCore.Mvc.Localization;
-@inject IViewLocalizer Localizer
+
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 <div class="card mx-auto" style="width:1000px">
     <img class="card-img-top" src="~/flight.jpg">
     <div class="card-body">
         <dl class="row">
             <dt class = "col-sm-2">
-                Departure Airport
+                @SharedLocalizer["Departure Airport"]
             </dt>
             <dd class = "col-sm-10">
-                Airport Name :
+                @SharedLocalizer["Airport"]
                 @Html.DisplayFor(model => model.DepartureAirport.Name) 
                     <br />
-                City :
+                @SharedLocalizer["City"]
                 @Html.DisplayFor(model => model.DepartureAirport.City.Name) 
                     <br />
-                Country :
+                @SharedLocalizer["Country"]
                 @Html.DisplayFor(model => model.DepartureAirport.City.IsoCountry)
             </dd>
             <dt class = "col-sm-2">
-                Arrival Airport
+                @SharedLocalizer["Arrival Airport"]
             </dt>
             <dd class = "col-sm-10">
-                Airport Name :
+                @SharedLocalizer["Airport"]
                 @Html.DisplayFor(model => model.ArrivalAirport.Name) 
                 <br />
-                City :
+                @SharedLocalizer["City"]
                 @Html.DisplayFor(model => model.ArrivalAirport.City.Name)
                 <br />
-                Country :
+                @SharedLocalizer["Country"]
                 @Html.DisplayFor(model => model.ArrivalAirport.City.IsoCountry)
             </dd>
             <dt class = "col-sm-2">
-                Aircraft
+                @SharedLocalizer["Aircraft"]
             </dt>
             <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.Aircraft.ModelType)
                 <br />
                 @Html.DisplayFor(model => model.Aircraft.AircraftState)
                 <br />
-                Seats :
+                @SharedLocalizer["Seats"] :
                 @Html.DisplayFor(model => model.Aircraft.Seats.Count)
                 </dd>
             <dt class = "col-sm-2">
-                Departure Date
+                @SharedLocalizer["Departure Date"]
             </dt>
             <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.DepartureDateTime)
             </dd>
             <dt class = "col-sm-2">
-                Arrival Date
+                @SharedLocalizer["Arrival Date"]
             </dt>
             <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.ArrivalDateTime)
             </dd>
             <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Id)
+               Id
             </dt>
             <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.Id)
@@ -71,16 +72,16 @@
             <thead>
                 <tr>
                     <th>
-                        Price
+                        @SharedLocalizer["Price"]
                     </th>
                     <th>
-                        Ticket State
+                        @SharedLocalizer["State"]
                     </th>
                     <th>
-                        Class
+                        @SharedLocalizer["Class"]
                     </th>
                     <th>
-                        Position
+                        @SharedLocalizer["Position"]
                     </th>
                     <th>
 
@@ -107,7 +108,7 @@
                         <td>
                             @if(User.IsInRole("Passenger") && item.TicketState == TicketState.Active)
                             {
-                                @Html.ActionLink("Buy", "Payoff", "Passenger", new { id = item.Id})
+                                @Html.ActionLink(SharedLocalizer["Buy"].Value, "Payoff", "Passenger", new { id = item.Id})
                             }
                         </td>
                     </tr>

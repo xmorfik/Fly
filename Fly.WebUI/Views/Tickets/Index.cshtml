@@ -1,7 +1,7 @@
 ﻿@using Fly.Core.Entities;
 @using Microsoft.AspNetCore.Mvc.Localization;
 @model TicketsViewModel;
-@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 <div class="card text-center mx-auto" style="width:1000px">
     <img class="card-img-top" src="~/ticket.jpg">
@@ -60,7 +60,7 @@
 
                 <div class="col">
                     <br/>
-                    <input type="submit" onclick="setStartPage()" value=@Localizer["Search"] class="btn btn-primary" />
+                    <input type="submit" onclick="setStartPage()" value=@SharedLocalizer["Search"] class="btn btn-primary" />
                 </div>
                 <br />
                 <div class="card-body">

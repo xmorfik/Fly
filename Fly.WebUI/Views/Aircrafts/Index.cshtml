@@ -1,7 +1,8 @@
 ﻿@using Fly.Core.Entities;
+@using Fly.Core.Enums;
 @using Microsoft.AspNetCore.Mvc.Localization;
 @model AircraftsViewModel;
-@inject IViewLocalizer Localizer
+
 @inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 <div class="card text-center mx-auto" style="width:1200px">
@@ -13,13 +14,16 @@
                     <label class="control-label">@SharedLocalizer["Model Type"]</label>
                     <input asp-for="AircraftParameter.ModelType" class="form-control" />
                 </div>
-                @if(!Model.IsSelect)
-                {
-                    <div class="col">
-                        <label class="control-label">@SharedLocalizer["Aircraft State"]</label>
-                        <input asp-for="AircraftParameter.AircraftState" class="form-control" />
-                    </div>
-                }
+
+                <div class="col">
+                    <label class="control-label">@SharedLocalizer["Aircraft State"]</label>
+                    @Html.DropDownListFor(
+                    x=>x.AircraftParameter.AircraftState,
+                        Html.GetEnumSelectList<AircraftState>()
+                        .Append(new SelectListItem("All",null)),
+                        new { @class = "form-control" })
+                </div>
+
                 <div class="col">
                     <label class="control-label">@SharedLocalizer["Airline"]</label>
                     <input asp-for="AircraftParameter.Airline" class="form-control" />
