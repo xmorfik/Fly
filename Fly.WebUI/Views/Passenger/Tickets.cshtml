@@ -70,10 +70,6 @@
                 </div>
                 <br />
                 <div class="card-body">
-                    @if (User.IsInRole("Administrator") || User.IsInRole("Manager"))
-                    {
-                        @Html.ActionLink(SharedLocalizer["Create"].Value, "Create")
-                    }
                     <table class="table rounded rounded-6 overflow-hidden table-sm table-dark table-hover">
                         <thead>
                             <tr>

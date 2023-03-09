@@ -336,6 +336,9 @@
   <data name="Sign In" xml:space="preserve">
     <value>Реєстрація</value>
   </data>
+  <data name="Sold Date" xml:space="preserve">
+    <value>Дата продажу</value>
+  </data>
   <data name="State" xml:space="preserve">
     <value>Статус</value>
   </data>

@@ -33,7 +33,7 @@ public class Index : PageModel
     {
         LogoutId = logoutId;
 
-        var showLogoutPrompt = LogoutOptions.ShowLogoutPrompt;
+        var showLogoutPrompt = false;
 
         if (User?.Identity.IsAuthenticated != true)
         {

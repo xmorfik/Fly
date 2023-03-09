@@ -30,8 +30,7 @@ public class AccountController : Controller
     {
         await HttpContext.SignOutAsync("Cookie");
         await HttpContext.SignOutAsync("oidc");
-
-        return Redirect("/");
+        return Redirect(_authority.Uri + "account/logout");
     }
 
     public IActionResult Register()
