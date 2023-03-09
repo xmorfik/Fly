@@ -1,10 +1,7 @@
-﻿using Ardalis.Specification;
-using Fly.Core.Entities;
+﻿using Fly.Core.Entities;
 using Fly.Core.Enums;
 using Fly.Core.Interfaces;
 using Fly.Core.Services;
-using Fly.Core.Specifications;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Fly.Services;
 

@@ -9,8 +9,6 @@ using LiqPay.SDK;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using System.Configuration;
-using System.Drawing.Text;
 using Fly.Core.Enums;
 
 namespace Fly.WebUI.Controllers;
@@ -85,9 +83,7 @@ public class PassengerController : Controller
     {
         var userId = User.FindFirstValue("sub");
         var user = await _service.GetListAsync(new PassengerParameter { UserId = userId }, new Page());
-
         ticketViewModel.TicketParameter.PassengerId = user.FirstOrDefault().Id ?? 0;
-
         var response = await _tickets.GetListAsync(ticketViewModel.TicketParameter, ticketViewModel.MetaData.ToPage());
 
         ticketViewModel.PagedResponse = response;

@@ -2,7 +2,6 @@
 using Fly.Core.Entities;
 using Fly.Core.Interfaces;
 using Fly.Core.Services;
-using Fly.Core.Specifications;
 using Fly.Shared.DataTransferObjects;
 using Microsoft.Extensions.Logging;
 using Redis.OM;

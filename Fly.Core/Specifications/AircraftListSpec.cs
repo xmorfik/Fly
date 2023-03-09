@@ -15,6 +15,8 @@ public class AircraftListSpec : Specification<Aircraft>
 
         Query.Include(x => x.Airport).ThenInclude(x => x.City);
 
+        Query.Include(x => x.Seats);
+
         //todo: convert to if/else
         Query.Where(x => parameter.AircraftState == null || x.AircraftState == parameter.AircraftState);
 

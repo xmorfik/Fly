@@ -1,4 +1,7 @@
-﻿@model PayoffViewModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+@model PayoffViewModel
 
 <div id="liqpay_checkout"></div>
   <script>
@@ -29,7 +32,7 @@
 	@Html.HiddenFor(x=>x.TicketId)
 	@Html.HiddenFor(x=>x.IsSuccessed)
 	<div class="form-group">
-		<input type="submit" value="PayOff" class="btn btn-primary" />
+		<input type="submit" value="@SharedLocalizer["Payoff"]" class="btn btn-primary" />
 	</div>
 </form>
 

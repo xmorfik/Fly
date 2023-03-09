@@ -1,7 +1,9 @@
 ﻿@using Fly.Core.Entities;
+@using Fly.Core.Enums;
 @using Microsoft.AspNetCore.Mvc.Localization;
 @model AircraftsViewModel;
-@inject IViewLocalizer Localizer
+
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 <div class="card text-center mx-auto" style="width:1200px">
     <img class="card-img-top" src="~/aircraft.jpg">
@@ -9,74 +11,80 @@
         <form asp-action="Index">
             <div class="row">
                 <div class="col">
-                    <label class="control-label">Model Type</label>
+                    <label class="control-label">@SharedLocalizer["Model Type"]</label>
                     <input asp-for="AircraftParameter.ModelType" class="form-control" />
                 </div>
-                @if(!Model.IsSelect)
-                {
-                    <div class="col">
-                        <label class="control-label">Aircraft State</label>
-                        <input asp-for="AircraftParameter.AircraftState" class="form-control" />
-                    </div>
-                }
+
                 <div class="col">
-                    <label class="control-label">Airline</label>
+                    <label class="control-label">@SharedLocalizer["Aircraft State"]</label>
+                    @Html.DropDownListFor(
+                    x=>x.AircraftParameter.AircraftState,
+                        Html.GetEnumSelectList<AircraftState>()
+                        .Append(new SelectListItem("All",null)),
+                        new { @class = "form-control" })
+                </div>
+
+                <div class="col">
+                    <label class="control-label">@SharedLocalizer["Airline"]</label>
                     <input asp-for="AircraftParameter.Airline" class="form-control" />
                 </div>
                 @Html.HiddenFor(x=>x.RedirectUri)
                 @Html.HiddenFor(x=>x.IsSelect)
                 <div class=" row">
                     <div class="col">
-                        <label> OrderBy </label>
+                        <label> @SharedLocalizer["Order By"] </label>
                         @Html.DropDownListFor(x => x.AircraftParameter.OrderBy,
                         new List<SelectListItem>
                         {
                             new SelectListItem{ Value = "Id", Text= "Id"},
-                            new SelectListItem{ Value = "ModelType", Text= "ModelType"},
-                            new SelectListItem{ Value = "SerialNumber", Text= "SerialNumber"},
-                            new SelectListItem{ Value = "FlightHours", Text= "FlightHours"},
-                            new SelectListItem{ Value = "AircraftState", Text= "AircraftState"},
+                            new SelectListItem{ Value = "ModelType", Text= SharedLocalizer["Model Type"].Value},
+                            new SelectListItem{ Value = "SerialNumber", Text= SharedLocalizer["Serial Number"].Value},
+                            new SelectListItem{ Value = "FlightHours", Text= SharedLocalizer["Flight Hours"].Value},
+                            new SelectListItem{ Value = "AircraftState", Text= SharedLocalizer["Aircraft State"].Value},
                         }, new { @class = "form-select"} )
                     </div>
                     <div class="col">
                         <br />
-                        <label> Descresing </label>
+                        <label> @SharedLocalizer["By Decreasing"] </label>
                         @Html.CheckBoxFor(x=>x.AircraftParameter.Descresing)
                     </div>
                 </div>
                 <div class="col">
                     <br />
-                    <input type="submit" onclick="setStartPage()" value=@Localizer["Search"] class="btn btn-primary" />
+                    <input type="submit" onclick="setStartPage()" value=@SharedLocalizer["Search"] class="btn btn-primary" />
                 </div>
                 <br />
                 <div class="card-body">
                     @if (User.IsInRole("Administrator") || User.IsInRole("Manager"))
                     {
-                        @Html.ActionLink("Create", "Create")
+                        @Html.ActionLink($"{SharedLocalizer["Create"].Value}", "Create")
                     }
                     <table class="table rounded rounded-6 overflow-hidden table-sm table-dark table-hover">
                         <thead>
                             <tr>
                                 <th>
-                                    Model Type
+                                    @SharedLocalizer["Model Type"]
                                 </th>
                                 <th>
-                                    Serial Number
+                                    @SharedLocalizer["Serial Number"]
                                 </th>
                                 <th>
-                                    Manufacture Date
+                                    @SharedLocalizer["Manufacture Date"]
                                 </th>
                                 <th>
-                                    Flight Hours
+                                    @SharedLocalizer["Flight Hours"]
                                 </th>
                                 <th>
-                                    Aircraft State
+                                    @SharedLocalizer["Aircraft State"]
                                 </th>
                                 <th>
-                                    Airline Name
+                                    @SharedLocalizer["Airline"]
                                 </th>
                                 <th>
-                                    Airport Name
+                                    @SharedLocalizer["Airport"]
+                                </th>
+                                <th>
+                                    @SharedLocalizer["Seats"]
                                 </th>
                                
                                 <th></th>
@@ -108,26 +116,28 @@
                                         @Html.DisplayFor(modelItem => item.Airport.Name)
                                         @Html.DisplayFor(modelItem => item.Airport.City.IsoCountry)
                                     </td>
-                                   
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Seats.Count)
+                                    </td>
                                     <td>
                                         @if(Model.IsSelect)
                                         {
-                                            @Html.ActionLink("Select","Select", new { id = item.Id, redirectUri = Model.RedirectUri})
+                                            @Html.ActionLink(SharedLocalizer["Select"].Value,"Select", new { id = item.Id, redirectUri = Model.RedirectUri})
                                         }
                                         else
                                         {
                                             @if (User.IsInRole("Administrator"))
                                             {
-                                                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                                                @Html.ActionLink(SharedLocalizer["Edit"].Value, "Edit", new { id = item.Id })
                                                 <br />
-                                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                                @Html.ActionLink(SharedLocalizer["Delete"].Value, "Delete", new { id = item.Id })
                                             }
-                                            @if(User.IsInRole("Manager"))
+                                            @if(User.IsInRole("Manager") &&  !item.Seats.Any())
                                             {
-                                                @Html.ActionLink("Create seats", "Create", "Seats", new{ id = item.Id })
+                                                @Html.ActionLink(SharedLocalizer["Create seats"].Value, "Create", "Seats", new{ id = item.Id })
                                             }
                                         }
-                                        @Html.ActionLink("Details", "Details", new { id=item.Id })
+                                        @Html.ActionLink(SharedLocalizer["Details"].Value, "Details", new { id=item.Id })
                                     </td>
                                 </tr>
                             }
@@ -143,13 +153,13 @@
                 @if (Model.MetaData.HasPrevious)
                 {
                     <div class="col">
-                         <input type="submit" value="Prev" onclick="decrementValue()" class="btn btn-outline-primary" />
+                        <input type="submit" value="@SharedLocalizer["Prev"]" onclick="decrementValue()" class="btn btn-outline-primary" />
                     </div>
                 }
                 @if (Model.MetaData.HasNext)
                 {
                     <div class="col">
-                        <input type="submit" value="Next" onclick="incrementValue()" class="btn btn-outline-primary" />
+                        <input type="submit" value="@SharedLocalizer["Next"]" onclick="incrementValue()" class="btn btn-outline-primary" />
                     </div>
                 }
             </div>

@@ -1,4 +1,7 @@
-﻿@using Fly.Core.Entities;
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+@using Fly.Core.Entities;
 @model Passenger
 
 <div class="card  mx-auto" style="width:1000px">
@@ -7,49 +10,49 @@
             <fieldset id="profile">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="FirstName" class="control-label"></label>
+                    <label asp-for="FirstName" class="control-label">@SharedLocalizer["First Name"]</label>
                     <input asp-for="FirstName" class="form-control" />
                     <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
                 <br />
                 <div class="form-group">
-                    <label asp-for="MiddleName" class="control-label"></label>
+                    <label asp-for="MiddleName" class="control-label">@SharedLocalizer["Middle Name"]</label>
                     <input asp-for="MiddleName" class="form-control" />
                     <span asp-validation-for="MiddleName" class="text-danger"></span>
                 </div>
                 <br />
                 <div class="form-group">
-                    <label asp-for="LastName" class="control-label"></label>
+                    <label asp-for="LastName" class="control-label">@SharedLocalizer["Last Name"]</label>
                     <input asp-for="LastName" class="form-control" />
                     <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
                 <br />
                 <div class="form-group">
-                    <label asp-for="Email" class="control-label"></label>
+                    <label asp-for="Email" class="control-label">Email</label>
                     <input asp-for="Email" class="form-control" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <br />
                 <div class="form-group">
-                    <label asp-for="PhoneNumber" class="control-label"></label>
+                    <label asp-for="PhoneNumber" class="control-label">@SharedLocalizer["Phone"]</label>
                     <input asp-for="PhoneNumber" class="form-control" />
                     <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                 </div>
                 <br />
                 <div class="form-group">
-                    <label asp-for="Address" class="control-label"></label>
+                    <label asp-for="Address" class="control-label">@SharedLocalizer["Address"]</label>
                     <input asp-for="Address" class="form-control" />
                     <span asp-validation-for="Address" class="text-danger"></span>
                 </div>
                 <br />
                 <div class="form-group">
-                    <label asp-for="Nationality" class="control-label"></label>
+                    <label asp-for="Nationality" class="control-label">@SharedLocalizer["Nationality"]</label>
                     <input asp-for="Nationality" class="form-control" />
                     <span asp-validation-for="Nationality" class="text-danger"></span>
                 </div>
                 <br />
                 <div class="form-group">
-                    <label asp-for="PassportNo" class="control-label"></label>
+                    <label asp-for="PassportNo" class="control-label">@SharedLocalizer["Passport No"]</label>
                     <input asp-for="PassportNo" class="form-control" />
                     <span asp-validation-for="PassportNo" class="text-danger"></span>
                 </div>
@@ -57,11 +60,11 @@
                 @Html.HiddenFor(x=>x.UserId)
                 @Html.HiddenFor(x=>x.Id)
                 <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <input type="submit" value="@SharedLocalizer["Save"]" class="btn btn-primary" />
                 </div>
                 <br />
             </fieldset>
-            @Html.ActionLink("Back", "Index")
+            @Html.ActionLink(SharedLocalizer["Back"].Value, "Index")
         </form>
     </div>
 </div>

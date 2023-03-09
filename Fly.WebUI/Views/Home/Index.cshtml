@@ -1,16 +1,29 @@
 ﻿@using Fly.Core.Entities;
 @model Flight
+@using Microsoft.AspNetCore.Mvc.Localization;
+
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 <div class="row">
-	<div class="card"  id="flightCard" style="width: 18rem; display:none">
-		<img class="card-img-top" src="~/aircraft.jpg">
-		<div class="card-body" id="cardBody">
+	<div class="col-auto">
+		<div class="container-fluid">
+			<div class="card" id="flightCard" style="width: 19rem; display:none">
+				<img class="card-img-top" src="~/aircraft.jpg">
+				<div class="card-body text-center" id="cardBody">
+				</div>
+			</div>
 		</div>
 	</div>
 
 	<div class="col">
 		<div class="card">
 			<div id="map" style="width: 100%; height: 820px;"></div>
+		</div>
+	</div>
+
+	<div class="col-auto">
+		<div class="container-fluid">
+			
 		</div>
 	</div>
 </div>
@@ -22,10 +35,16 @@
 <script>
 	const map = L.map('map').setView([ 50.4501, 50.4501], 3);
 
-	const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		maxZoom: 19,
-		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+	const googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+		maxZoom: 20,
+		minZoom: 3,
+		subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
 	}).addTo(map);
+
+	//const tiles = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+	//	maxZoom: 19,
+	//	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+	//}).addTo(map);
 
 	const icon = L.icon({
 		iconUrl: 'plane-icon.png',
@@ -38,6 +57,7 @@
         .build();
 
 	let markers = [];
+	let airportMarkers = [];
 	let polyline;
 	let selectedFlight;
 	let route = [];
@@ -59,42 +79,61 @@
     });
 
 	hubConnection.on("Flight", function (flight) {
+
 		console.log(flight);
-		if(line.length>0){
-			map.removeLayer(polyline);
-			line = [];
+
+		if (airportMarkers.length > 0) {
+			airportMarkers.forEach(function (item, i, markers) {
+				map.removeLayer(item);
+			});
+			airportMarkers = [];
 		}
-		line.push([flight.departureLatitude, flight.departureLongitude]);
-		line.push([flight.arrivalLatitude, flight.arrivalLongitude]);
+
+		let markerDeparture = L.marker([flight.departureLatitude, flight.departureLongitude]).addTo(map)
+			.bindPopup(flight.departureAirport)
+			.openPopup();;
+		let markerArrival = L.marker([flight.arrivalLatitude, flight.arrivalLongitude]).addTo(map)
+			.bindPopup(flight.arrivalAirport)
+			.openPopup();;
+
+		airportMarkers.push(markerDeparture);
+		airportMarkers.push(markerArrival);
+		
 		selectedFlight = flight;
+
 		let html = '';
-		html = `
+		html = 
+		`
+			<h5 class="card-title" >@SharedLocalizer["Aircraft"].Value</h5>
 			<h5 class="card-title" ><a href="/aircrafts/details/${flight.aircraftId}"class="card-link">${flight.aircraftName}</a></h5>
-			<ul class="list-group list-group-flush">
-				<li class="list-group-item">
-					${flight.departureCity}
-				</li>
-				<li class="list-group-item">
-				<a href="/airports/details/${flight.departureAirportId}" class="card-link">
-					${flight.departureAirport}
-				</a></li>
 
-				<li class="list-group-item">
-					${flight.arrivalCity}
-				</li>
-				<li class="list-group-item">
-				<a href="/airports/details/${flight.arrivalAirportId}" class="card-link">
+			<a href="/airports/details/${flight.departureAirportId}" class="list-group-item list-group-item-action list-group-item-secondary flex-column align-items-start">
+				<div class="d-flex w-100 justify-content-between">
+					<h5 class="mb-1">${flight.departureCity}</h5>
+				</div>
+				<p class="mb-1">
+					@SharedLocalizer["Departure Airport"].Value
+					<br>
+						${flight.departureAirport}
+				</p>
+				<small>${flight.departureDateTime}</small>
+			</a>
+
+			<a href="/airports/details/${flight.arrivalAirportId}" class="list-group-item list-group-item-action list-group-item-secondary flex-column align-items-start">
+				<div class="d-flex w-100 justify-content-between">
+					<h5 class="mb-1">${flight.arrivalCity}</h5>
+				</div>
+			<p class="mb-1">
+				@SharedLocalizer["Arrival Airport"].Value
+				<br>
 					${flight.arrivalAirport}
-				</a></li>
-
-				<li class="list-group-item">
-				<a href="/flights/details/${flight.flightId}" class="card-link">
-					Details
-				</a></li>
+			</p>
+					<small>${flight.arrivalDateTime}</small>
+			</a>
 			</ul>
+			<a href="/flights/details/${flight.flightId}" class="card-link"> @SharedLocalizer["Details"].Value </a>
 		`;
 		$('#cardBody').html(html);
-		polyline = L.polyline(line, { color: 'orange' }).addTo(map);
 		showFlightCard();
 	});
 

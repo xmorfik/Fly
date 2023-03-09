@@ -1,7 +1,8 @@
 ﻿@using Fly.Core.Entities;
 @using Microsoft.AspNetCore.Mvc.Localization;
 @model AirportsViewModel;
-@inject IViewLocalizer Localizer
+
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 <div class="card text-center mx-auto" style="width:1000px">
     <img class="card-img-top" src="~/airport.jpg">
@@ -9,19 +10,19 @@
         <form asp-action="Index">
             <div class="row">
                 <div class="col">
-                    <label class="control-label">Name</label>
+                    <label class="control-label">@SharedLocalizer["Name"]</label>
                     <input asp-for="AirportParameter.Name" class="form-control" />
                 </div>
                 <div class="col">
-                    <label class="control-label">City Name</label>
+                    <label class="control-label">@SharedLocalizer["City Name"]</label>
                     <input asp-for="AirportParameter.CityName" class="form-control" />
                 </div>
                 <div class="col">
-                    <label class="control-label">Iso Country</label>
+                    <label class="control-label">@SharedLocalizer["Iso Country"]</label>
                     <input asp-for="AirportParameter.IsoCountry" class="form-control" />
                 </div>
                 <div class="col">
-                    <label class="control-label">Iso Region</label>
+                    <label class="control-label">@SharedLocalizer["Iso Region"]</label>
                     <input asp-for="AirportParameter.IsoRegion" class="form-control" />
                 </div>
 
@@ -30,61 +31,61 @@
 
                 <div class=" row">
                     <div class="col">
-                        <label> OrderBy </label>
+                        <label> @SharedLocalizer["Order By"] </label>
                         @Html.DropDownListFor(x => x.AirportParameter.OrderBy,
                         new List<SelectListItem>
                         {
                         new SelectListItem{ Value = "Id", Text= "Id"},
-                        new SelectListItem{ Value = "Name", Text= "Name"},
-                        new SelectListItem{ Value = "Longitude", Text= "Longitude"},
-                        new SelectListItem{ Value = "Latitude", Text= "Latitude"},
-                        new SelectListItem{ Value = "Altitude", Text= "Altitude"},
+                        new SelectListItem{ Value = "Name", Text= SharedLocalizer["Name"].Value},
+                        new SelectListItem{ Value = "Longitude", Text= SharedLocalizer["Longitude"].Value},
+                        new SelectListItem{ Value = "Latitude", Text= SharedLocalizer["Latitude"].Value},
+                        new SelectListItem{ Value = "Altitude", Text= SharedLocalizer["Altitude"].Value},
                         }, new { @class = "form-select"} )
                     </div>
 
                     <div class="col">
                         <br />
-                        <label> Descresing </label>
+                        <label> @SharedLocalizer["By Decreasing"] </label>
                         @Html.CheckBoxFor(x=>x.AirportParameter.Descresing)
                     </div>
                 </div>
 
                 <div class="col">
                     <br />
-                    <input type="submit" onclick="setStartPage()" value=@Localizer["Search"] class="btn btn-primary" />
+                    <input type="submit" onclick="setStartPage()" value=@SharedLocalizer["Search"] class="btn btn-primary" />
                 </div>
                 <br />
                 <div class="card-body">
                     @if (User.IsInRole("Administrator"))
                     {
-                        @Html.ActionLink("Create", "Create")
+                        @Html.ActionLink(SharedLocalizer["Create"].Value, "Create")
                     }
                     <table class="table rounded rounded-6 overflow-hidden table-sm table-dark table-hover">
                         <thead>
                             <tr>
                                 <th>
-                                    Name
+                                    @SharedLocalizer["Name"]
                                 </th>
                                 <th>
-                                    AirportId
+                                    @SharedLocalizer["Airport"]
                                 </th>
                                 <th>
-                                    Longitude
+                                    @SharedLocalizer["Longitude"]
                                 </th>
                                 <th>
-                                    Latitude
+                                    @SharedLocalizer["Latitude"]
                                 </th>
                                 <th>
-                                    Altitude
+                                    @SharedLocalizer["Altitude"]
                                 </th>
                                 <th>
-                                    City Name
+                                    @SharedLocalizer["City Name"]
                                 </th>
                                 <th>
-                                    Counrty
+                                    @SharedLocalizer["Iso Country"]
                                 </th>
                                 <th>
-                                    Region
+                                    @SharedLocalizer["Iso Region"]
                                 </th>
                                 <th></th>
                             </tr>
@@ -120,18 +121,18 @@
                                     <td>
                                         @if (Model.IsSelect)
                                         {
-                                            @Html.ActionLink("Select","Select", new { id = item.Id, redirectUri = Model.RedirectUri})
+                                            @Html.ActionLink($"{SharedLocalizer["Select"].Value}","Select", new { id = item.Id, redirectUri = Model.RedirectUri})
                                         }
                                         else
                                         {
                                             @if (User.IsInRole("Administrator"))
                                             {
-                                                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                                                @Html.ActionLink($"{SharedLocalizer["Edit"].Value}", "Edit", new { id = item.Id })
                                                 <br />
-                                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                                @Html.ActionLink($"{SharedLocalizer["Delete"].Value}", "Delete", new { id = item.Id })
                                             }
                                         }
-                                        @Html.ActionLink("Details", "Details", new { id=item.Id })
+                                        @Html.ActionLink($"{SharedLocalizer["Details"].Value}", "Details", new { id=item.Id })
                                     </td>
                                 </tr>
                         }
@@ -147,13 +148,13 @@
                 @if (Model.MetaData.HasPrevious)
             {
                 <div class="col">
-                        <input type="submit" value="Prev" onclick="decrementValue()" class="btn btn-outline-primary" />
+                        <input type="submit" value="@SharedLocalizer["Prev"]" onclick="decrementValue()" class="btn btn-outline-primary" />
                     </div>
             }
                 @if (Model.MetaData.HasNext)
             {
                 <div class="col">
-                        <input type="submit" value="Next" onclick="incrementValue()" class="btn btn-outline-primary" />
+                        <input type="submit" value="@SharedLocalizer["Next"]" onclick="incrementValue()" class="btn btn-outline-primary" />
                     </div>
             }
             </div>

@@ -4,12 +4,14 @@ using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.WebUI.Interfaces;
 using Fly.WebUI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace Fly.WebUI.Controllers;
 
+[AllowAnonymous]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

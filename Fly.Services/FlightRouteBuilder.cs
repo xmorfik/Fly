@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Fly.Core.Entities;
+using Fly.Core.Interfaces;
 using Fly.Core.Services;
 using Fly.Shared.DataTransferObjects;
 using GeoCoordinatePortable;
@@ -9,14 +10,19 @@ namespace Fly.Services;
 
 public class FlightsRouteBuilder : IRouteBuilder<Flight, LocationDto>
 {
+    private readonly IRepository<Flight> _flights;
     private readonly IMapper _mapper;
     private readonly ILogger<FlightsRouteBuilder> _logger;
+    private const int _speed = 900; 
+
     public FlightsRouteBuilder(
         IMapper mapper,
-        ILogger<FlightsRouteBuilder> logger)
+        ILogger<FlightsRouteBuilder> logger,
+        IRepository<Flight> flights)
     {
         _mapper = mapper;
         _logger = logger;
+        _flights = flights;
     }
 
     public LocationDto GetLocation(Flight flight)

@@ -1,5 +1,8 @@
 ﻿@using Fly.Core.Entities;
 @using Fly.Shared.DataTransferObjects;
+@using Microsoft.AspNetCore.Mvc.Localization;
+
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 @model TicketsDto
 
 <div class="card  mx-auto" style="width:1000px">
@@ -9,10 +12,10 @@
             <br />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="FlightId" class="control-label"></label>
+                <label asp-for="FlightId" class="control-label">@SharedLocalizer["Flight"]</label>
                 <input asp-for="FlightId" readonly value="@ViewData["SelectedFlightId"]" class="form-control" />
                 <span asp-validation-for="FlightId" class="text-danger"></span>
-                @Html.ActionLink("Select","Index","Flights", new { isSelect = true, redirectUri = "/tickets/create" })
+                @Html.ActionLink(SharedLocalizer["Select"].Value,"Index","Flights", new { isSelect = true, redirectUri = "/tickets/create" })
             </div>
             @if (ViewData["SelectedFlight"] != null)
             {
@@ -26,24 +29,27 @@
             }
             <br />
             <div class="form-group">
-                <label asp-for="EconomClassPrice" class="control-label"></label>
+                <label asp-for="EconomClassPrice" class="control-label">@SharedLocalizer["Econom Class"]</label>
                 <input asp-for="EconomClassPrice" class="form-control" />
                 <span asp-validation-for="EconomClassPrice" class="text-danger"></span>
             </div><br />
             <div class="form-group">
-                <label asp-for="FirstClassPrice" class="control-label"></label>
+                <label asp-for="FirstClassPrice" class="control-label">@SharedLocalizer["First Class"]</label>
                 <input asp-for="FirstClassPrice" class="form-control" />
                 <span asp-validation-for="FirstClassPrice" class="text-danger"></span>
             </div><br />
             <div class="form-group">
-                <label asp-for="BusinessClassPrice" class="control-label"></label>
+                <label asp-for="BusinessClassPrice" class="control-label">@SharedLocalizer["Business Class"]</label>
                 <input asp-for="BusinessClassPrice"   class="form-control" />
                 <span asp-validation-for="BusinessClassPrice" class="text-danger"></span>
             </div><br />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="@SharedLocalizer["Create"]" class="btn btn-primary" />
             </div>
         </form><br />
+        <div>
+            <a asp-action="Index">@SharedLocalizer["Back"]</a>
+        </div>
     </div>
 </div>
 
