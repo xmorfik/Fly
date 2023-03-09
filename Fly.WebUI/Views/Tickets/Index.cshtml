@@ -1,4 +1,5 @@
 ﻿@using Fly.Core.Entities;
+@using Fly.Core.Enums;
 @using Microsoft.AspNetCore.Mvc.Localization;
 @model TicketsViewModel;
 @inject IHtmlLocalizer<SharedResource> SharedLocalizer
@@ -18,7 +19,11 @@
                 </div>
                 <div class="form-group">
                     <label class="col">@SharedLocalizer["State"]</label>
-                    <input asp-for="TicketParameter.TicketState" class="form-control" />
+                    @Html.DropDownListFor(
+                        x=>x.TicketParameter.TicketState,
+                        Html.GetEnumSelectList<TicketState>()
+                        .Append(new SelectListItem("All",null)),
+                        new { @class = "form-control" })
                 </div>
                 <div class="form-group">
                     <label class="col">@SharedLocalizer["Departure Date"]</label>

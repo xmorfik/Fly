@@ -113,6 +113,8 @@
 				</div>
 				<p class="mb-1">
 					@SharedLocalizer["Departure Airport"].Value
+					<br>
+						${flight.departureAirport}
 				</p>
 				<small>${flight.departureDateTime}</small>
 			</a>
@@ -123,8 +125,10 @@
 				</div>
 			<p class="mb-1">
 				@SharedLocalizer["Arrival Airport"].Value
+				<br>
+					${flight.arrivalAirport}
 			</p>
-				<small>${flight.arrivalDateTime}</small>
+					<small>${flight.arrivalDateTime}</small>
 			</a>
 			</ul>
 			<a href="/flights/details/${flight.flightId}" class="card-link"> @SharedLocalizer["Details"].Value </a>

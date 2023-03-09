@@ -15,7 +15,7 @@
                 <label asp-for="FlightId" class="control-label">@SharedLocalizer["Flight"]</label>
                 <input asp-for="FlightId" readonly value="@ViewData["SelectedFlightId"]" class="form-control" />
                 <span asp-validation-for="FlightId" class="text-danger"></span>
-                @Html.ActionLink("Select","Index","Flights", new { isSelect = true, redirectUri = "/tickets/create" })
+                @Html.ActionLink(SharedLocalizer["Select"].Value,"Index","Flights", new { isSelect = true, redirectUri = "/tickets/create" })
             </div>
             @if (ViewData["SelectedFlight"] != null)
             {
