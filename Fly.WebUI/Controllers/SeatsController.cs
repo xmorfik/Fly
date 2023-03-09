@@ -4,10 +4,12 @@ using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.Shared.DataTransferObjects;
 using Fly.WebUI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fly.WebUI.Controllers;
 
+[Authorize]
 public class SeatsController : Controller
 {
     private readonly IService<Seat, SeatParameter> _service;

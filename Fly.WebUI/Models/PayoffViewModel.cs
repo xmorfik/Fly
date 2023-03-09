@@ -1,5 +1,4 @@
-﻿using Duende.IdentityServer.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Fly.WebUI.Models;
 

@@ -3,10 +3,12 @@ using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.WebUI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fly.WebUI.Controllers;
 
+[Authorize]
 public class CitiesController : Controller
 {
     private readonly IService<City, CityParameter> _service;

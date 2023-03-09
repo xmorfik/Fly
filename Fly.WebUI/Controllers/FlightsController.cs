@@ -4,10 +4,12 @@ using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.WebUI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fly.WebUI.Controllers;
 
+[AllowAnonymous]
 public class FlightsController : Controller
 {
     private readonly IService<Flight, FlightParameter> _service;

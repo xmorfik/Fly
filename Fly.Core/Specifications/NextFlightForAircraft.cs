@@ -1,6 +1,5 @@
 ﻿using Ardalis.Specification;
 using Fly.Core.Entities;
-using Fly.WebUI.Models;
 
 namespace Fly.Core.Specifications;
 

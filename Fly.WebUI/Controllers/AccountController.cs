@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
 namespace Fly.WebUI.Controllers;
 
+[AllowAnonymous]
 public class AccountController : Controller
 {
     private readonly AuthorityUri _authority;
