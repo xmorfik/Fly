@@ -2,6 +2,7 @@
 @model Flight
 @using Microsoft.AspNetCore.Mvc.Localization;
 @inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 <div class="row">
 	<div class="col-auto">
@@ -103,7 +104,7 @@
 		let html = '';
 		html = 
 		`
-			<h5 class="card-title" >Aircraft : </h5>
+			<h5 class="card-title" >@SharedLocalizer["Aircraft"].Value</h5>
 			<h5 class="card-title" ><a href="/aircrafts/details/${flight.aircraftId}"class="card-link">${flight.aircraftName}</a></h5>
 
 			<a href="/airports/details/${flight.departureAirportId}" class="list-group-item list-group-item-action list-group-item-secondary flex-column align-items-start">
@@ -111,7 +112,7 @@
 					<h5 class="mb-1">${flight.departureCity}</h5>
 				</div>
 				<p class="mb-1">
-					Departure Airport
+					@SharedLocalizer["Departure Airport"].Value
 				</p>
 				<small>${flight.departureDateTime}</small>
 			</a>
