@@ -45,6 +45,25 @@
                 @Html.HiddenFor(x=>x.RedirectUri)
                 @Html.HiddenFor(x=>x.IsSelect)
                 @Html.HiddenFor(x=>x.TicketParameter.PassengerId)
+
+                <div class="row">
+                    <div class="col">
+                        <label>@SharedLocalizer["Order By"]</label>
+                        @Html.DropDownListFor(x => x.TicketParameter.OrderBy,
+                        new List<SelectListItem>
+                        {
+                        new SelectListItem{ Value = "Id", Text= "Id"},
+                        new SelectListItem{ Value = "Price", Text= SharedLocalizer["Price"].Value},
+                        new SelectListItem{ Value = "SoldDate", Text= SharedLocalizer["Date of purchase"].Value}
+                        }, new { @class = "form-select"} )
+                    </div>
+
+                    <div class="col">
+                        <br />
+                        <label> @SharedLocalizer["By Decreasing"] </label>
+                        @Html.CheckBoxFor(x=>x.TicketParameter.Descresing)
+                    </div>
+                </div>
                 <div class="col">
                     <br />
                     <input type="submit" onclick="setStartPage()" value=@SharedLocalizer["Search"] class="btn btn-primary" />

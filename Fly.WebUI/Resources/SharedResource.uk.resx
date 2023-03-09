@@ -162,6 +162,9 @@
   <data name="Back" xml:space="preserve">
     <value>Назад</value>
   </data>
+  <data name="Business Class" xml:space="preserve">
+    <value>Бізнес класс</value>
+  </data>
   <data name="By Decreasing" xml:space="preserve">
     <value>На зменшення</value>
   </data>
@@ -204,11 +207,20 @@
   <data name="Details" xml:space="preserve">
     <value>Деталі</value>
   </data>
+  <data name="Econom Class" xml:space="preserve">
+    <value>Економ класс</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Редагувати</value>
   </data>
+  <data name="First Class" xml:space="preserve">
+    <value>Перший класс</value>
+  </data>
   <data name="First Name" xml:space="preserve">
     <value>Ім`я</value>
+  </data>
+  <data name="Flight" xml:space="preserve">
+    <value>Рейс</value>
   </data>
   <data name="Flight Hours" xml:space="preserve">
     <value>Загальний наліт</value>
