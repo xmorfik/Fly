@@ -79,6 +79,9 @@
                                 <th>
                                     @SharedLocalizer["Airport"]
                                 </th>
+                                <th>
+                                    @SharedLocalizer["Seats"]
+                                </th>
                                
                                 <th></th>
                             </tr>
@@ -109,7 +112,9 @@
                                         @Html.DisplayFor(modelItem => item.Airport.Name)
                                         @Html.DisplayFor(modelItem => item.Airport.City.IsoCountry)
                                     </td>
-                                   
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Seats.Count)
+                                    </td>
                                     <td>
                                         @if(Model.IsSelect)
                                         {
@@ -123,7 +128,7 @@
                                                 <br />
                                                 @Html.ActionLink(SharedLocalizer["Delete"].Value, "Delete", new { id = item.Id })
                                             }
-                                            @if(User.IsInRole("Manager"))
+                                            @if(User.IsInRole("Manager") &&  !item.Seats.Any())
                                             {
                                                 @Html.ActionLink(SharedLocalizer["Create seats"].Value, "Create", "Seats", new{ id = item.Id })
                                             }

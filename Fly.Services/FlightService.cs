@@ -43,6 +43,12 @@ public class FlightService : IService<Flight, FlightParameter>
             }
 
             var flight = await _flightOnCreationService.SetDepartureAirport(item);
+            if(flight.ArrivalDateTime == null)
+            {
+                var calculatedFlight = await _flightOnCreationService.SetArrivalDateTime(flight);
+                flight = calculatedFlight;
+            }
+
             var result = await _repository.AddAsync(flight);
 
             _scheduleService.Schedule(result);
