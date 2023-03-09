@@ -49,8 +49,10 @@ public class LocationHub : Hub
             DepartureAirport = flight.DepartureAirport.Name + " / " + flight.DepartureAirport.AirportId,
             DepartureAirportId = flight.DepartureAirportId ?? 0,
             ArrivalAirportId = flight.ArrivalAirportId ?? 0,
-            AircraftName = flight.Aircraft.ModelType + " : " + flight.Aircraft.SerialNumber
-        };
+            AircraftName = flight.Aircraft.ModelType + " : " + flight.Aircraft.SerialNumber,
+            ArrivalDateTime = flight.ArrivalDateTime ?? DateTime.Now,
+            DepartureDateTime = flight.DepartureDateTime ?? DateTime.Now
+		};
 
         await Clients.Caller.SendAsync("Flight", flightDto);
     }
