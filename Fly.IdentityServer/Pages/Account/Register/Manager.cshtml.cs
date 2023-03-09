@@ -2,10 +2,13 @@ using AutoMapper;
 using Fly.Core.Entities;
 using Fly.Data;
 using Fly.Shared.DataTransferObjects;
+using Fly.WebAPI.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Serilog;
 using System.Security.Claims;
@@ -17,6 +20,7 @@ public class ManagerModel : PageModel
 {
     [BindProperty]
     public ManagerForRegistrationDto ManagerForRegistrationDto { get; set; }
+    public SelectList Airlines { get; set; }
     public string ErrorMessage { get; set; }
 
     private readonly UserManager<User> _userManager;
@@ -25,7 +29,6 @@ public class ManagerModel : PageModel
     private readonly ClientUriConfiguration _clientConfiguration;
 
     public ManagerModel(UserManager<User> userManager,
-        SignInManager<User> signInManager,
         FlyDbContext db,
         IOptions<ClientUriConfiguration> clientUri,
         IMapper mapper)
@@ -38,6 +41,8 @@ public class ManagerModel : PageModel
 
     public async Task<IActionResult> OnGet()
     {
+        var airlines = await _db.Airlines.ToListAsync();
+        Airlines = new SelectList(airlines, "Id", "Name");
         return Page();
     }
 
