@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Fly.WebUI.Controllers;
 
-[Authorize (Roles = "Administrator")]
+[Authorize(Roles = "Administrator")]
 public class ManagersController : Controller
 {
     private readonly IService<Manager, ManagerParameter> _service;

@@ -3,7 +3,7 @@ using Fly.Core.Entities;
 
 namespace Fly.Core.Specifications;
 
-public class AirlineSpec : Specification<Airline> , ISingleResultSpecification
+public class AirlineSpec : Specification<Airline>, ISingleResultSpecification
 {
     public AirlineSpec(int id)
     {

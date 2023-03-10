@@ -10,7 +10,7 @@ namespace Fly.Core.Specifications;
 public class AirlineListSpec : Specification<Airline>
 {
     public AirlineListSpec(AirlineParameter parameter, Page? page)
-    {  
+    {
         //to do: rename
         var paramEx = Expression.Parameter(typeof(PropertyInfo));
         var memberEx = Expression.PropertyOrField(paramEx, "PropertyType");
@@ -23,7 +23,7 @@ public class AirlineListSpec : Specification<Airline>
 
         foreach (var prop in strProps)
         {
-            if(prop.GetValue(parameter) == null)
+            if (prop.GetValue(parameter) == null)
             {
                 continue;
             }
@@ -46,7 +46,7 @@ public class AirlineListSpec : Specification<Airline>
 
         if (page != null)
         {
-            if(parameter.OrderBy != null)
+            if (parameter.OrderBy != null)
             {
                 try
                 {
@@ -66,7 +66,7 @@ public class AirlineListSpec : Specification<Airline>
                 }
                 catch
                 {
-                    Query.OrderByDescending(x=>x.Id);
+                    Query.OrderByDescending(x => x.Id);
                 }
             }
             Query.Skip((page.PageNumber - 1) * page.PageSize).Take(page.PageSize);

@@ -12,15 +12,19 @@
   <ItemGroup>
     <Compile Remove="Pagination\**" />
     <Compile Remove="Requests\**" />
+    <Compile Remove="Resources\Views\**" />
     <Compile Remove="Scripts\**" />
     <Content Remove="Pagination\**" />
     <Content Remove="Requests\**" />
+    <Content Remove="Resources\Views\**" />
     <Content Remove="Scripts\**" />
     <EmbeddedResource Remove="Pagination\**" />
     <EmbeddedResource Remove="Requests\**" />
+    <EmbeddedResource Remove="Resources\Views\**" />
     <EmbeddedResource Remove="Scripts\**" />
     <None Remove="Pagination\**" />
     <None Remove="Requests\**" />
+    <None Remove="Resources\Views\**" />
     <None Remove="Scripts\**" />
   </ItemGroup>
 
@@ -56,10 +60,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Fly.Core\Fly.Core.csproj" />
     <ProjectReference Include="..\Fly.Data\Fly.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resources\Views\" />
   </ItemGroup>
 
 </Project>

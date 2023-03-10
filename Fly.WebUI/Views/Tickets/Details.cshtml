@@ -1,49 +1,50 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization;
 
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 @model Fly.Core.Entities.Ticket
 
 <div class="card mx-auto" style="width:600px">
     <img class="card-img-top" src="~/seat.jpg">
     <div class="card-body">
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
+            <dt class="col-sm-10">
+            @SharedLocalizer["Price"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Price)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TicketState)
+            <dt class="col-sm-10">
+            @SharedLocalizer["State"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.TicketState)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SoldDate)
+            <dt class="col-sm-10">
+            @SharedLocalizer["Sold Date"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.SoldDate)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FlightId)
+            <dt class="col-sm-10">
+            @SharedLocalizer["Flight"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FlightId)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SeatId)
+            <dt class="col-sm-10">
+            @SharedLocalizer["Seat"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.SeatId)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PassengerId)
+            <dt class="col-sm-10">
+            @SharedLocalizer["Passenger"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.PassengerId)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
+            <dt class="col-sm-10">
+            Id
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Id)

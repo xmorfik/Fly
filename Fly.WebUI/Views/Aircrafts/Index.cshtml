@@ -23,11 +23,13 @@
                         .Append(new SelectListItem("All",null)),
                         new { @class = "form-control" })
                 </div>
-
-                <div class="col">
-                    <label class="control-label">@SharedLocalizer["Airline"]</label>
-                    <input asp-for="AircraftParameter.Airline" class="form-control" />
-                </div>
+                @if(!User.IsInRole("Manager"))
+                {
+                    <div class="col">
+                        <label class="control-label">@SharedLocalizer["Airline"]</label>
+                        <input asp-for="AircraftParameter.Airline" class="form-control" />
+                    </div>
+                }
                 @Html.HiddenFor(x=>x.RedirectUri)
                 @Html.HiddenFor(x=>x.IsSelect)
                 <div class=" row">

@@ -36,14 +36,14 @@ public class FlightService : IService<Flight, FlightParameter>
         try
         {
             var canCreate = await _flightOnCreationService.СheckFlight(item);
-            if(!canCreate)
+            if (!canCreate)
             {
                 _logger.LogError("Can't create" + JsonConvert.SerializeObject(item));
                 return;
             }
 
             var flight = await _flightOnCreationService.SetDepartureAirport(item);
-            if(flight.ArrivalDateTime == null)
+            if (flight.ArrivalDateTime == null)
             {
                 var calculatedFlight = await _flightOnCreationService.SetArrivalDateTime(flight);
                 flight = calculatedFlight;

@@ -31,7 +31,7 @@ public class AircraftsController : Controller
     {
         var aircraftViewModel = new AircraftsViewModel();
         var aircraftParameter = new AircraftParameter();
-       
+
         var response = await _service.GetListAsync(aircraftParameter, new Page());
 
         aircraftViewModel.PagedResponse = response;

@@ -48,7 +48,7 @@ public class SeatsController : Controller
         {
             aircraftId = id ?? 0;
         }
-        else if(int.TryParse(Request.Cookies["SelectedAircraftId"], out aircraftId))
+        else if (int.TryParse(Request.Cookies["SelectedAircraftId"], out aircraftId))
         {
         }
         else
@@ -70,13 +70,13 @@ public class SeatsController : Controller
                 ViewData["SelectedAircraft"] = result.Data;
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             ViewData["SelectedAircraftId"] = null;
             ViewData["SelectedAircraft"] = null;
             _logger.LogError(ex.Message);
         }
-            
+
         return View();
     }
 
@@ -119,7 +119,7 @@ public class SeatsController : Controller
         Response.Cookies.Delete("SelectedAircraftId");
 
         await _seatsGenerator.Generate(item);
-        return RedirectToAction("Index","Aircrafts");
+        return RedirectToAction("Index", "Aircrafts");
     }
 
     [HttpPost]

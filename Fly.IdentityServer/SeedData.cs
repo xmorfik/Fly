@@ -23,7 +23,7 @@ public class SeedData
                 andrii = new User
                 {
                     UserName = "andrii",
-                    Email = "a.dukhno@outlook.com",
+                    Email = "a@a.com",
                     EmailConfirmed = true,
                 };
                 var result = userMgr.CreateAsync(andrii, "PassWord123$").Result;

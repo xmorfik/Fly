@@ -52,7 +52,7 @@ public class LocationHub : Hub
             AircraftName = flight.Aircraft.ModelType + " : " + flight.Aircraft.SerialNumber,
             ArrivalDateTime = flight.ArrivalDateTime ?? DateTime.Now,
             DepartureDateTime = flight.DepartureDateTime ?? DateTime.Now
-		};
+        };
 
         await Clients.Caller.SendAsync("Flight", flightDto);
     }

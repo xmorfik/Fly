@@ -2,7 +2,6 @@ using AutoMapper;
 using Fly.Core.Entities;
 using Fly.Data;
 using Fly.Shared.DataTransferObjects;
-using Fly.WebAPI.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

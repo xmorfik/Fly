@@ -21,7 +21,7 @@ public class AirportListSpec : Specification<Airport>
 
         Query.Where(x => parameter.Name == null || x.Name.Contains(parameter.Name));
 
-        if(page != null)
+        if (page != null)
         {
             if (parameter.OrderBy != null)
             {
@@ -41,7 +41,7 @@ public class AirportListSpec : Specification<Airport>
                         Query.OrderBy(orderLambda);
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Query.OrderByDescending(x => x.Id);
                 }

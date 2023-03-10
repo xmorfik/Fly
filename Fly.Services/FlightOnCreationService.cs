@@ -25,7 +25,7 @@ public class FlightOnCreationService : IFlightOnCreationService
 
     public async Task<bool> СheckFlight(Flight flight)
     {
-        if(flight.DepartureDateTime >= flight.ArrivalDateTime)
+        if (flight.DepartureDateTime >= flight.ArrivalDateTime)
         {
             return false;
         }
@@ -61,7 +61,7 @@ public class FlightOnCreationService : IFlightOnCreationService
 
     public async Task<Flight> SetArrivalDateTime(Flight flight)
     {
-        if(flight.ArrivalDateTime != null)
+        if (flight.ArrivalDateTime != null)
         {
             return flight;
         }
@@ -80,6 +80,6 @@ public class FlightOnCreationService : IFlightOnCreationService
     {
         var sCoord = new GeoCoordinate(departureAirport.Latitude, departureAirport.Longitude);
         var eCoord = new GeoCoordinate(arrivalAirport.Latitude, arrivalAirport.Longitude);
-        return (int)sCoord.GetDistanceTo(eCoord)/1000;
+        return (int)sCoord.GetDistanceTo(eCoord) / 1000;
     }
 }

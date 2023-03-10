@@ -288,6 +288,9 @@
   <data name="Order By" xml:space="preserve">
     <value>Сортувати за</value>
   </data>
+  <data name="Passenger" xml:space="preserve">
+    <value>Пасажир</value>
+  </data>
   <data name="Passport No" xml:space="preserve">
     <value>Номер паспорту</value>
   </data>
@@ -323,6 +326,9 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>Пошук</value>
+  </data>
+  <data name="Seat" xml:space="preserve">
+    <value>Місце</value>
   </data>
   <data name="Seats" xml:space="preserve">
     <value>Місця</value>

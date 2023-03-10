@@ -1,15 +1,15 @@
 ﻿using Fly.Core.Entities;
+using Fly.Core.Enums;
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.WebUI.Models;
-using LiqPay.SDK.Dto.Enums;
-using LiqPay.SDK.Dto;
 using LiqPay.SDK;
+using LiqPay.SDK.Dto;
+using LiqPay.SDK.Dto.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using Fly.Core.Enums;
 
 namespace Fly.WebUI.Controllers;
 
@@ -42,13 +42,13 @@ public class PassengerController : Controller
     public async Task<IActionResult> Profile()
     {
         var userId = User.FindFirstValue("sub");
-        if(userId == null)
+        if (userId == null)
         {
             return NotFound();
         }
 
         var user = await _service.GetListAsync(new PassengerParameter { UserId = userId }, new Page());
-        if(user.FirstOrDefault() == null)
+        if (user.FirstOrDefault() == null)
         {
             var passenger = new Passenger { UserId = userId };
             return View(passenger);
@@ -101,14 +101,14 @@ public class PassengerController : Controller
             var userId = User.FindFirstValue("sub");
             var user = await _service.GetListAsync(new PassengerParameter { UserId = userId }, new Page());
             var passenger = user?.FirstOrDefault();
-            if(passenger == null)
+            if (passenger == null)
             {
                 _logger.LogCritical($"{userId} not created as passenger");
-                return RedirectToAction("Error","Home");
+                return RedirectToAction("Error", "Home");
             }
 
             var result = await _tickets.GetAsync(id);
-            if(!result.Succeeded || result.Data == null)
+            if (!result.Succeeded || result.Data == null)
             {
                 _logger.LogCritical($"Ticket {id} does not exist");
                 return RedirectToAction("Error", "Home");
@@ -119,7 +119,7 @@ public class PassengerController : Controller
             var ticketId = ticket.Id ?? 0;
             var passengerId = passenger.Id ?? 0;
 
-            if(passengerId == 0)
+            if (passengerId == 0)
             {
                 _logger.LogCritical($"Null id passenger field, userId {userId}");
                 return RedirectToAction("Error", "Home");
@@ -159,7 +159,7 @@ public class PassengerController : Controller
         {
             _logger.LogCritical($"Payoff crashed on get");
         }
-        
+
         return View(payoffVm);
     }
 
@@ -167,10 +167,10 @@ public class PassengerController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Payoff(PayoffViewModel payoffViewModel)
     {
-        if(payoffViewModel.IsSuccessed)
+        if (payoffViewModel.IsSuccessed)
         {
             var result = await _tickets.GetAsync(payoffViewModel.TicketId);
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
                 var ticket = result.Data;
                 ticket.PassengerId = payoffViewModel.PassengerId;

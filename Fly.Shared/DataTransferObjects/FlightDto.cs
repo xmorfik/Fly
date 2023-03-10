@@ -16,5 +16,5 @@ public class FlightDto
     public string DepartureAirport { get; set; }
     public string ArrivalAirport { get; set; }
     public DateTime ArrivalDateTime { get; set; }
-	public DateTime DepartureDateTime { get; set; }
+    public DateTime DepartureDateTime { get; set; }
 }
