@@ -12,5 +12,5 @@ public static class FlightHelper
                                .RuleFor(x => x.ArrivalAirportId, x => x.IndexFaker + 1)
                                .RuleFor(x => x.DepartureDateTime, x => x.Date.Soon())
                                .RuleFor(x => x.ArrivalDateTime, x => x.Date.Soon())
-                               .Generate(3);
+                               .Generate(15);
 }
