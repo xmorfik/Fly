@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Fly.Core.Entities;
 using Fly.Core.Interfaces;
+using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.Core.Specifications;
@@ -50,5 +51,16 @@ public class FlightsSpecTests
         var result = spec.Evaluate(Flights);
 
         result.Count().Should().Be(0);
+    }
+
+    [Fact]
+    public async Task FlightListSpec_ReturnsPage()
+    {
+        var page = new Page();
+        var spec = new FlightListSpec(new FlightParameter(), page);
+        var result = spec.Evaluate(Flights);
+
+        result.Count().Should().BeGreaterThanOrEqualTo(0);
+        result.Count().Should().BeLessThanOrEqualTo(page.PageSize);
     }
 }
