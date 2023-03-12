@@ -19,5 +19,5 @@ public record ManagerForRegistrationDto
     [RegularExpression("^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$", ErrorMessage = "Enter valid phone number")]
     public string? PhoneNumber { get; init; }
     [Required]
-    public string? AirlineId { get; init; }
+    public int? AirlineId { get; init; }
 }
