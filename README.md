@@ -1,22 +1,23 @@
 ## WebApp for flight management and ticket sales
+
 ## Features
 - OpenApi
 - Authorization and authentication
 - Map with the ability to track aircraft routes using SignalR
 - Ardalis.Specification for repos 
-- Flight notifications to users
 - Search and filtering of air tickets
-- Airline stats
 - AutoMapper
 - Bootstrap 5 
-- Chat with Admin
 - XUnit testing
--
+- Hangfire for live aircraft tracking
+- Redis store locations
+- IdentityServer 6
 ## Roles
 ### Airline 
-- Aircraft flight management and ticket sales, statistics
+- Сreate and manage company aircraft
+- Aircraft flight management and ticket sales
 ### Passenger
-- Purchase search and compare tickets!
-## Diagram
+- Purchase search for tickets!
+### Admin
+- Create Airlines and Managers
 
-![diagram](https://user-images.githubusercontent.com/56976694/215276557-700fc649-60c2-4982-be79-4a84328f1cad.png)
