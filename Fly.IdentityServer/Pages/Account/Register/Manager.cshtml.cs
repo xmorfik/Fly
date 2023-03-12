@@ -47,6 +47,9 @@ public class ManagerModel : PageModel
 
     public async Task<IActionResult> OnPost()
     {
+        var airlines = await _db.Airlines.ToListAsync();
+        Airlines = new SelectList(airlines, "Id", "Name");
+
         if (!ModelState.IsValid)
         {
             return Page();
