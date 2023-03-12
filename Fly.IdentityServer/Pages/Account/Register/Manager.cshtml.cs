@@ -58,7 +58,7 @@ public class ManagerModel : PageModel
         if (result.Succeeded)
         {
             await _userManager.AddClaimAsync(user, new Claim("Role", "Manager"));
-            await _userManager.AddClaimAsync(user, new Claim("Airline", ManagerForRegistrationDto.AirlineId));
+            await _userManager.AddClaimAsync(user, new Claim("Airline", ManagerForRegistrationDto.AirlineId.ToString()));
             var manager = _mapper.Map<Manager>(ManagerForRegistrationDto);
             manager.UserId = user.Id;
 
