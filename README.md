@@ -1,5 +1,11 @@
 ## WebApp for flight management and ticket sales
 
+![Screenshot (9)](https://user-images.githubusercontent.com/56976694/224639460-47f2bd65-736d-4ef8-ab09-df70f4f634dd.png)
+
+![Screenshot (11)](https://user-images.githubusercontent.com/56976694/224639502-06b374bf-3ebd-4687-94e8-e23e064b6a41.png)
+
+![Screenshot (12)](https://user-images.githubusercontent.com/56976694/224639533-a42fbd77-6cdf-43ea-baeb-66c970540422.png)
+
 ## Features
 - OpenApi
 - Authorization and authentication
