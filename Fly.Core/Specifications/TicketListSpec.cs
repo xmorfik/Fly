@@ -23,13 +23,11 @@ public class TicketListSpec : Specification<Ticket>
         if(parameter.TicketState is not null)
         {
             Query.Where(x => x.TicketState == parameter.TicketState);
-
         }
 
         if (parameter.PriceMin is not null)
         {
             Query.Where(x => x.Price >= parameter.PriceMin);
-
         }
 
         if (parameter.PriceMax is not null)
@@ -41,19 +39,16 @@ public class TicketListSpec : Specification<Ticket>
         if (parameter.PassengerId is not null)
         {
             Query.Where(x => x.PassengerId == parameter.PassengerId);
-
         }
 
         if (parameter.DepartureCity is not null)
         {
             Query.Where(x =>  x.Flight.DepartureAirport.City.Name.Contains(parameter.DepartureCity));
-
         }
 
         if (parameter.ArrivalCity is not null)
         {
             Query.Where(x => x.Flight.ArrivalAirport.City.Name.Contains(parameter.ArrivalCity));
-
         }
 
         if (parameter.OrderBy is not null)
