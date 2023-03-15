@@ -28,11 +28,10 @@ public class AccountController : Controller
         });
     }
 
-    public async Task<IActionResult> Logout()
+    public async Task Logout()
     {
         await HttpContext.SignOutAsync("Cookie");
         await HttpContext.SignOutAsync("oidc");
-        return Redirect(_authority.Uri + "account/logout");
     }
 
     public IActionResult Register()

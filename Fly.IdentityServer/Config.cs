@@ -1,5 +1,6 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
+using Fly.Core;
 
 namespace Fly.IdentityServer;
 
@@ -11,14 +12,14 @@ public static class Config
         {
             new IdentityResources.OpenId(),
             new IdentityResources.Profile(),
-            new IdentityResource("Roles", "User role(s)", new List<string> { "Role" }),
-            new IdentityResource("Airline", "Airline", new List<string> { "Airline" })
+            new IdentityResource(Scopes.Roles, "User role(s)", new List<string> { Scopes.Role }),
+            new IdentityResource(Claims.Airline, "Airline", new List<string> { Claims.Airline })
         };
 
     public static IEnumerable<ApiScope> ApiScopes =>
         new ApiScope[]
             {
-                new ApiScope("api1", "Web Api ", new List<string> { "Role" ,  "Airline" })
+                new ApiScope("api1", "Web Api ", new List<string> { Scopes.Role,  Claims.Airline })
             };
 
     public static IEnumerable<Client> Clients =>
@@ -42,8 +43,8 @@ public static class Config
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         "api1",
-                        "Roles",
-                        "Airline"
+                        Scopes.Roles,
+                        Claims.Airline
                     },
 
                     AlwaysIncludeUserClaimsInIdToken = true

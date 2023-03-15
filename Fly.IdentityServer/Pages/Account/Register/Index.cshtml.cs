@@ -1,5 +1,6 @@
 using AutoMapper;
 using Azure.Communication.Email.Models;
+using Fly.Core;
 using Fly.Core.Entities;
 using Fly.Core.Services;
 using Fly.Data;
@@ -62,7 +63,7 @@ public class IndexModel : PageModel
 
         if (result.Succeeded)
         {
-            await _userManager.AddClaimAsync(user, new Claim("Role", "Passenger"));
+            await _userManager.AddClaimAsync(user, new Claim(Scopes.Role, Claims.Airline));
             var passenger = _mapper.Map<Passenger>(UserForRegistrationDto);
             passenger.UserId = user.Id;
             try

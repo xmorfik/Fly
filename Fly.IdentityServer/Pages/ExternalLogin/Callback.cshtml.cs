@@ -1,13 +1,16 @@
 using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Services;
+using Fly.Core;
 using Fly.Core.Entities;
+using Fly.Data;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Serilog;
 using System.Security.Claims;
 
 namespace Fly.IdentityServer.Pages.ExternalLogin;
@@ -21,19 +24,22 @@ public class Callback : PageModel
     private readonly IIdentityServerInteractionService _interaction;
     private readonly ILogger<Callback> _logger;
     private readonly IEventService _events;
+    private readonly FlyDbContext _db;
 
     public Callback(
         IIdentityServerInteractionService interaction,
         IEventService events,
         ILogger<Callback> logger,
         UserManager<User> userManager,
-        SignInManager<User> signInManager)
+        SignInManager<User> signInManager,
+        FlyDbContext db)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _interaction = interaction;
         _logger = logger;
         _events = events;
+        _db = db;
     }
 
     public async Task<IActionResult> OnGet()
@@ -155,10 +161,25 @@ public class Callback : PageModel
             }
         }
 
-        filtered.Add(new Claim("Role", "Passenger"));
+        filtered.Add(new Claim(Scopes.Role, FlyRoles.Passenger));
 
         var identityResult = await _userManager.CreateAsync(user);
         if (!identityResult.Succeeded) throw new Exception(identityResult.Errors.First().Description);
+
+        var passenger = new Passenger();
+        passenger.UserId = user.Id;
+        passenger.Email = user.Email;
+
+        try
+        {
+            await _db.Passengers.AddAsync(passenger);
+            await _db.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            await _userManager.DeleteAsync(user);
+            Log.Error(ex.Message);
+        }
 
         if (filtered.Any())
         {
