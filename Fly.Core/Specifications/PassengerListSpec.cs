@@ -13,9 +13,12 @@ namespace Fly.Core.Specifications
         {
             Query.Include(x => x.User);
 
-            Query.Where(x => parameter.UserId == null || x.UserId == parameter.UserId);
+            if (parameter.UserId is not null)
+            {
+                Query.Where(x => x.UserId == parameter.UserId);
+            }
 
-            if (page != null)
+            if (parameter.OrderBy is not null)
             {
                 try
                 {
@@ -33,10 +36,18 @@ namespace Fly.Core.Specifications
                         Query.OrderBy(orderLambda);
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
                     Query.OrderByDescending(x => x.Id);
                 }
+            }
+            else
+            {
+                Query.OrderByDescending(x => x.Id);
+            }
+
+            if (page is not null)
+            {
                 Query.Skip((page.PageNumber - 1) * page.PageSize).Take(page.PageSize);
             }
         }

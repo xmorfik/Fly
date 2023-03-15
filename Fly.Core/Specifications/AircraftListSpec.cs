@@ -17,41 +17,56 @@ public class AircraftListSpec : Specification<Aircraft>
 
         Query.Include(x => x.Seats);
 
-        //todo: convert to if/else
-        Query.Where(x => parameter.AircraftState == null || x.AircraftState == parameter.AircraftState);
-
-        Query.Where(x => parameter.Airline == null || x.Airline.Name.Contains(parameter.Airline));
-
-        Query.Where(x => parameter.ModelType == null || x.ModelType.Contains(parameter.ModelType));
-
-        Query.Where(x => parameter.AirlineId == null || x.Airline.Id == parameter.AirlineId);
-
-        //todo: move order by to global
-        if (page != null)
+        if(parameter.AircraftState is not null)
         {
-            if (parameter.OrderBy != null)
+            Query.Where(x => x.AircraftState == parameter.AircraftState);
+        }
+
+        if (parameter.Airline is not null)
+        {
+            Query.Where(x => x.Airline.Name.Contains(parameter.Airline));
+        }
+
+        if (parameter.ModelType is not null)
+        {
+            Query.Where(x => x.ModelType.Contains(parameter.ModelType));
+        }
+
+        if (parameter.AirlineId is not null)
+        {
+            Query.Where(x => x.Airline.Id == parameter.AirlineId);
+        }
+
+        if (parameter.OrderBy is not null)
+        {
+            try
             {
-                try
+                var property = typeof(Aircraft).GetTypeInfo().GetProperty(parameter.OrderBy);
+                var orderExpressionParam = Expression.Parameter(typeof(Aircraft));
+                var propertyAccess = Expression.MakeMemberAccess(orderExpressionParam, property);
+                var conversion = Expression.Convert(propertyAccess, typeof(object));
+                var orderLambda = Expression.Lambda<Func<Aircraft, object?>>(conversion, orderExpressionParam);
+                if (parameter.Descresing)
                 {
-                    var property = typeof(Aircraft).GetTypeInfo().GetProperty(parameter.OrderBy);
-                    var orderExpressionParam = Expression.Parameter(typeof(Aircraft));
-                    var propertyAccess = Expression.MakeMemberAccess(orderExpressionParam, property);
-                    var conversion = Expression.Convert(propertyAccess, typeof(object));
-                    var orderLambda = Expression.Lambda<Func<Aircraft, object?>>(conversion, orderExpressionParam);
-                    if (parameter.Descresing)
-                    {
-                        Query.OrderByDescending(orderLambda);
-                    }
-                    else
-                    {
-                        Query.OrderBy(orderLambda);
-                    }
+                    Query.OrderByDescending(orderLambda);
                 }
-                catch
+                else
                 {
-                    Query.OrderByDescending(x => x.Id);
+                    Query.OrderBy(orderLambda);
                 }
             }
+            catch
+            {
+                Query.OrderByDescending(x => x.Id);
+            }
+        }
+        else
+        {
+            Query.OrderByDescending(x => x.Id);
+        }
+
+        if (page is not null)
+        {
             Query.Skip((page.PageNumber - 1) * page.PageSize).Take(page.PageSize);
         }
     }

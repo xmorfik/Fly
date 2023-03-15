@@ -11,7 +11,7 @@ public class SeatListSpec : Specification<Seat>
 {
     public SeatListSpec(SeatParameter parameter, Page? page)
     {
-        if (page != null)
+        if (parameter.OrderBy is not null)
         {
             try
             {
@@ -29,10 +29,18 @@ public class SeatListSpec : Specification<Seat>
                     Query.OrderBy(orderLambda);
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 Query.OrderByDescending(x => x.Id);
             }
+        }
+        else
+        {
+            Query.OrderByDescending(x => x.Id);
+        }
+
+        if (page != null)
+        {
             Query.Skip((page.PageNumber - 1) * page.PageSize).Take(page.PageSize);
         }
     }

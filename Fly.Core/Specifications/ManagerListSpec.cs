@@ -11,13 +11,47 @@ public class ManagerListSpec : Specification<Manager>
 {
     public ManagerListSpec(ManagerParameter parameter, Page? page)
     {
-        Query.Where(x => parameter.AirlineName == null || x.Airline.Name.Contains(parameter.AirlineName));
-
-        Query.Where(x => parameter.UserName == null || x.User.UserName.Contains(parameter.UserName));
-
         Query.Include(x => x.User);
 
         Query.Include(x => x.Airline);
+
+        if (parameter.AirlineName is not null)
+        {
+            Query.Where(x => x.Airline.Name.Contains(parameter.AirlineName));
+        }
+
+        if (parameter.UserName is not null)
+        {
+            Query.Where(x => x.User.UserName.Contains(parameter.UserName));
+        }
+
+        if (parameter.OrderBy is not null)
+        {
+            try
+            {
+                var property = typeof(Manager).GetTypeInfo().GetProperty(parameter.OrderBy);
+                var orderExpressionParam = Expression.Parameter(typeof(Manager));
+                var propertyAccess = Expression.MakeMemberAccess(orderExpressionParam, property);
+                var conversion = Expression.Convert(propertyAccess, typeof(object));
+                var orderLambda = Expression.Lambda<Func<Manager, object?>>(conversion, orderExpressionParam);
+                if (parameter.Descresing)
+                {
+                    Query.OrderByDescending(orderLambda);
+                }
+                else
+                {
+                    Query.OrderBy(orderLambda);
+                }
+            }
+            catch (Exception ex)
+            {
+                Query.OrderByDescending(x => x.Id);
+            }
+        }
+        else
+        {
+            Query.OrderByDescending(x => x.Id);
+        }
 
         if (page != null)
         {

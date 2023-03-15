@@ -19,19 +19,34 @@ public class FlightListSpec : Specification<Flight>
 
         Query.Include(x => x.Tickets);
 
-        Query.Where(x => parameter.FlightState == null || x.FlightState == parameter.FlightState);
+        if(parameter.FlightState is not null)
+        {
+            Query.Where(x => x.FlightState == parameter.FlightState);
+        }
 
-        Query.Where(x => parameter.DepartureDateTime == null || x.DepartureDateTime <= parameter.DepartureDateTime);
+        if (parameter.DepartureDateTime is not null)
+        {
+            Query.Where(x => x.DepartureDateTime <= parameter.DepartureDateTime);
+        }
 
-        Query.Where(x => parameter.ArrivalDateTime == null || x.ArrivalDateTime >= parameter.ArrivalDateTime);
+        if (parameter.ArrivalDateTime is not null)
+        {
+            Query.Where(x => x.ArrivalDateTime >= parameter.ArrivalDateTime);
+        }
 
-        Query.Where(x => parameter.DepartureCity == null || x.DepartureAirport.City.Name.Contains(parameter.DepartureCity));
+        if (parameter.DepartureCity is not null)
+        {
+            Query.Where(x => x.DepartureAirport.City.Name.Contains(parameter.DepartureCity));
+        }
 
-        Query.Where(x => parameter.ArrivalCity == null || x.ArrivalAirport.City.Name.Contains(parameter.ArrivalCity));
+        if (parameter.ArrivalCity is not null)
+        {
+            Query.Where(x => x.ArrivalAirport.City.Name.Contains(parameter.ArrivalCity));
+        }
 
         Query.AsNoTracking();
 
-        if (page != null)
+        if (parameter.OrderBy is not null)
         {
             try
             {
@@ -49,10 +64,18 @@ public class FlightListSpec : Specification<Flight>
                     Query.OrderBy(orderLambda);
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 Query.OrderByDescending(x => x.Id);
             }
+        }
+        else
+        {
+            Query.OrderByDescending(x => x.Id);
+        }
+
+        if (page is not null)
+        {
             Query.Skip((page.PageNumber - 1) * page.PageSize).Take(page.PageSize);
         }
     }

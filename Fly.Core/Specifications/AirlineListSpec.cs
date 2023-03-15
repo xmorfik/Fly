@@ -11,19 +11,18 @@ public class AirlineListSpec : Specification<Airline>
 {
     public AirlineListSpec(AirlineParameter parameter, Page? page)
     {
-        //to do: rename
-        var paramEx = Expression.Parameter(typeof(PropertyInfo));
-        var memberEx = Expression.PropertyOrField(paramEx, "PropertyType");
-        var constantEx = Expression.Constant(Type.GetType("System.String"));
-        var binaryEx = Expression.Equal(memberEx, constantEx);
-        var stringProp = Expression.Lambda<Func<PropertyInfo, bool>>(binaryEx, paramEx);
+        var param = Expression.Parameter(typeof(PropertyInfo));
+        var member = Expression.PropertyOrField(param, "PropertyType");
+        var constant = Expression.Constant(Type.GetType("System.String"));
+        var equal = Expression.Equal(member, constant);
+        var stringProp = Expression.Lambda<Func<PropertyInfo, bool>>(equal, param);
 
-        var props = typeof(AirlineParameter).GetProperties();
-        var strProps = props.AsQueryable().Where(stringProp).ToList();
+        var properties = typeof(AirlineParameter).GetProperties();
+        var stringProperties = properties.AsQueryable().Where(stringProp).ToList();
 
-        foreach (var prop in strProps)
+        foreach (var prop in stringProperties)
         {
-            if (prop.GetValue(parameter) == null)
+            if (prop.GetValue(parameter) is null)
             {
                 continue;
             }
@@ -40,35 +39,40 @@ public class AirlineListSpec : Specification<Airline>
             }
             catch
             {
-                continue;
             }
         }
 
-        if (page != null)
+        if (parameter.OrderBy is not null)
         {
-            if (parameter.OrderBy != null)
+            try
             {
-                try
+                var property = typeof(Airline).GetTypeInfo().GetProperty(parameter.OrderBy);
+                var orderExpressionParam = Expression.Parameter(typeof(Airline));
+                var propertyAccess = Expression.MakeMemberAccess(orderExpressionParam, property);
+                var conversion = Expression.Convert(propertyAccess, typeof(object));
+                var orderLambda = Expression.Lambda<Func<Airline, object?>>(conversion, orderExpressionParam);
+                if (parameter.Descresing)
                 {
-                    var property = typeof(Airline).GetTypeInfo().GetProperty(parameter.OrderBy);
-                    var orderExpressionParam = Expression.Parameter(typeof(Airline));
-                    var propertyAccess = Expression.MakeMemberAccess(orderExpressionParam, property);
-                    var conversion = Expression.Convert(propertyAccess, typeof(object));
-                    var orderLambda = Expression.Lambda<Func<Airline, object?>>(conversion, orderExpressionParam);
-                    if (parameter.Descresing)
-                    {
-                        Query.OrderByDescending(orderLambda);
-                    }
-                    else
-                    {
-                        Query.OrderBy(orderLambda);
-                    }
+                    Query.OrderByDescending(orderLambda);
                 }
-                catch
+                else
                 {
-                    Query.OrderByDescending(x => x.Id);
+                    Query.OrderBy(orderLambda);
                 }
             }
+            catch
+            {
+                Query.OrderByDescending(x => x.Id);
+            }
+        }
+        else
+        {
+            Query.OrderByDescending(x => x.Id);
+        }
+
+        if (page is not null)
+        {
+            
             Query.Skip((page.PageNumber - 1) * page.PageSize).Take(page.PageSize);
         }
     }

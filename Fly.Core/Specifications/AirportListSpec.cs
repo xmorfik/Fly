@@ -13,39 +13,56 @@ public class AirportListSpec : Specification<Airport>
     {
         Query.Include(x => x.City);
 
-        Query.Where(x => parameter.CityName == null || x.City.Name.Contains(parameter.CityName));
-
-        Query.Where(x => parameter.IsoRegion == null || x.City.IsoRegion.Contains(parameter.IsoRegion));
-
-        Query.Where(x => parameter.IsoCountry == null || x.City.IsoCountry.Contains(parameter.IsoCountry));
-
-        Query.Where(x => parameter.Name == null || x.Name.Contains(parameter.Name));
-
-        if (page != null)
+        if(parameter.CityName is not null)
         {
-            if (parameter.OrderBy != null)
+            Query.Where(x => x.City.Name.Contains(parameter.CityName));
+        }
+
+        if (parameter.IsoRegion is not null)
+        {
+            Query.Where(x => x.City.IsoRegion.Contains(parameter.IsoRegion));
+        }
+
+        if (parameter.IsoCountry is not null)
+        {
+            Query.Where(x => x.City.IsoCountry.Contains(parameter.IsoCountry));
+        }
+
+        if (parameter.Name is not null)
+        {
+            Query.Where(x => x.Name.Contains(parameter.Name));
+        }
+
+        if (parameter.OrderBy is not null)
+        {
+            try
             {
-                try
+                var property = typeof(Airport).GetTypeInfo().GetProperty(parameter.OrderBy);
+                var orderExpressionParam = Expression.Parameter(typeof(Airport));
+                var propertyAccess = Expression.MakeMemberAccess(orderExpressionParam, property);
+                var conversion = Expression.Convert(propertyAccess, typeof(object));
+                var orderLambda = Expression.Lambda<Func<Airport, object?>>(conversion, orderExpressionParam);
+                if (parameter.Descresing)
                 {
-                    var property = typeof(Airport).GetTypeInfo().GetProperty(parameter.OrderBy);
-                    var orderExpressionParam = Expression.Parameter(typeof(Airport));
-                    var propertyAccess = Expression.MakeMemberAccess(orderExpressionParam, property);
-                    var conversion = Expression.Convert(propertyAccess, typeof(object));
-                    var orderLambda = Expression.Lambda<Func<Airport, object?>>(conversion, orderExpressionParam);
-                    if (parameter.Descresing)
-                    {
-                        Query.OrderByDescending(orderLambda);
-                    }
-                    else
-                    {
-                        Query.OrderBy(orderLambda);
-                    }
+                    Query.OrderByDescending(orderLambda);
                 }
-                catch (Exception ex)
+                else
                 {
-                    Query.OrderByDescending(x => x.Id);
+                    Query.OrderBy(orderLambda);
                 }
             }
+            catch (Exception ex)
+            {
+                Query.OrderByDescending(x => x.Id);
+            }
+        }
+        else
+        {
+            Query.OrderByDescending(x => x.Id);
+        }
+
+        if (page is not null)
+        {
             Query.Skip((page.PageNumber - 1) * page.PageSize).Take(page.PageSize);
         }
     }

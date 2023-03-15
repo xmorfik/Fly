@@ -11,9 +11,12 @@ public class CityListSpec : Specification<City>
 {
     public CityListSpec(CityParameter parameter, Page? page)
     {
-        Query.Where(x => parameter.Name == null || x.Name.Contains(parameter.Name));
+        if(parameter.Name is not null)
+        {
+            Query.Where(x => x.Name.Contains(parameter.Name));
+        }
 
-        if (page != null)
+        if (parameter.OrderBy is not null)
         {
             try
             {
@@ -31,10 +34,18 @@ public class CityListSpec : Specification<City>
                     Query.OrderBy(orderLambda);
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 Query.OrderByDescending(x => x.Id);
             }
+        }
+        else
+        {
+            Query.OrderByDescending(x => x.Id);
+        }
+
+        if (page is not null)
+        {
             Query.Skip((page.PageNumber - 1) * page.PageSize).Take(page.PageSize);
         }
     }
