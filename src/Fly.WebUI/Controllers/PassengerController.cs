@@ -69,8 +69,25 @@ public class PassengerController : Controller
     {
         var ticketViewModel = new TicketsViewModel();
         var userId = User.FindFirstValue("sub");
-        var user = await _service.GetListAsync(new PassengerParameter { UserId = userId }, new Page());
-        var response = await _tickets.GetListAsync(new TicketParameter { PassengerId = user?.FirstOrDefault().Id ?? 0 }, new Page());
+        var passengers = await _service.GetListAsync(new PassengerParameter { UserId = userId }, new Page());
+        var passenger = new Passenger();
+
+        try
+        {
+            passenger = passengers?.FirstOrDefault();
+            if (passenger is null)
+            {
+                _logger.LogCritical($"Cant find passanger {userId}");
+                return RedirectToAction("Error", "Home");
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogCritical(ex.Message);
+            return RedirectToAction("Error", "Home");
+        }
+        
+        var response = await _tickets.GetListAsync(new TicketParameter { PassengerId = passenger.Id }, new Page());
 
         ticketViewModel.PagedResponse = response;
         ticketViewModel.MetaData = response.MetaData;
@@ -82,8 +99,25 @@ public class PassengerController : Controller
     public async Task<IActionResult> Tickets(TicketsViewModel ticketViewModel)
     {
         var userId = User.FindFirstValue("sub");
-        var user = await _service.GetListAsync(new PassengerParameter { UserId = userId }, new Page());
-        ticketViewModel.TicketParameter.PassengerId = user.FirstOrDefault().Id ?? 0;
+        var passengers = await _service.GetListAsync(new PassengerParameter { UserId = userId }, new Page());
+        var passenger = new Passenger();
+
+        try
+        {
+            passenger = passengers?.FirstOrDefault();
+            if (passenger is null)
+            {
+                _logger.LogCritical($"Cant find passanger {userId}");
+                return RedirectToAction("Error", "Home");
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogCritical(ex.Message);
+            return RedirectToAction("Error", "Home");
+        }
+
+        ticketViewModel.TicketParameter.PassengerId = passenger.Id;
         var response = await _tickets.GetListAsync(ticketViewModel.TicketParameter, ticketViewModel.MetaData.ToPage());
 
         ticketViewModel.PagedResponse = response;
