@@ -3,7 +3,7 @@ using Fly.Core.Entities;
 using Fly.Shared.DataTransferObjects;
 using Fly.WebUI.Models;
 
-namespace Fly.WebUI;
+namespace Fly.WebUI.Mapping;
 
 public class AutoMapperProfile : Profile
 {

@@ -23,8 +23,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fly.WebAPI", "Fly.WebAPI\Fl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fly.WebUI", "Fly.WebUI\Fly.WebUI.csproj", "{3962C283-5F7A-44D8-9094-8B0D0D776A5F}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{FB4B0D9A-00BA-4030-940B-1A2161AF79E0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fly.IdentityServer", "Fly.IdentityServer\Fly.IdentityServer.csproj", "{94109209-F814-42D6-BC18-512F738A674D}"
 EndProject
 Global
@@ -65,10 +63,6 @@ Global
 		{3962C283-5F7A-44D8-9094-8B0D0D776A5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3962C283-5F7A-44D8-9094-8B0D0D776A5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3962C283-5F7A-44D8-9094-8B0D0D776A5F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FB4B0D9A-00BA-4030-940B-1A2161AF79E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB4B0D9A-00BA-4030-940B-1A2161AF79E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB4B0D9A-00BA-4030-940B-1A2161AF79E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB4B0D9A-00BA-4030-940B-1A2161AF79E0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{94109209-F814-42D6-BC18-512F738A674D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{94109209-F814-42D6-BC18-512F738A674D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94109209-F814-42D6-BC18-512F738A674D}.Release|Any CPU.ActiveCfg = Release|Any CPU
