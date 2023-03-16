@@ -1,6 +1,6 @@
 ﻿namespace Fly.Core;
 
-public static class FlyRoles
+public static class AppRoles
 {
     public const string Passenger = "Passenger";
     public const string Manager = "Manager";

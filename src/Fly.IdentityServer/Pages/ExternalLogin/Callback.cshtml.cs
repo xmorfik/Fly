@@ -161,7 +161,7 @@ public class Callback : PageModel
             }
         }
 
-        filtered.Add(new Claim(Scopes.Role, FlyRoles.Passenger));
+        filtered.Add(new Claim(Scopes.Role, AppRoles.Passenger));
 
         var identityResult = await _userManager.CreateAsync(user);
         if (!identityResult.Succeeded) throw new Exception(identityResult.Errors.First().Description);
