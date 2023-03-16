@@ -17,7 +17,7 @@ public class AircraftListSpec : Specification<Aircraft>
 
         Query.Include(x => x.Seats);
 
-        if(parameter.AircraftState is not null)
+        if (parameter.AircraftState is not null)
         {
             Query.Where(x => x.AircraftState == parameter.AircraftState);
         }

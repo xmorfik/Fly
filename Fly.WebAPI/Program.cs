@@ -2,6 +2,7 @@ using Fly.WebAPI.Extensions;
 using Fly.WebAPI.Hubs;
 using Fly.WebAPI.Middlewares;
 using Hangfire;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,11 +18,11 @@ builder.Services.ConfigureRedis(builder.Configuration);
 builder.Services.AddSignalR();
 builder.Services.ConfigureHangfire(builder.Configuration);
 
-builder.Services.AddControllers().AddNewtonsoftJson(x =>
-{
-    x.SerializerSettings.MaxDepth = 1;
-    x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-});
+builder.Services.AddControllers().AddJsonOptions(
+    o =>
+    {
+        o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+    });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwagger();
@@ -32,6 +33,7 @@ var logger = LoggerFactory.Create(config =>
 {
     config.AddConsole();
 }).CreateLogger("ExceptionHandler");
+
 app.ConfigureExceptionHandler(logger);
 
 //using (var scope = app.Services.CreateScope())
@@ -45,7 +47,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    //builder.Configuration.AddUserSecrets<Program>();
 }
 
 app.UseHttpsRedirection();
@@ -53,12 +54,6 @@ app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.Use(async (context, next) =>
-{
-    Thread.CurrentPrincipal = context.User;
-    await next(context);
-});
 
 app.UseSwagger();
 app.UseSwaggerUI(s =>

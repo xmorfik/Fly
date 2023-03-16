@@ -19,7 +19,7 @@ public class FlightListSpec : Specification<Flight>
 
         Query.Include(x => x.Tickets);
 
-        if(parameter.FlightState is not null)
+        if (parameter.FlightState is not null)
         {
             Query.Where(x => x.FlightState == parameter.FlightState);
         }

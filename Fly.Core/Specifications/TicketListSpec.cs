@@ -11,7 +11,7 @@ public class TicketListSpec : Specification<Ticket>
 {
     public TicketListSpec(TicketParameter parameter, Page? page)
     {
-       
+
         Query.Include(x => x.Seat);
 
         Query.Include(x => x.Passenger);
@@ -20,7 +20,7 @@ public class TicketListSpec : Specification<Ticket>
 
         Query.Include(x => x.Flight).ThenInclude(x => x.DepartureAirport);
 
-        if(parameter.TicketState is not null)
+        if (parameter.TicketState is not null)
         {
             Query.Where(x => x.TicketState == parameter.TicketState);
         }
@@ -43,7 +43,7 @@ public class TicketListSpec : Specification<Ticket>
 
         if (parameter.DepartureCity is not null)
         {
-            Query.Where(x =>  x.Flight.DepartureAirport.City.Name.Contains(parameter.DepartureCity));
+            Query.Where(x => x.Flight.DepartureAirport.City.Name.Contains(parameter.DepartureCity));
         }
 
         if (parameter.ArrivalCity is not null)

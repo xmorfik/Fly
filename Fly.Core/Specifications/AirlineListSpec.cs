@@ -72,7 +72,7 @@ public class AirlineListSpec : Specification<Airline>
 
         if (page is not null)
         {
-            
+
             Query.Skip((page.PageNumber - 1) * page.PageSize).Take(page.PageSize);
         }
     }

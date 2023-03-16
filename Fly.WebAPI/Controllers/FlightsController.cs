@@ -5,7 +5,7 @@ using Fly.Core.Services;
 using Fly.WebAPI.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Fly.WebAPI.Controllers;
 
@@ -25,7 +25,8 @@ public class FlightsController : ControllerBase
     public async Task<ICollection<Flight>> Get([FromQuery] FlightParameter parameter, [FromQuery] Page page)
     {
         var result = await _service.GetListAsync(parameter, page);
-        Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(result.MetaData));
+        var metaData = JsonSerializer.Serialize(result.MetaData);
+        Response.Headers.Add("X-Pagination", metaData);
         return result;
     }
 

@@ -11,7 +11,7 @@ public class CityListSpec : Specification<City>
 {
     public CityListSpec(CityParameter parameter, Page? page)
     {
-        if(parameter.Name is not null)
+        if (parameter.Name is not null)
         {
             Query.Where(x => x.Name.Contains(parameter.Name));
         }

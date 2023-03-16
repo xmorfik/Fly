@@ -1,12 +1,13 @@
-﻿using Fly.Core.Entities;
+﻿using Fly.Core;
+using Fly.Core.Entities;
 using Fly.Core.Pagination;
 using Fly.Core.Parameters;
 using Fly.Core.Services;
 using Fly.WebAPI.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace Fly.WebAPI.Controllers;
 
@@ -30,8 +31,8 @@ public class AircraftsController : ControllerBase
     {
         try
         {
-            var claims = ClaimsPrincipal.Current.Identities.First().Claims.ToList();
-            var airlineId = claims?.FirstOrDefault(x => x.Type.Equals("Airline", StringComparison.OrdinalIgnoreCase))?.Value;
+            var airlineId = User.FindFirstValue(Claims.Airline);
+
             if (airlineId != null)
             {
                 parameter.AirlineId = int.Parse(airlineId);
@@ -43,7 +44,8 @@ public class AircraftsController : ControllerBase
         }
 
         var result = await _service.GetListAsync(parameter, page);
-        Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(result.MetaData));
+        var metaData = JsonSerializer.Serialize(result.MetaData);
+        Response.Headers.Add("X-Pagination", metaData);
         return result;
     }
 
@@ -60,8 +62,8 @@ public class AircraftsController : ControllerBase
     {
         try
         {
-            var claims = ClaimsPrincipal.Current.Identities.First().Claims.ToList();
-            var airlineId = claims?.FirstOrDefault(x => x.Type.Equals("Airline", StringComparison.OrdinalIgnoreCase))?.Value;
+            var airlineId = User.FindFirstValue(Claims.Airline);
+
             if (airlineId != null)
             {
                 value.AirlineId = int.Parse(airlineId);
