@@ -60,6 +60,15 @@ public class FlightsController : Controller
         return View(flightViewModel);
     }
 
+    [HttpPost]
+    public async Task<IActionResult> Index(FlightsViewModel flightViewModel)
+    {
+        var response = await _service.GetListAsync(flightViewModel.FlightParameter, flightViewModel.MetaData.ToPage());
+        flightViewModel.PagedResponse = response;
+        flightViewModel.MetaData = response.MetaData;
+        return View(flightViewModel);
+    }
+
     [HttpGet]
     public async Task<IActionResult> Create()
     {
@@ -83,11 +92,29 @@ public class FlightsController : Controller
         return View();
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(Flight item)
+    {
+        Response.Cookies.Delete("SelectedAircraftId");
+        Response.Cookies.Delete("SelectedAirportId");
+
+        await _service.CreateAsync(item);
+        return RedirectToAction("index");
+    }
+
     [HttpGet]
     public async Task<IActionResult> Delete(int id)
     {
         var item = await _service.GetAsync(id);
         return View(item.Data);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(Flight item)
+    {
+        await _service.DeleteAsync(item.Id ?? 0);
+        return RedirectToAction("index");
     }
 
     [HttpGet]
@@ -102,34 +129,6 @@ public class FlightsController : Controller
     {
         var item = await _service.GetAsync(id);
         return View(item.Data);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Index(FlightsViewModel flightViewModel)
-    {
-        var response = await _service.GetListAsync(flightViewModel.FlightParameter, flightViewModel.MetaData.ToPage());
-        flightViewModel.PagedResponse = response;
-        flightViewModel.MetaData = response.MetaData;
-        return View(flightViewModel);
-    }
-
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Flight item)
-    {
-        Response.Cookies.Delete("SelectedAircraftId");
-        Response.Cookies.Delete("SelectedAirportId");
-
-        await _service.CreateAsync(item);
-        return RedirectToAction("index");
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Delete(Flight item)
-    {
-        await _service.DeleteAsync(item.Id ?? 0);
-        return RedirectToAction("index");
     }
 
     [HttpPost]

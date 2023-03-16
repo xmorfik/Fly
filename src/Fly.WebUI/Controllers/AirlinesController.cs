@@ -32,10 +32,27 @@ public class AirlinesController : Controller
         return View(airlineViewModel);
     }
 
+    [HttpPost]
+    public async Task<IActionResult> Index(AirlinesViewModel airlineViewModel)
+    {
+        var response = await _service.GetListAsync(airlineViewModel.AirlineParameter, airlineViewModel.MetaData.ToPage());
+        airlineViewModel.PagedResponse = response;
+        airlineViewModel.MetaData = response.MetaData;
+        return View(airlineViewModel);
+    }
+
     [HttpGet]
     public async Task<IActionResult> Create()
     {
         return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(Airline item)
+    {
+        await _service.CreateAsync(item);
+        return RedirectToAction("index");
     }
 
     [HttpGet]
@@ -43,6 +60,13 @@ public class AirlinesController : Controller
     {
         var item = await _service.GetAsync(id);
         return View(item.Data);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(Airline item)
+    {
+        await _service.DeleteAsync(item.Id ?? 0);
+        return RedirectToAction("index");
     }
 
     [HttpGet]
@@ -57,32 +81,6 @@ public class AirlinesController : Controller
     {
         var item = await _service.GetAsync(id);
         return View(item.Data);
-    }
-
-
-    [HttpPost]
-    public async Task<IActionResult> Index(AirlinesViewModel airlineViewModel)
-    {
-        var response = await _service.GetListAsync(airlineViewModel.AirlineParameter, airlineViewModel.MetaData.ToPage());
-        airlineViewModel.PagedResponse = response;
-        airlineViewModel.MetaData = response.MetaData;
-        return View(airlineViewModel);
-    }
-
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Airline item)
-    {
-        await _service.CreateAsync(item);
-        return RedirectToAction("index");
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Delete(Airline item)
-    {
-        await _service.DeleteAsync(item.Id ?? 0);
-        return RedirectToAction("index");
     }
 
     [HttpPost]

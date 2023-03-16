@@ -42,6 +42,17 @@ public class AircraftsController : Controller
         return View(aircraftViewModel);
     }
 
+    [HttpPost]
+    public async Task<IActionResult> Index(AircraftsViewModel aircraftViewModel)
+    {
+        var response = await _service.GetListAsync(aircraftViewModel.AircraftParameter, aircraftViewModel.MetaData.ToPage());
+
+        aircraftViewModel.PagedResponse = response;
+        aircraftViewModel.MetaData = response.MetaData;
+
+        return View(aircraftViewModel);
+    }
+
     [HttpGet]
     public async Task<IActionResult> Create()
     {
@@ -63,11 +74,31 @@ public class AircraftsController : Controller
         return View();
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(AircarftForCreationDto item)
+    {
+        Response.Cookies.Delete("SelectedAirlineId");
+        Response.Cookies.Delete("SelectedAirportId");
+
+        var result = _mapper.Map<Aircraft>(item);
+        await _service.CreateAsync(result);
+
+        return RedirectToAction("index");
+    }
+
     [HttpGet]
     public async Task<IActionResult> Delete(int id)
     {
         var item = await _service.GetAsync(id);
         return View(item.Data);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(Aircraft item)
+    {
+        await _service.DeleteAsync(item.Id ?? 0);
+        return RedirectToAction("index");
     }
 
     [HttpGet]
@@ -82,38 +113,6 @@ public class AircraftsController : Controller
     {
         var item = await _service.GetAsync(id);
         return View(item.Data);
-    }
-
-
-    [HttpPost]
-    public async Task<IActionResult> Index(AircraftsViewModel aircraftViewModel)
-    {
-        var response = await _service.GetListAsync(aircraftViewModel.AircraftParameter, aircraftViewModel.MetaData.ToPage());
-
-        aircraftViewModel.PagedResponse = response;
-        aircraftViewModel.MetaData = response.MetaData;
-
-        return View(aircraftViewModel);
-    }
-
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(AircarftForCreationDto item)
-    {
-        Response.Cookies.Delete("SelectedAirlineId");
-        Response.Cookies.Delete("SelectedAirportId");
-
-        var result = _mapper.Map<Aircraft>(item);
-        await _service.CreateAsync(result);
-        return RedirectToAction("index");
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Delete(Aircraft item)
-    {
-        await _service.DeleteAsync(item.Id ?? 0);
-        return RedirectToAction("index");
     }
 
     [HttpPost]

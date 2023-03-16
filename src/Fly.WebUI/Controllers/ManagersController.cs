@@ -5,6 +5,7 @@ using Fly.Core.Services;
 using Fly.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace Fly.WebUI.Controllers;
 
@@ -12,10 +13,14 @@ namespace Fly.WebUI.Controllers;
 public class ManagersController : Controller
 {
     private readonly IService<Manager, ManagerParameter> _service;
+    private readonly AuthorityUri _authorityUri;
 
-    public ManagersController(IService<Manager, ManagerParameter> service)
+    public ManagersController(
+        IService<Manager, ManagerParameter> service,
+        IOptions<AuthorityUri> options)
     {
         _service = service;
+        _authorityUri = options.Value;
     }
 
     [HttpGet]
@@ -29,10 +34,20 @@ public class ManagersController : Controller
         return View(managerViewModel);
     }
 
+    [HttpPost]
+    public async Task<IActionResult> Index(ManagersViewModel managerViewModel)
+    {
+        var response = await _service.GetListAsync(managerViewModel.ManagerParameter, managerViewModel.MetaData.ToPage());
+        managerViewModel.PagedResponse = response;
+        managerViewModel.MetaData = response.MetaData;
+
+        return View(managerViewModel);
+    }
+
     [HttpGet]
     public async Task<IActionResult> Create()
     {
-        return Redirect("https://localhost:5004/account/register/manager");
+        return Redirect(_authorityUri.Uri + "account/register/manager");
     }
 
     [HttpGet]
@@ -40,6 +55,13 @@ public class ManagersController : Controller
     {
         var item = await _service.GetAsync(id);
         return View(item.Data);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(Manager item)
+    {
+        await _service.DeleteAsync(item.Id ?? 0);
+        return RedirectToAction("index");
     }
 
     [HttpGet]
@@ -54,23 +76,6 @@ public class ManagersController : Controller
     {
         var item = await _service.GetAsync(id);
         return View(item.Data);
-    }
-
-
-    [HttpPost]
-    public async Task<IActionResult> Index(ManagersViewModel managerViewModel)
-    {
-        var response = await _service.GetListAsync(managerViewModel.ManagerParameter, managerViewModel.MetaData.ToPage());
-        managerViewModel.PagedResponse = response;
-        managerViewModel.MetaData = response.MetaData;
-        return View(managerViewModel);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Delete(Manager item)
-    {
-        await _service.DeleteAsync(item.Id ?? 0);
-        return RedirectToAction("index");
     }
 
     [HttpPost]

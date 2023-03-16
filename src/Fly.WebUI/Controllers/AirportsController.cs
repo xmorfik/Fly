@@ -36,6 +36,16 @@ public class AirportsController : Controller
         return View(airportViewModel);
     }
 
+    [HttpPost]
+    public async Task<IActionResult> Index(AirportsViewModel airportViewModel)
+    {
+        var response = await _service.GetListAsync(airportViewModel.AirportParameter, airportViewModel.MetaData.ToPage());
+        airportViewModel.PagedResponse = response;
+        airportViewModel.MetaData = response.MetaData;
+
+        return View(airportViewModel);
+    }
+
     [HttpGet]
     public async Task<IActionResult> Create()
     {
@@ -51,11 +61,29 @@ public class AirportsController : Controller
         return View();
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(Airport item)
+    {
+        Response.Cookies.Delete("SelectedCityId");
+
+        await _service.CreateAsync(item);
+
+        return RedirectToAction("index");
+    }
+
     [HttpGet]
     public async Task<IActionResult> Delete(int id)
     {
         var item = await _service.GetAsync(id);
         return View(item.Data);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(Airport item)
+    {
+        await _service.DeleteAsync(item.Id ?? 0);
+        return RedirectToAction("index");
     }
 
     [HttpGet]
@@ -70,34 +98,6 @@ public class AirportsController : Controller
     {
         var item = await _service.GetAsync(id);
         return View(item.Data);
-    }
-
-
-    [HttpPost]
-    public async Task<IActionResult> Index(AirportsViewModel airportViewModel)
-    {
-        var response = await _service.GetListAsync(airportViewModel.AirportParameter, airportViewModel.MetaData.ToPage());
-        airportViewModel.PagedResponse = response;
-        airportViewModel.MetaData = response.MetaData;
-        return View(airportViewModel);
-    }
-
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Airport item)
-    {
-        Response.Cookies.Delete("SelectedCityId");
-
-        await _service.CreateAsync(item);
-        return RedirectToAction("index");
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Delete(Airport item)
-    {
-        await _service.DeleteAsync(item.Id ?? 0);
-        return RedirectToAction("index");
     }
 
     [HttpPost]

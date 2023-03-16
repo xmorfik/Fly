@@ -32,10 +32,28 @@ public class CitiesController : Controller
         return View(cityViewModel);
     }
 
+    [HttpPost]
+    public async Task<IActionResult> Index(CitiesViewModel cityViewModel)
+    {
+        var response = await _service.GetListAsync(cityViewModel.CityParameter, cityViewModel.MetaData.ToPage());
+        cityViewModel.PagedResponse = response;
+        cityViewModel.MetaData = response.MetaData;
+
+        return View(cityViewModel);
+    }
+
     [HttpGet]
     public async Task<IActionResult> Create()
     {
         return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(City item)
+    {
+        await _service.CreateAsync(item);
+        return RedirectToAction("index");
     }
 
     [HttpGet]
@@ -43,6 +61,13 @@ public class CitiesController : Controller
     {
         var item = await _service.GetAsync(id);
         return View(item.Data);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(City item)
+    {
+        await _service.DeleteAsync(item.Id ?? 0);
+        return RedirectToAction("index");
     }
 
     [HttpGet]
@@ -57,30 +82,6 @@ public class CitiesController : Controller
     {
         var item = await _service.GetAsync(id);
         return View(item.Data);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Index(CitiesViewModel cityViewModel)
-    {
-        var response = await _service.GetListAsync(cityViewModel.CityParameter, cityViewModel.MetaData.ToPage());
-        cityViewModel.PagedResponse = response;
-        cityViewModel.MetaData = response.MetaData;
-        return View(cityViewModel);
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(City item)
-    {
-        await _service.CreateAsync(item);
-        return RedirectToAction("index");
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Delete(City item)
-    {
-        await _service.DeleteAsync(item.Id ?? 0);
-        return RedirectToAction("index");
     }
 
     [HttpPost]

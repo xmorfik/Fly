@@ -39,6 +39,15 @@ public class SeatsController : Controller
         return View(seatViewModel);
     }
 
+    [HttpPost]
+    public async Task<IActionResult> Index(SeatsViewModel seatViewModel)
+    {
+        var response = await _service.GetListAsync(seatViewModel.SeatParameter, seatViewModel.MetaData.ToPage());
+        seatViewModel.PagedResponse = response;
+        seatViewModel.MetaData = response.MetaData;
+        return View(seatViewModel);
+    }
+
     [HttpGet]
     public async Task<IActionResult> Create(int? id)
     {
@@ -80,11 +89,28 @@ public class SeatsController : Controller
         return View();
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(SeatsDto item)
+    {
+        Response.Cookies.Delete("SelectedAircraftId");
+
+        await _seatsGenerator.Generate(item);
+        return RedirectToAction("Index", "Aircrafts");
+    }
+
     [HttpGet]
     public async Task<IActionResult> Delete(int id)
     {
         var item = await _service.GetAsync(id);
         return View(item.Data);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(Seat item)
+    {
+        await _service.DeleteAsync(item.Id ?? 0);
+        return RedirectToAction("index");
     }
 
     [HttpGet]
@@ -99,34 +125,6 @@ public class SeatsController : Controller
     {
         var item = await _service.GetAsync(id);
         return View(item.Data);
-    }
-
-
-    [HttpPost]
-    public async Task<IActionResult> Index(SeatsViewModel seatViewModel)
-    {
-        var response = await _service.GetListAsync(seatViewModel.SeatParameter, seatViewModel.MetaData.ToPage());
-        seatViewModel.PagedResponse = response;
-        seatViewModel.MetaData = response.MetaData;
-        return View(seatViewModel);
-    }
-
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(SeatsDto item)
-    {
-        Response.Cookies.Delete("SelectedAircraftId");
-
-        await _seatsGenerator.Generate(item);
-        return RedirectToAction("Index", "Aircrafts");
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Delete(Seat item)
-    {
-        await _service.DeleteAsync(item.Id ?? 0);
-        return RedirectToAction("index");
     }
 
     [HttpPost]

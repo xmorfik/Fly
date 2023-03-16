@@ -42,6 +42,15 @@ public class TicketsController : Controller
         return View(ticketViewModel);
     }
 
+    [HttpPost]
+    public async Task<IActionResult> Index(TicketsViewModel ticketViewModel)
+    {
+        var response = await _service.GetListAsync(ticketViewModel.TicketParameter, ticketViewModel.MetaData.ToPage());
+        ticketViewModel.PagedResponse = response;
+        ticketViewModel.MetaData = response.MetaData;
+        return View(ticketViewModel);
+    }
+
     [HttpGet]
     public async Task<IActionResult> Create(int? id)
     {
@@ -83,11 +92,27 @@ public class TicketsController : Controller
         return View();
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(TicketsDto item)
+    {
+        Response.Cookies.Delete("SelectedFlightId");
+        await _ticketsGenerator.Generate(item);
+        return RedirectToAction("index");
+    }
+
     [HttpGet]
     public async Task<IActionResult> Delete(int id)
     {
         var item = await _service.GetAsync(id);
         return View(item.Data);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(Ticket item)
+    {
+        await _service.DeleteAsync(item.Id ?? 0);
+        return RedirectToAction("index");
     }
 
     [HttpGet]
@@ -102,33 +127,6 @@ public class TicketsController : Controller
     {
         var item = await _service.GetAsync(id);
         return View(item.Data);
-    }
-
-
-    [HttpPost]
-    public async Task<IActionResult> Index(TicketsViewModel ticketViewModel)
-    {
-        var response = await _service.GetListAsync(ticketViewModel.TicketParameter, ticketViewModel.MetaData.ToPage());
-        ticketViewModel.PagedResponse = response;
-        ticketViewModel.MetaData = response.MetaData;
-        return View(ticketViewModel);
-    }
-
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(TicketsDto item)
-    {
-        Response.Cookies.Delete("SelectedFlightId");
-        await _ticketsGenerator.Generate(item);
-        return RedirectToAction("index");
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Delete(Ticket item)
-    {
-        await _service.DeleteAsync(item.Id ?? 0);
-        return RedirectToAction("index");
     }
 
     [HttpPost]
