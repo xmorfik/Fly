@@ -2,7 +2,7 @@
 using Fly.Core.Entities;
 using Fly.Shared.DataTransferObjects;
 
-namespace Fly.IdentityServer;
+namespace Fly.IdentityServer.Mapping;
 
 public class AutoMapperProfile : Profile
 {
