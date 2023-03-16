@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+
+@model Fly.Core.Entities.Airline
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+<div class="card  mx-auto" style="width:1000px">
+    <img class="card-img-top" src="~/airline.jpg">
+    <div class="card-body">
+        <form asp-action="Create">
+            <br />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">@SharedLocalizer["Name"]</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label">@SharedLocalizer["Phone"]</label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="RegistrationAddress" class="control-label">@SharedLocalizer["Registration Address"]</label>
+                <input asp-for="RegistrationAddress" class="form-control" />
+                <span asp-validation-for="RegistrationAddress" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="@SharedLocalizer["Create"]" class="btn btn-primary" />
+            </div>
+        </form>
+        <br />
+        <div>
+            <a asp-action="Index">@SharedLocalizer["Back"]</a>
+        </div>
+    </div>
+</div>
+
+@Html.AntiForgeryToken();
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

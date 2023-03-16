@@ -1,0 +1,33 @@
+﻿@model Fly.Core.Entities.Manager
+@using Microsoft.AspNetCore.Mvc.Localization;
+
+
+<div class="card  mx-auto" style="width:1000px">
+    <img class="card-img-top" src="~/manager.jpg">
+    <div class="card-body">
+        <form asp-action="Edit">
+            <br />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AirlineId" class="control-label"></label>
+                <input asp-for="AirlineId" class="form-control" />
+                <span asp-validation-for="AirlineId" class="text-danger"></span>
+            </div><br />
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@Html.AntiForgeryToken();
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

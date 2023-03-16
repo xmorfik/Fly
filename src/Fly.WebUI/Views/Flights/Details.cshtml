@@ -1,0 +1,133 @@
+﻿@using Fly.Core.Enums;
+@model Fly.Core.Entities.Flight
+@using Microsoft.AspNetCore.Mvc.Localization;
+
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+<div class="card mx-auto" style="width:1000px">
+    <img class="card-img-top" src="~/flight.jpg">
+    <div class="card-body">
+        <dl class="row">
+            <dt class = "col-sm-2">
+                @SharedLocalizer["Departure Airport"]
+            </dt>
+            <dd class = "col-sm-10">
+                @SharedLocalizer["Airport"]
+                @Html.DisplayFor(model => model.DepartureAirport.Name) 
+                    <br />
+                @SharedLocalizer["City"]
+                @Html.DisplayFor(model => model.DepartureAirport.City.Name) 
+                    <br />
+                @SharedLocalizer["Country"]
+                @Html.DisplayFor(model => model.DepartureAirport.City.IsoCountry)
+            </dd>
+            <dt class = "col-sm-2">
+                @SharedLocalizer["Arrival Airport"]
+            </dt>
+            <dd class = "col-sm-10">
+                @SharedLocalizer["Airport"]
+                @Html.DisplayFor(model => model.ArrivalAirport.Name) 
+                <br />
+                @SharedLocalizer["City"]
+                @Html.DisplayFor(model => model.ArrivalAirport.City.Name)
+                <br />
+                @SharedLocalizer["Country"]
+                @Html.DisplayFor(model => model.ArrivalAirport.City.IsoCountry)
+            </dd>
+            <dt class = "col-sm-2">
+                @SharedLocalizer["Aircraft"]
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Aircraft.ModelType)
+                <br />
+                @Html.DisplayFor(model => model.Aircraft.AircraftState)
+                </dd>
+            <dt class = "col-sm-2">
+                @SharedLocalizer["Departure Date"]
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.DepartureDateTime)
+            </dd>
+            <dt class = "col-sm-2">
+                @SharedLocalizer["Arrival Date"]
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.ArrivalDateTime)
+            </dd>
+            <dt class = "col-sm-2">
+               Id
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Id)
+            </dd>  
+        </dl>
+        <div class="card">
+            <div id="map" style="width: 100%; height: 500px;"></div>
+        </div>
+        <br />
+        <table class="table rounded rounded-6 overflow-hidden table-sm table-dark table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @SharedLocalizer["Price"]
+                    </th>
+                    <th>
+                        @SharedLocalizer["State"]
+                    </th>
+                    <th>
+                        @SharedLocalizer["Class"]
+                    </th>
+                    <th>
+                        @SharedLocalizer["Position"]
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Tickets)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TicketState)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Seat.SeatClass)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Seat.Row)  
+                            @Html.DisplayFor(modelItem => item.Seat.Column)
+                        </td>
+                        <td>
+                            @if(User.IsInRole("Passenger") && item.TicketState == TicketState.Active)
+                            {
+                                @Html.ActionLink(SharedLocalizer["Buy"].Value, "Payoff", "Passenger", new { id = item.Id})
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const map = L.map('map').setView([@Model.ArrivalAirport.Latitude, @Model.ArrivalAirport.Longitude], 6);
+
+    const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    L.marker([@Model.DepartureAirport.Latitude, @Model.DepartureAirport.Longitude]).addTo(map)
+        .bindPopup('@(Model.DepartureAirport.Name)')
+        .openPopup();
+
+    L.marker([@Model.ArrivalAirport.Latitude, @Model.ArrivalAirport.Longitude]).addTo(map)
+        .bindPopup('@(Model.ArrivalAirport.Name)')
+        .openPopup();
+</script>

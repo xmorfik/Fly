@@ -1,0 +1,44 @@
+﻿@model Fly.Core.Entities.Seat
+@using Microsoft.AspNetCore.Mvc.Localization;
+
+
+<div class="card  mx-auto" style="width:600px">
+    <div class="card-body">
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Row)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Row)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Column)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Column)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SeatClass)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SeatClass)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AircraftId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AircraftId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="submit" value="Delete" class="btn btn-danger" /> 
+    </form>
+</div>
+</div>

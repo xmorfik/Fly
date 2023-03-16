@@ -1,0 +1,126 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+
+@model Fly.Core.Entities.Airline
+
+<div class="card  mx-auto" style="width:1000px">
+    <img class="card-img-top" src="~/airline.jpg">
+    <div class="card-body">
+        <dl class="row">
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Phone)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Phone)
+            </dd>
+            <dt class = "col-sm-2">
+                Address
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.RegistrationAddress)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+        </dl>
+        <div class="container">
+            <div class="col">
+                <table class="table rounded rounded-6 overflow-hidden table-sm table-dark table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                Model Type
+                            </th>
+                            <th>
+                                Serial Number
+                            </th>
+                            <th>
+                                Manufacture Date
+                            </th>
+                            <th>
+                                Flight Hours
+                            </th>
+                            <th>
+                                Aircraft State
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Aircrafts)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ModelType)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SerialNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ManufactureDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FlightHours)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AircraftState)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Details", "Details","Aircrafts", new { id=item.Id })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col">
+                <table class="table rounded rounded-6 overflow-hidden table-sm table-dark table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                UserName
+                            </th>
+                            <th>
+                                User Email
+                            </th>
+                            <th>
+                                Phone Number
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Managers)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.UserName)
+                                </td>
+                                
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.Email)
+                                </td>
+                                
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.PhoneNumber)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Details", "Details", "Managers", new { id=item.Id })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

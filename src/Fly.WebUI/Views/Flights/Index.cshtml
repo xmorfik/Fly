@@ -1,0 +1,169 @@
+﻿@using Fly.Core.Entities;
+@using Microsoft.AspNetCore.Mvc.Localization;
+@model FlightsViewModel
+
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+<div class="card text-center mx-auto" style="width:1000px">
+    <img class="card-img-top" src="~/flight.jpg">
+    <div class="card-body">
+        <form asp-action="Index">
+            <div class="row">
+                <div class="col">
+                    <label class="control-label">@SharedLocalizer["Time"]</label>
+                    <input asp-for="FlightParameter.DepartureDateTime" class="form-control" />
+                </div>
+                <div class="col">
+                    <label class="control-label">@SharedLocalizer["Departure City"]</label>
+                    <input asp-for="FlightParameter.DepartureCity" class="form-control" />
+                </div>
+                <div class="col">
+                    <label class="control-label">@SharedLocalizer["Arrival City"]</label>
+                    <input asp-for="FlightParameter.ArrivalCity" class="form-control" />
+                </div>
+                @Html.HiddenFor(x=>x.RedirectUri)
+                @Html.HiddenFor(x=>x.IsSelect)
+
+                <div class = "row">
+                    <div class="col">
+                        <label>@SharedLocalizer["Order By"]</label>
+                        @Html.DropDownListFor(x => x.FlightParameter.OrderBy,
+                        new List<SelectListItem>
+                        {
+                        new SelectListItem{ Value = "Id", Text= "Id"},
+                        new SelectListItem{ Value = "FlightState", Text= SharedLocalizer["Flight State"].Value},
+                        new SelectListItem{ Value = "DepartureDateTime", Text= SharedLocalizer["Departure Date"].Value},
+                        new SelectListItem{ Value = "ArrivalDateTime", Text= SharedLocalizer["Arrival Date"].Value}
+                        }, new { @class = "form-select"} )
+                    </div>
+
+                    <div class="col">
+                        <br />
+                        <label>@SharedLocalizer["By Decreasing"]</label>
+                        @Html.CheckBoxFor(x=>x.FlightParameter.Descresing)
+                    </div>
+                </div>
+                
+                <div class="col">
+                    <br/>
+                    <input type="submit" value=@SharedLocalizer["Search"] class="btn btn-primary" />
+                </div>
+                <br />
+                <div class="card-body">
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Manager"))
+                    {
+                        @Html.ActionLink(SharedLocalizer["Create"].Value, "Create")
+                    }
+                    <table class="table rounded rounded-6 overflow-hidden table-sm table-dark table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @SharedLocalizer["Departure Airport"]
+                                </th>
+                                <th>
+                                    @SharedLocalizer["Arrival Airport"]
+                                </th>
+                                <th>
+                                    @SharedLocalizer["Aircraft"]
+                                </th>
+                                <th>
+                                    @SharedLocalizer["Departure Date"]
+                                </th>
+                                <th>
+                                    @SharedLocalizer["Arrival Date"]
+                                </th>
+                                <th>
+                                    @SharedLocalizer["Flight State"]
+                                </th>
+                                <th>
+                                    @SharedLocalizer["Tickets"]
+                                </th>
+
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PagedResponse)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DepartureAirport.Name)
+                                    @Html.DisplayFor(modelItem => item.DepartureAirport.City.IsoCountry)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ArrivalAirport.Name)
+                                    @Html.DisplayFor(modelItem => item.ArrivalAirport.City.IsoCountry)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Aircraft.ModelType)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DepartureDateTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ArrivalDateTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FlightState)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Tickets.Count)
+                                </td>
+                                <td>
+                                    @if (Model.IsSelect)
+                                    {
+                                        @Html.ActionLink(SharedLocalizer["Select"].Value,"Select", new { id = item.Id, redirectUri = Model.RedirectUri})
+                                    }
+                                    else
+                                    {
+                                        @if (User.IsInRole("Administrator"))
+                                        {
+                                            @Html.ActionLink(SharedLocalizer["Edit"].Value, "Edit", new { id = item.Id })
+                                            <br />
+                                            @Html.ActionLink(SharedLocalizer["Delete"].Value, "Delete", new { id = item.Id })
+                                        }
+                                    }
+                                    @Html.ActionLink(SharedLocalizer["Details"].Value, "Details", new { id=item.Id })
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="col">
+                    <input asp-for="MetaData.PageSize" min="1" value="@Model.MetaData.PageSize" class="form-control" />
+                </div>
+                <div class="col">
+                    <input hidden="true" asp-for="MetaData.CurrentPage" value="@Model.MetaData.CurrentPage" id="pageNumber" class="form-control" />
+                </div>
+                @if (Model.MetaData.HasPrevious)
+                {
+                    <div class="col">
+                        <input type="submit" value="@SharedLocalizer["Prev"]" onclick="decrementValue()" class="btn btn-primary" />
+                    </div>
+                }
+                @if (Model.MetaData.HasNext)
+                {
+                    <div class="col">
+                        <input type="submit" value="@SharedLocalizer["Next"]" onclick="incrementValue()" class="btn btn-primary" />
+                    </div>
+                }
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function incrementValue(){
+        var value = parseInt(document.getElementById('pageNumber').value, 10);
+        value++;
+        document.getElementById('pageNumber').value = value;
+    }
+
+    function decrementValue() {
+        var value = parseInt(document.getElementById('pageNumber').value, 10);
+        value--;
+        document.getElementById('pageNumber').value = value;
+    }
+</script>

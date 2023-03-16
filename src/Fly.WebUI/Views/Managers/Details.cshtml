@@ -1,0 +1,30 @@
+﻿@model Fly.Core.Entities.Manager
+@using Microsoft.AspNetCore.Mvc.Localization;
+
+
+<div class="card mx-auto" style="width:600px">
+    <img class="card-img-top" src="~/manager.jpg">
+    <div class="card-body">
+    <dl class="row">
+        <dt class = "col-sm-2">
+            AirlineId
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Airline.Name)
+        </dd>
+
+        <dt class = "col-sm-2">
+            Email
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.User.Email)
+        </dd>
+
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+    </dl>
+</div>

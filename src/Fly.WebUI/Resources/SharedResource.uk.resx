@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Address" xml:space="preserve">
+    <value>Адреса</value>
+  </data>
+  <data name="Admin" xml:space="preserve">
+    <value>Адмін</value>
+  </data>
+  <data name="Aircraft" xml:space="preserve">
+    <value>Літак</value>
+  </data>
+  <data name="Aircraft State" xml:space="preserve">
+    <value>Статус</value>
+  </data>
+  <data name="Aircrafts" xml:space="preserve">
+    <value>Літаки</value>
+  </data>
+  <data name="Airline" xml:space="preserve">
+    <value>Авіакомпанія</value>
+  </data>
+  <data name="Airlines" xml:space="preserve">
+    <value>Авіакомпанії</value>
+  </data>
+  <data name="Airport" xml:space="preserve">
+    <value>Аеропорт</value>
+  </data>
+  <data name="Airports" xml:space="preserve">
+    <value>Аеропорти</value>
+  </data>
+  <data name="Altitude" xml:space="preserve">
+    <value>Висота</value>
+  </data>
+  <data name="Arrival" xml:space="preserve">
+    <value>Прибуття</value>
+  </data>
+  <data name="Arrival Airport" xml:space="preserve">
+    <value>Аеропорт прибуття</value>
+  </data>
+  <data name="Arrival City" xml:space="preserve">
+    <value>Місто прибуття</value>
+  </data>
+  <data name="Arrival Date" xml:space="preserve">
+    <value>Час прибуття</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Назад</value>
+  </data>
+  <data name="Business Class" xml:space="preserve">
+    <value>Бізнес класс</value>
+  </data>
+  <data name="Buy" xml:space="preserve">
+    <value>Купити</value>
+  </data>
+  <data name="By Decreasing" xml:space="preserve">
+    <value>На зменшення</value>
+  </data>
+  <data name="Cities" xml:space="preserve">
+    <value>Міста</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Mісто</value>
+  </data>
+  <data name="City Name" xml:space="preserve">
+    <value>Місто</value>
+  </data>
+  <data name="Class" xml:space="preserve">
+    <value>Класс</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Країна</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Створити</value>
+  </data>
+  <data name="Create seats" xml:space="preserve">
+    <value>Створити місця</value>
+  </data>
+  <data name="Date of purchase" xml:space="preserve">
+    <value>Дата покупки</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Видалити</value>
+  </data>
+  <data name="Departure" xml:space="preserve">
+    <value>Відбуття</value>
+  </data>
+  <data name="Departure Airport" xml:space="preserve">
+    <value>Аеропорт вильоту</value>
+  </data>
+  <data name="Departure City" xml:space="preserve">
+    <value>Місто вильоту</value>
+  </data>
+  <data name="Departure Date" xml:space="preserve">
+    <value>Час вильоту</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Деталі</value>
+  </data>
+  <data name="Econom Class" xml:space="preserve">
+    <value>Економ класс</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Редагувати</value>
+  </data>
+  <data name="First Class" xml:space="preserve">
+    <value>Перший класс</value>
+  </data>
+  <data name="First Name" xml:space="preserve">
+    <value>Ім`я</value>
+  </data>
+  <data name="Flight" xml:space="preserve">
+    <value>Рейс</value>
+  </data>
+  <data name="Flight Hours" xml:space="preserve">
+    <value>Загальний наліт</value>
+  </data>
+  <data name="Flight State" xml:space="preserve">
+    <value>Статус</value>
+  </data>
+  <data name="Flights" xml:space="preserve">
+    <value>Рейси</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="Iso Country" xml:space="preserve">
+    <value>Країна</value>
+  </data>
+  <data name="Iso Region" xml:space="preserve">
+    <value>Регіон</value>
+  </data>
+  <data name="Last Name" xml:space="preserve">
+    <value>Призвіще</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Широта</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Вхід</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Вихід</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Довгота</value>
+  </data>
+  <data name="Manage" xml:space="preserve">
+    <value>Керувати</value>
+  </data>
+  <data name="Managers" xml:space="preserve">
+    <value>Менеджери</value>
+  </data>
+  <data name="Manufacture Date" xml:space="preserve">
+    <value>Дата виготовлення</value>
+  </data>
+  <data name="Middle Name" xml:space="preserve">
+    <value>По батькові</value>
+  </data>
+  <data name="Model Type" xml:space="preserve">
+    <value>Модель</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Назва</value>
+  </data>
+  <data name="Nationality" xml:space="preserve">
+    <value>Національність</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Наступна сторінка</value>
+  </data>
+  <data name="Order By" xml:space="preserve">
+    <value>Сортувати за</value>
+  </data>
+  <data name="Passenger" xml:space="preserve">
+    <value>Пасажир</value>
+  </data>
+  <data name="Passport No" xml:space="preserve">
+    <value>Номер паспорту</value>
+  </data>
+  <data name="Payoff" xml:space="preserve">
+    <value>Pозплатитися</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Телефон</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Місце</value>
+  </data>
+  <data name="Prev" xml:space="preserve">
+    <value>Поперення сторінка</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Ціна</value>
+  </data>
+  <data name="Price Max" xml:space="preserve">
+    <value>Максимальна ціна</value>
+  </data>
+  <data name="Price Min" xml:space="preserve">
+    <value>Мінімальна ціна</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Профіль</value>
+  </data>
+  <data name="Registration Address" xml:space="preserve">
+    <value>Адреса реєстрації</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Зберегти</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Пошук</value>
+  </data>
+  <data name="Seat" xml:space="preserve">
+    <value>Місце</value>
+  </data>
+  <data name="Seats" xml:space="preserve">
+    <value>Місця</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Вибрати</value>
+  </data>
+  <data name="Serial Number" xml:space="preserve">
+    <value>Серійний номер</value>
+  </data>
+  <data name="Sign In" xml:space="preserve">
+    <value>Реєстрація</value>
+  </data>
+  <data name="Sold Date" xml:space="preserve">
+    <value>Дата продажу</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>Статус</value>
+  </data>
+  <data name="Tickets" xml:space="preserve">
+    <value>Квитки</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Час</value>
+  </data>
+  <data name="User Name" xml:space="preserve">
+    <value>Користувач</value>
+  </data>
+</root>

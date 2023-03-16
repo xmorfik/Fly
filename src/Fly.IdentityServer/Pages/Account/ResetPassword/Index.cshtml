@@ -1,0 +1,28 @@
+﻿@page
+@model Fly.IdentityServer.Pages.Account.ResetPassword.IndexModel
+@{
+}
+
+<p>
+    @Model.ErrorMessage
+</p>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-antiforgery="true">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ResetPasswordDto.UserName" class="control-label"></label>
+                <input asp-for="ResetPasswordDto.UserName" class="form-control" />
+                <span asp-validation-for="ResetPasswordDto.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Reset" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

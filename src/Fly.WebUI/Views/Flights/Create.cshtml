@@ -1,0 +1,75 @@
+﻿@using Fly.Core.Entities;
+@model Fly.Core.Entities.Flight
+@using Microsoft.AspNetCore.Mvc.Localization;
+
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+<div class="card  mx-auto" style="width:1000px">
+    <img class="card-img-top" src="~/flight.jpg">
+    <div class="card-body">
+        <form asp-action="Create">
+            <br />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AircraftId" class="control-label">@SharedLocalizer["Aircraft"]</label>
+                <input asp-for="AircraftId" value="@ViewData["SelectedAircraftId"]" readonly class="form-control" />
+                <span asp-validation-for="AircraftId" class="text-danger"></span>
+                @Html.ActionLink(SharedLocalizer["Select"].Value,"Index","Aircrafts", new { isSelect = true, redirectUri = "/flights/create" })
+            </div><br />
+            @if (ViewData["SelectedAircraft"] != null)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@(((Aircraft)ViewData["SelectedAircraft"]).ModelType)</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@(((Aircraft)ViewData["SelectedAircraft"]).SerialNumber)</h6>
+                        <p class="card-text">
+                            Current airport : @(((Aircraft)ViewData["SelectedAircraft"]).Airport.Name)
+                        </p>
+                        <a href="/airports/details/@(((Aircraft)ViewData["SelectedAircraft"]).AirportId)" class="card-link">Departure airport details</a>
+                        <a href="/aircrafts/details/@(((Aircraft)ViewData["SelectedAircraft"]).Id)" class="card-link">Aircraft details</a>
+                    </div>
+                </div>
+            }
+            <br />
+            <div class="form-group">
+                <label asp-for="ArrivalAirportId" class="control-label">@SharedLocalizer["Arrival Airport"]</label>
+                <input asp-for="ArrivalAirportId" value="@ViewData["SelectedAirportId"]" readonly class="form-control" />
+                @Html.ActionLink(SharedLocalizer["Select"].Value,"Index","Airports", new { isSelect = true, redirectUri = "/flights/create" })
+                <span asp-validation-for="ArrivalAirportId" class="text-danger"></span>
+            </div><br />
+            @if (ViewData["SelectedAirport"] != null)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@(((Airport)ViewData["SelectedAirport"]).Name)</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@(((Airport)ViewData["SelectedAirport"]).City.IsoCountry)</h6>
+                        <a href="/airports/details/@(((Airport)ViewData["SelectedAirport"]).Id)" class="card-link">Details</a>
+                    </div>
+                </div>
+            }
+            <br />
+            <div class="form-group">
+                <label asp-for="DepartureDateTime" class="control-label">@SharedLocalizer["Departure Date"]</label>
+                <input asp-for="DepartureDateTime" class="form-control" />
+                <span asp-validation-for="DepartureDateTime" class="text-danger"></span>
+            </div><br />
+            <div class="form-group">
+                <label asp-for="ArrivalDateTime" class="control-label">@SharedLocalizer["Arrival Date"]</label>
+                <input asp-for="ArrivalDateTime" class="form-control" />
+                <span asp-validation-for="ArrivalDateTime" class="text-danger"></span>
+            </div><br />
+            <div class="form-group">
+                <input type="submit" value="@SharedLocalizer["Create"]" class="btn btn-primary" />
+            </div>
+        </form><br />
+        <div>
+            <a asp-action="Index">@SharedLocalizer["Back"]</a>
+        </div>
+    </div>
+</div>
+
+@Html.AntiForgeryToken();
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,164 @@
+﻿@using Fly.Core.Entities;
+@model Flight
+@using Microsoft.AspNetCore.Mvc.Localization;
+
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+<div class="row">
+	<div class="col-auto">
+		<div class="container-fluid">
+			<div class="card" id="flightCard" style="width: 19rem; display:none">
+				<img class="card-img-top" src="~/aircraft.jpg">
+				<div class="card-body text-center" id="cardBody">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col">
+		<div class="card">
+			<div id="map" style="width: 100%; height: 820px;"></div>
+		</div>
+	</div>
+
+	<div class="col-auto">
+		<div class="container-fluid">
+			
+		</div>
+	</div>
+</div>
+
+<script src="~/lib/leaflet-rotatedmarker/leaflet.rotatedMarker.js"></script>
+<script src="~/lib/microsoft-signalr/signalr.min.js"></script>
+<script src="~/lib/leaflet.markercluster/leaflet.markercluster.js"></script>
+
+<script>
+	const map = L.map('map').setView([ 50.4501, 50.4501], 3);
+
+	const googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+		maxZoom: 20,
+		minZoom: 3,
+		subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+	}).addTo(map);
+
+	//const tiles = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+	//	maxZoom: 19,
+	//	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+	//}).addTo(map);
+
+	const icon = L.icon({
+		iconUrl: 'plane-icon.png',
+		iconSize: [20, 20],
+		iconAnchor: [10, 10]
+	});
+
+	const hubConnection = new signalR.HubConnectionBuilder()
+		.withUrl("https://localhost:5000/locations")
+        .build();
+
+	let markers = [];
+	let airportMarkers = [];
+	let polyline;
+	let selectedFlight;
+	let route = [];
+	let line = [];
+
+	hubConnection.on("Locations", function (locations) {
+		if (markers.length > 0) {
+			markers.forEach(function (item, i, markers) {
+				map.removeLayer(item);
+			});
+			markers = [];
+		}
+
+		locations.forEach(function (item, i, locations) {
+			console.log(i + " : " + item.latitude + " / " + item.longitude + " : " + item.aircraftId);
+			let marker = L.marker([item.latitude, item.longitude], { icon: icon, rotationAngle: item.directionAngle, attributes: item.flightId }).on('click', markerOnClick).addTo(map);
+			markers.push(marker);
+		});
+    });
+
+	hubConnection.on("Flight", function (flight) {
+
+		console.log(flight);
+
+		if (airportMarkers.length > 0) {
+			airportMarkers.forEach(function (item, i, markers) {
+				map.removeLayer(item);
+			});
+			airportMarkers = [];
+		}
+
+		let markerDeparture = L.marker([flight.departureLatitude, flight.departureLongitude]).addTo(map)
+			.bindPopup(flight.departureAirport)
+			.openPopup();;
+		let markerArrival = L.marker([flight.arrivalLatitude, flight.arrivalLongitude]).addTo(map)
+			.bindPopup(flight.arrivalAirport)
+			.openPopup();;
+
+		airportMarkers.push(markerDeparture);
+		airportMarkers.push(markerArrival);
+		
+		selectedFlight = flight;
+
+		let html = '';
+		html = 
+		`
+			<h5 class="card-title" >@SharedLocalizer["Aircraft"].Value</h5>
+			<h5 class="card-title" ><a href="/aircrafts/details/${flight.aircraftId}"class="card-link">${flight.aircraftName}</a></h5>
+
+			<a href="/airports/details/${flight.departureAirportId}" class="list-group-item list-group-item-action list-group-item-secondary flex-column align-items-start">
+				<div class="d-flex w-100 justify-content-between">
+					<h5 class="mb-1">${flight.departureCity}</h5>
+				</div>
+				<p class="mb-1">
+					@SharedLocalizer["Departure Airport"].Value
+					<br>
+						${flight.departureAirport}
+				</p>
+				<small>${flight.departureDateTime}</small>
+			</a>
+
+			<a href="/airports/details/${flight.arrivalAirportId}" class="list-group-item list-group-item-action list-group-item-secondary flex-column align-items-start">
+				<div class="d-flex w-100 justify-content-between">
+					<h5 class="mb-1">${flight.arrivalCity}</h5>
+				</div>
+			<p class="mb-1">
+				@SharedLocalizer["Arrival Airport"].Value
+				<br>
+					${flight.arrivalAirport}
+			</p>
+					<small>${flight.arrivalDateTime}</small>
+			</a>
+			</ul>
+			<a href="/flights/details/${flight.flightId}" class="card-link"> @SharedLocalizer["Details"].Value </a>
+		`;
+		$('#cardBody').html(html);
+		showFlightCard();
+	});
+
+	hubConnection.start().then(() => 
+	{ 
+		console.log('Connection started.......!'); 
+		hubConnection.invoke("SendLocationsAsync");
+	}).catch(err => console.log('Error while connect with server'));
+
+	function markerOnClick(e) {
+		console.log(e.target.options.attributes);
+		let id = e.target.options.attributes;
+		hubConnection.invoke("GetFlight", id);
+	}
+
+	function showFlightCard() {
+		var x = document.getElementById("flightCard");
+		if (x.style.display === "none") {
+			x.style.display = "block";
+		} 
+	}
+
+	function hideFlightCard() {
+		var x = document.getElementById("flightCard");
+		x.style.display = "none";
+	}
+</script>
+

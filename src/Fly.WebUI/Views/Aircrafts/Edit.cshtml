@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+
+@model Fly.Core.Entities.Aircraft
+
+<div class="card  mx-auto" style="width:1000px">
+    <img class="card-img-top" src="~/aircraft.jpg">
+    <div class="card-body">
+        <form asp-action="Edit">
+            <br />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ModelType" class="control-label"></label>
+                <input asp-for="ModelType" class="form-control" />
+                <span asp-validation-for="ModelType" class="text-danger"></span>
+            </div><br />
+            <div class="form-group">
+                <label asp-for="SerialNumber" class="control-label"></label>
+                <input asp-for="SerialNumber" class="form-control" />
+                <span asp-validation-for="SerialNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ManufactureDate" class="control-label"></label>
+                <input asp-for="ManufactureDate" class="form-control" />
+                <span asp-validation-for="ManufactureDate" class="text-danger"></span>
+            </div><br />
+            <div class="form-group">
+                <label asp-for="FlightHours" class="control-label"></label>
+                <input asp-for="FlightHours" class="form-control" />
+                <span asp-validation-for="FlightHours" class="text-danger"></span>
+            </div><br />
+            @Html.HiddenFor(x=>x.AirlineId)
+            @Html.HiddenFor(x=>x.AirportId)
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+        @Html.ActionLink("Back","Index")
+    </div>
+</div>
+
+@Html.AntiForgeryToken();
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
+<div class="row">
+    <dic class="col">
+        <div class="card bg-dark text-white text-center mx-auto" style="width:500px">
+            <img class="card-img" src="~/ticket.jpg" alt="Card image">
+            <div class="card-img-overlay">
+                <p class="display-1 card-title text-uppercase text-light ">@SharedLocalizer["Tickets"]</p>
+                <a href="~/passenger/tickets" class="stretched-link"></a>
+            </div>
+        </div>
+        <br />
+        <div class="card bg-dark text-white text-center mx-auto" style="width:500px">
+            <img class="card-img" src="~/flight.jpg" alt="Card image">
+            <div class="card-img-overlay">
+                <p class="display-1 card-title text-uppercase text-light ">@SharedLocalizer["Profile"]</p>
+                <a href="~/passenger/profile" class="stretched-link"></a>
+            </div>
+        </div>
+    </dic>
+</div>
