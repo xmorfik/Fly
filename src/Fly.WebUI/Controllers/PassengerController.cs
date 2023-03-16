@@ -86,7 +86,7 @@ public class PassengerController : Controller
             _logger.LogCritical(ex.Message);
             return RedirectToAction("Error", "Home");
         }
-        
+
         var response = await _tickets.GetListAsync(new TicketParameter { PassengerId = passenger.Id }, new Page());
 
         ticketViewModel.PagedResponse = response;
